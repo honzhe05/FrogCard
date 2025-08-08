@@ -40,11 +40,11 @@ class StartScreen(Screen):
             allow_stretch = True ,
             keep_ratio = True
         )
-        anim_up = Animation(y = self.title.y + 50 , duration = 0.5)
-        anim_down = Animation(y = self.title.y , duration = 0.8)
-        anim = anim_up + anim_down
-        anim.repeat = True
-        anim.start(self.title)  
+        self.anim_up = Animation(y = self.title.y + 50 , duration = 0.5)
+        self.anim_down = Animation(y = self.title.y , duration = 0.8)
+        self.anim = self.anim_up + self.anim_down
+        self.anim.repeat = True
+        self.anim.start(self.title)  
         
         self.title.bind(on_release = self.change_image)
         layout.add_widget(self.title)
@@ -77,12 +77,12 @@ class StartScreen(Screen):
     
         self.add_widget (layout)
         self.jump_distance = Window.width + 200
-        self.jump_duration = 4
+        self.jump_duration = 4.5
         
         self.start_jump_animation()
         
     def change_image(self ,  *args):
-        #self.anim.stop(self.title)
+        self.anim.stop(self.title)
         self.title.source = 'Titleb.png' 
 
     def start_jump_animation(self):
@@ -103,12 +103,27 @@ class StartScreen(Screen):
         self.startbtn.size = (new_width, new_height)
         self.startbtn.pos = (new_x, new_y)
         self.manager.current = 'game'
-            
+        
 class GameScreen(Screen):
     def __init__(self , **kwargs):
         super().__init__(**kwargs)
         layout = FloatLayout()
         self.add_widget(layout)
+        
+        topbar = Image(
+            source = 'Topbar.png' ,
+            size_hint = (None , None) ,
+            allow_stretch = True ,
+            keep_ratio = True
+        )
+        topbar.texture_update()
+        img_w, img_h = topbar.texture.size
+        screen_w, screen_h = Window.size
+        topbar.width = screen_w
+        topbar.height = screen_w * img_h / img_w
+        
+        topbar.pos = (0 , screen_h - topbar.height)
+        layout.add_widget(topbar)
         
         layout.add_widget(
             Label(
@@ -117,7 +132,7 @@ class GameScreen(Screen):
                 font_size = 100
             )
         )
-        
+    
 class MyApp(App):
     def build(self):
         sm = ScreenManager(transition=NoTransition())
