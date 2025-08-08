@@ -1,0 +1,35 @@
+name: Build APK
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y python3-pip openjdk-11-jdk unzip git
+        pip3 install --upgrade cython buildozer
+
+    - name: Setup Android SDK & NDK
+      run: |
+        buildozer android update sdk
+
+    - name: Build APK
+      run: |
+        buildozer android debug
+
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: FrogCard-debug-apk
+        path: bin/*.apk
