@@ -14,13 +14,22 @@ Window.clearcolor = (0.66 , 0.36 , 0.17 , 0.6)
 
 class ImageButton(ButtonBehavior , Image):
     pass
-    
+
 class StartScreen(Screen):
     def __init__(self , **kwargs):
         super().__init__(**kwargs)
         layout = FloatLayout()
         
-        title = Image(
+        background = Image(
+            source = 'Background.jpg' ,
+            size_hint = (1 , 1) ,
+            pos = (0 , 0) ,
+            allow_stretch = True ,
+            keep_ratio = False
+        )
+        layout.add_widget(background)
+        
+        self.title = ImageButton(
             source = 'Title.png' ,
             size_hint = (None , None) ,
             size = (1000 , 1000) ,
@@ -31,13 +40,24 @@ class StartScreen(Screen):
             allow_stretch = True ,
             keep_ratio = True
         )
-        anim_up = Animation(y = title.y + 50 , duration = 0.5)
-        anim_down = Animation(y = title.y , duration = 0.8)
+        anim_up = Animation(y = self.title.y + 50 , duration = 0.5)
+        anim_down = Animation(y = self.title.y , duration = 0.8)
         anim = anim_up + anim_down
         anim.repeat = True
-        anim.start(title)
+        anim.start(self.title)  
         
-        layout.add_widget(title)
+        self.title.bind(on_release = self.change_image)
+        layout.add_widget(self.title)
+        
+        self.titlefrog = Image(
+            source = 'titlefrog.png' ,
+            size_hint = (None, None),
+            size = (200 , 200) ,
+            pos = (Window.width , 0) ,
+            allow_stretch = True ,
+            keep_ratio = True
+        )
+        layout.add_widget(self.titlefrog)
         
         self.startbtn = ImageButton(
             source = 'StartButton.png' ,
@@ -54,7 +74,25 @@ class StartScreen(Screen):
         
         self.startbtn.bind(on_release = self.go_to_game)
         
+    
         self.add_widget (layout)
+        self.jump_distance = Window.width + 200
+        self.jump_duration = 4
+        
+        self.start_jump_animation()
+        
+    def change_image(self ,  *args):
+        #self.anim.stop(self.title)
+        self.title.source = 'Titleb.png' 
+
+    def start_jump_animation(self):
+        anim = Animation(x=self.titlefrog.x - self.jump_distance, duration=self.jump_duration)
+        anim.bind(on_complete=self.reset_position)
+        anim.start(self.titlefrog)
+
+    def reset_position(self, *args):
+        self.titlefrog.x = Window.width
+        self.start_jump_animation()
         
     def go_to_game(self, *args):
         new_width = self.startbtn.width * 0.85
@@ -65,7 +103,7 @@ class StartScreen(Screen):
         self.startbtn.size = (new_width, new_height)
         self.startbtn.pos = (new_x, new_y)
         self.manager.current = 'game'
-        
+            
 class GameScreen(Screen):
     def __init__(self , **kwargs):
         super().__init__(**kwargs)
