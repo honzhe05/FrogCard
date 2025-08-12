@@ -209,3 +209,5 @@ __marimo__/
 /error.log
 /test/test.py
 /.kivy/
+node_modules/
+yarn.lock
