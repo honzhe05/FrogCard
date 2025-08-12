@@ -3,6 +3,7 @@ import os
 import math
 from kivy.app import App
 from kivy.uix.label import Label
+from kivy.resources import resource_find
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.image import Image
 from kivy.animation import Animation
@@ -44,7 +45,7 @@ class MovingFly(ButtonBehavior , Image):
                 self.app.root.get_screen('game').exp_bar.add_exp(18)
                 game_screen.update_exp_level_label()
     
-                self.source = os.path.join('assets', 'Particle.png')
+                self.source = resource_find('assets/Particle.png')
                 fade_out = Animation(opacity=0, duration=0.5)
                 fade_out.bind(on_complete=self.fade_complete)
                 fade_out.start(self)
@@ -56,7 +57,7 @@ class MovingFly(ButtonBehavior , Image):
 
     def recover(self, dt):
         self.opacity = 1
-        self.source = os.path.join('assets' ,  'Fly.png')
+        self.source = os.path.join('assets', 'Fly.png')
         self.disabled = False
         
         random_size = random.randint(140, 160)

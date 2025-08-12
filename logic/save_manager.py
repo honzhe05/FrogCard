@@ -1,6 +1,7 @@
 import json
 import os
 import traceback
+from kivy.app import App
 
 SAVE_PATH = "data/savegame.json"
 ERROR_LOG = "error.log"

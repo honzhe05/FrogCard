@@ -15,6 +15,7 @@ from components.imagebutton import ImageButton
 from components.XPcircle import ExpArc
 from logic.save_manager import save_game, load_game, clear_save
 from screens.shop import ShopPanel
+from screens.startscreen import StartScreen
 
 class GameScreen(Screen):
     def __init__(self , **kwargs):
@@ -22,12 +23,12 @@ class GameScreen(Screen):
         self.app = App.get_running_app()
         self.menu_open = False
         
-        self.shop_panel = ShopPanel(game_screen=self)
-        self.add_widget(self.shop_panel)
+        self.shop_panel = ShopPanel()
         self.layout = FloatLayout()
         self.add_widget(self.layout)
         self.fly_layer = FloatLayout()
         self.layout.add_widget(self.fly_layer)
+        self.start_screen = StartScreen()
         
         #top bar
         topbar = Image(
@@ -88,7 +89,7 @@ class GameScreen(Screen):
             
         #menu button
         self.menu_button = ImageButton(
-            source = os.path.join('assets' , 'Menu.png'),
+            source = resource_find('assets/Menu.png'),
             size_hint = (None , None) ,
             size = (100 , 80),
             allow_stretch = True ,
@@ -121,6 +122,12 @@ class GameScreen(Screen):
         self.layout.add_widget(self.exp_bar)
         self.create_exp_level_label()
         self.load()
+        
+    def hide_flies(self):
+            self.fly_layer.opacity = 0
+
+    def show_flies(self):
+        self.fly_layer.opacity = 1
         
     #fly
     def spawn_flies(self, count):
@@ -212,7 +219,7 @@ class GameScreen(Screen):
         
         clear_save()
         self.clear_label = Label(
-            text = "資料即將清除，並回到起始畫面" ,
+            text = "資料將清除，並關閉遊戲" ,
             font_name = 'NotoSans-Bold' ,
             size_hint = (None , None) ,
             font_size = 60 ,
@@ -222,7 +229,7 @@ class GameScreen(Screen):
             outline_width=2
         )
         self.layout.add_widget(self.clear_label)
-        Clock.schedule_once(self.reset_game , 2.5)
+        Clock.schedule_once(self.reset_game , 1.5)
         
     def not_del(self , button_instance):
         self.layout.remove_widget(self.confirm_btn)
@@ -285,31 +292,9 @@ class GameScreen(Screen):
         cancel_btn.bind(on_release=self.not_del)
 
     def reset_game(self, dt):
-        self.start_screen = self.manager.get_screen("start")
-        
-        self.app.mn = 100
-        self.app.dm = 10
-        self.app.quan = 5
-        self.app.quan_mn = 50
-        self.quan_level = 1
-        self.shop_panel.quan_level = 1
-        self.exp_bar.current_exp = 0
-        self.exp_bar.level = 1
-        
-        self.exp_bar.update_arc()
-        self.update_exp_level_label()
-        self.shop_panel.update_quan(self.app.quan)
-        self.start_screen.title.source = resource_find('assets/Title.png')
-        self.start_screen.startbtn.opacity = 1
-        self.open_menu(self.menu_button)
-        self.spawn_flies(self.app.quan)
-        self.remove_all_flies()
-        self.money.text = str(self.app.mn)
-        self.diamond.text = str(self.app.dm)
-        self.shop_panel.quan_level_label.text = "LV. 1"
-        self.shop_panel.quan_need_mn.text = str(self.app.quan_mn)
-        self.layout.remove_widget(self.clear_label)
-        self.manager.current = 'start'
+        app = App.get_running_app()
+        app.skip_save_on_exit = True
+        app.stop()
         
     def remove_all_flies(self):
         self.fly_layer.clear_widgets()
@@ -326,7 +311,7 @@ class GameScreen(Screen):
             self.garbage.disabled = True
     
     def open_shop(self, *args):
-        self.shop_panel.show()
+        self.manager.current = 'shop'
        
     def save(self):
         try:

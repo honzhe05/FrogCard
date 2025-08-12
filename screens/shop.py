@@ -1,27 +1,47 @@
 import os
 from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
+from kivy.resources import resource_find
 from kivy.uix.label import Label
 from kivy.uix.image import Image
 from kivy.uix.button import Button
 from kivy.core.window import Window
+from kivy.uix.screenmanager import Screen
+from components.XPcircle import ExpArc
 
-class ShopPanel(FloatLayout):
-    def __init__(self, game_screen, **kwargs):
-        self.app = App.get_running_app() 
-        self.game_screen = game_screen
+class ShopPanel(Screen):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.opacity = 0
-        self.disabled = True
-        
+        self.app = App.get_running_app()
+       
         bg = Image(
-            source=os.path.join('assets', 'Shop.png'),
+            source=resource_find('assets/Shop.png'),
             size_hint=(None, None),
             size = Window.size,
             pos=(0, 0),
             allow_stretch=True
         )
         self.add_widget(bg)
+        
+        topbar = Image(
+            source = resource_find('assets/Topbar.png' ) ,
+            size_hint = (None , None) ,
+            allow_stretch = True ,
+            keep_ratio = True
+        )
+        topbar.texture_update()
+        img_w, img_h = topbar.texture.size
+        screen_w, screen_h = Window.size
+        topbar.width = screen_w
+        topbar.height = screen_w * img_h / img_w
+        
+        topbar.pos = (0 , screen_h - topbar.height)
+        self.add_widget(topbar)
+        
+        self.money = self.create_label(str(self.app.mn), {'x': 0.8, 'y': 0.949})
+        self.diamond = self.create_label(str(self.app.dm), {'x': 0.4, 'y': 0.948})
+        self.add_widget(self.money)
+        self.add_widget(self.diamond)
         
         self.fly_quan = Label(
             text = str(self.app.quan),
@@ -93,24 +113,38 @@ class ShopPanel(FloatLayout):
         self.add_widget(close_btn)
         close_btn.bind(on_release=self.hide)
     
-    def show(self):
-        if not self.parent:
-            self.game_screen.layout.add_widget(self)
-        self.opacity = 1
-        self.disabled = False
+    def on_enter(self):
+        self.game_screen = App.get_running_app().root.get_screen('game')
+        if self.game_screen:
+            self.game_screen.hide_flies()
+
+    def on_leave(self):
+        if self.game_screen:
+            self.game_screen.show_flies()
     
     def hide(self, *args): 
-        self.opacity = 0
-        self.disabled = True
-        if self.parent:
-                self.parent.remove_widget(self)
+        self.manager.current = 'game'
+    
+    def create_label(self, text, pos_hint):
+            return Label(
+                text=text,
+                font_name = 'NotoSans-Regular' ,
+                size_hint=(None, None),
+                size=(100, 50),
+                pos_hint=pos_hint,
+                halign="center",
+                valign="middle",
+                color=(1, 1, 1, 1),
+                outline_color=(0, 0, 0, 1),
+                outline_width=2
+            )
         
     def buy_quan(self, *args):
         try:
             if self.app.mn >= self.app.quan_mn:
                 self.app.mn -= self.app.quan_mn
-                self.game_screen.money_hint("-" + str(self.app.quan_mn))
                 self.game_screen.money.text = str(self.app.mn)
+                self.money.text = str(self.app.mn)
                 self.app.quan_level += 1
                 self.app.quan_mn += 20 * (self.app.quan_level - 1)
                 self.app.quan += 1
@@ -124,4 +158,4 @@ class ShopPanel(FloatLayout):
         self.app.quan = new_value
         self.fly_quan.text = str(self.app.quan)
         self.quan_level_label.text = "LV. " + str(self.app.quan_level)
-        self.quan_need_mn.text = str(self.app.quan_mn)
+        self.quan_need_mn.text = str(self.app.quan_mn)    

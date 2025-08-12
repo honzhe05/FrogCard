@@ -1,6 +1,7 @@
 import os
 from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
+from kivy.resources import resource_find
 from kivy.animation import Animation
 from kivy.uix.image import Image
 from kivy.core.window import Window
@@ -15,7 +16,7 @@ class StartScreen(Screen):
         
         #background
         background = Image(
-            source = os.path.join('assets' , 'Background.jpg') ,
+            source = resource_find('assets/Background.jpg') ,
             size_hint = (1 , 1) ,
             pos = (0 , 0) ,
             allow_stretch = True ,
@@ -29,7 +30,7 @@ class StartScreen(Screen):
         center_y = Window.height * 0.22
       
         self.title = ImageButton(
-            source = os.path.join('assets' ,  'Title.png') ,
+            source = resource_find('assets/Title.png') ,
             size_hint = (0.85, 0.85),
             pos = (center_x, center_y),
             allow_stretch = True ,
@@ -41,7 +42,7 @@ class StartScreen(Screen):
         
         #title frog
         self.titlefrog = Image(
-            source = os.path.join('assets' , 'titlefrog.png') ,
+            source = resource_find('assets/titlefrog.png') ,
             size_hint= (0.15, 0.15),
             pos = (Window.width, -50) ,
             allow_stretch = True ,
@@ -55,7 +56,7 @@ class StartScreen(Screen):
         center_y = Window.height * 0.05
         
         self.startbtn = ImageButton(
-            source = os.path.join('assets' , 'StartButton.png') ,
+            source = resource_find('assets/StartButton.png') ,
             size_hint = (0.4, 0.4) ,
             pos = (img_width, center_y),
             allow_stretch = True ,
@@ -80,7 +81,7 @@ class StartScreen(Screen):
     def title_change_image(self, *args):
         try:
             self.anim.stop(self.title)
-            self.title.source = os.path.join('assets', 'Titleb.png')
+            self.title.source = resource_find('assets/Titleb.png')
         except Exception as e:
             with open("error.log", "a", encoding="utf-8") as f:
                 f.write(f"[title_change_image] {e}\n")

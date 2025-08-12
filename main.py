@@ -2,12 +2,17 @@ import os
 import kivy
 from kivy.app import App
 from kivy.core.window import Window
+from kivy.uix.button import Button
+from kivy.uix.label import Label
 from kivy.core.text import LabelBase
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.popup import Popup
 from kivy.resources import resource_find
 from kivy.uix.screenmanager import ScreenManager , Screen , FadeTransition
 from screens.startscreen import StartScreen
 from screens.gamescreen import GameScreen
 from screens.cardgallery import CardGalleryScreen
+from screens.shop import ShopPanel
 
 try:
     kivy.resources.resource_add_path("fonts")
@@ -25,11 +30,12 @@ try:
     )
 except Exception as e:
     with open("error.log", "a", encoding="utf-8") as f:
-        f.write(f"[Font Register Error] {e}\n")
+        f.write(f"[LabelBase.Register] {e}\n")
 Window.clearcolor = (0.66 , 0.36 , 0.17 , 1)
         
 class MyApp(App):
     def build(self):
+        self.skip_save_on_exit = False
         self.mn = 100
         self.dm = 10
         self.quan = 5
@@ -41,11 +47,15 @@ class MyApp(App):
         
         sm = ScreenManager(transition=FadeTransition(duration = 0.5 , clearcolor = (0.66 , 0.36 , 0.17 , 1)))
         sm.add_widget(StartScreen(name= 'start'))
-        sm.add_widget(GameScreen(name= 'game'))
+        sm.add_widget(GameScreen(name='game'))
         sm.add_widget(CardGalleryScreen(name='card'))
+        sm.add_widget(ShopPanel(name='shop'))
+        Window.bind(on_key_down=self.on_key)
         return sm
         
     def on_stop(self):
+        if self.skip_save_on_exit:
+            return
         try:
             game_screen = self.root.get_screen('game')
             if hasattr(game_screen, 'save'):
@@ -53,6 +63,72 @@ class MyApp(App):
         except Exception as e:
             with open("error.log", "a", encoding="utf-8") as f:
                 f.write(f"[on_stop] {e}\n")
+                
+    def on_key(self, window, key, *args):
+        if key==27:
+            sm = self.root
+            try:
+                if sm.current != 'game' and sm.current != 'start':
+                    sm.current = 'game'
+                else:
+                    self.show_exit_popup()
+                return True
+            except Exception as e:
+                with open("error.log", "a", encoding="utf-8") as f:
+                    f.write(f"[go_to_game.screen] {e}\n")
+                return True
+        return False
+         
+    def show_exit_popup(self):
+        layout = BoxLayout(
+            orientation='vertical',
+            padding=10,
+            spacing=10
+        )
+        label = Label(
+            text= '你真的想要退出嗎？(盯',
+            font_name = 'NotoSans-Regular'
+        )
+        btn_layout = BoxLayout(
+            size_hint_y=None,
+            height='40dp',
+            spacing=10
+        )
+
+        btn_yes = Button(
+            text='Yes',
+            size_hint=(0.5, 1),
+            background_color = (0.544, 0.74, 0.836, 1)
+        )
+        btn_no = Button(
+            text='No',
+            size_hint=(0.5, 1),
+            background_color = (0.544, 0.74, 0.836, 1)
+        )
+
+        btn_layout.add_widget(btn_yes)
+        btn_layout.add_widget(btn_no)
+
+        layout.add_widget(label)
+        layout.add_widget(btn_layout)
+
+        popup = Popup(
+            title= 'Are You Sure?',
+            content=layout,
+            background = ' ',
+            background_color = (0.444, 0.64, 0.736, 1),
+            size_hint=(0.7, 0.25),
+            auto_dismiss=False
+        )
+
+        btn_yes.bind(on_release=self.stop_app)
+        btn_yes.bind(on_release=popup.dismiss)
+        btn_no.bind(on_release=popup.dismiss)
+
+        popup.open()
+
+    def stop_app(self, *args):
+        self.stop()
      
 if __name__ == '__main__' :
     MyApp().run()
