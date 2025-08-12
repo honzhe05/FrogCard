@@ -22,6 +22,17 @@ jobs:
         run: |
           sudo chmod -R 777 bin/
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v2
+        with:
+          api-level: 33
+          build-tools: 33.0.2
+          target: android-33
+          ndk: 25.2.9519653
+
+      - name: Install build-tools 29.0.3
+        run: yes | sdkmanager "build-tools;29.0.3"
+
       - uses: r0adkll/sign-android-release@v1
         name: Sign app APK
         # ID used to access action output
