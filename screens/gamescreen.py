@@ -2,6 +2,7 @@ import random
 import os
 from kivy.app import App
 from kivy.uix.label import Label
+from kivy.resources import resource_find
 from kivy.uix.floatlayout import FloatLayout
 from kivy.animation import Animation
 from kivy.uix.image import Image
@@ -30,7 +31,7 @@ class GameScreen(Screen):
         
         #top bar
         topbar = Image(
-            source = os.path.join('assets' , 'Topbar.png' ) ,
+            source = resource_find('assets/Topbar.png' ) ,
             size_hint = (None , None) ,
             allow_stretch = True ,
             keep_ratio = True
@@ -44,9 +45,9 @@ class GameScreen(Screen):
         topbar.pos = (0 , screen_h - topbar.height)
         self.layout.add_widget(topbar)
         
-        #button bar
+        # button bar
         buttonbar = Image(
-            source = os.path.join('assets' , 'Buttonbar.png' ) ,
+            source = resource_find('assets/Buttonbar.png' ) ,
             size_hint = (None , None) ,
             allow_stretch = True ,
             keep_ratio = True ,
@@ -67,7 +68,7 @@ class GameScreen(Screen):
         
         #shop menu
         self.shop_menu = ImageButton(
-            source = os.path.join('assets', 'Shopicon.png'),
+            source = resource_find('assets/Shopicon.png'),
             size_hint = (None , None),
             size = (200, 150),
             pos_hint = {'x': 0.04 , 'y' : 0.006}
@@ -77,7 +78,7 @@ class GameScreen(Screen):
         
         #card menu
         self.cardmenu = ImageButton(
-            source = os.path.join('assets', 'CardShop.png'),
+            source = resource_find('assets/CardShop.png'),
             size_hint = (None , None),
             size = (250, 150),
             pos_hint = {'x': 0.38 , 'y' : 0.006}
@@ -127,7 +128,7 @@ class GameScreen(Screen):
             for _ in range(count):
                 random_size = random.randint(140, 160)
                 fly = MovingFly(
-                    source=os.path.join('assets', 'Fly.png'),
+                    source=resource_find('assets/Fly.png'),
                     size_hint=(None, None),
                     size=(random_size, random_size)
                 )
@@ -298,7 +299,7 @@ class GameScreen(Screen):
         self.exp_bar.update_arc()
         self.update_exp_level_label()
         self.shop_panel.update_quan(self.app.quan)
-        self.start_screen.title.source = os.path.join('assets', 'Title.png')
+        self.start_screen.title.source = resource_find('assets/Title.png')
         self.start_screen.startbtn.opacity = 1
         self.open_menu(self.menu_button)
         self.spawn_flies(self.app.quan)
@@ -316,11 +317,11 @@ class GameScreen(Screen):
     def open_menu(self, button):
         self.menu_open = not self.menu_open
         if self.menu_open:
-            button.source = os.path.join('assets', 'Menu2.png')
+            button.source = resource_find('assets/Menu2.png')
             self.garbage.opacity = 1
             self.garbage.disabled = False
         else:
-            button.source = os.path.join('assets', 'Menu.png')
+            button.source = resource_find('assets/Menu.png')
             self.garbage.opacity = 0
             self.garbage.disabled = True
     

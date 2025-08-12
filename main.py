@@ -1,18 +1,31 @@
 import os
+import kivy
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.core.text import LabelBase
+from kivy.resources import resource_find
 from kivy.uix.screenmanager import ScreenManager , Screen , FadeTransition
 from screens.startscreen import StartScreen
 from screens.gamescreen import GameScreen
 from screens.cardgallery import CardGalleryScreen
 
-LabelBase.register(name="NotoSans-Regular",
-    fn_regular=os.path.join("fonts", "NotoSansTC-Regular.ttf"))
-LabelBase.register(name="NotoSans-Bold",
-    fn_regular=os.path.join("fonts", "NotoSansTC-Bold.ttf"))
-LabelBase.register(name="NotoSans-Light",
-    fn_regular=os.path.join("fonts", "NotoSansTC-Light.ttf"))
+try:
+    kivy.resources.resource_add_path("fonts")
+    LabelBase.register(
+        name="NotoSans-Regular",
+        fn_regular=resource_find("fonts/NotoSansTC-Regular.ttf")
+    )
+    LabelBase.register(
+        name="NotoSans-Bold",
+        fn_regular=resource_find("fonts/NotoSansTC-Bold.ttf")
+    )
+    LabelBase.register(
+        name="NotoSans-Light",
+        fn_regular=resource_find("fonts/NotoSansTC-Light.ttf")
+    )
+except Exception as e:
+    with open("error.log", "a", encoding="utf-8") as f:
+        f.write(f"[Font Register Error] {e}\n")
 Window.clearcolor = (0.66 , 0.36 , 0.17 , 1)
         
 class MyApp(App):
