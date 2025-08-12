@@ -330,7 +330,6 @@ class GameScreen(Screen):
     
     def load(self):
         try:
-            #self.remove_all_flies()
             data = load_game()
             if data:
                 self.app.mn = data.get("money", 100)

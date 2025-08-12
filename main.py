@@ -31,6 +31,7 @@ try:
 except Exception as e:
     with open("error.log", "a", encoding="utf-8") as f:
         f.write(f"[LabelBase.Register] {e}\n")
+        
 Window.clearcolor = (0.66 , 0.36 , 0.17 , 1)
         
 class MyApp(App):
