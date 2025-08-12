@@ -204,3 +204,7 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+/data/savegame.json
+/error.log
+/test/test.py
