@@ -18,6 +18,10 @@ jobs:
           workdir: .
           buildozer_version: stable
 
+      - name: Fix Permission 
+        run: |
+          sudo chmod -R 777 bin/
+
       - uses: r0adkll/sign-android-release@v1
         name: Sign app APK
         # ID used to access action output
