@@ -1,7 +1,4 @@
 #main.py
-import os
-import kivy
-import traceback
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.button import Button
@@ -21,7 +18,6 @@ if Window is None:
     print("[警告] Window 初始化失敗，無法啟動遊戲")
 
 try:
-    kivy.resources.resource_add_path("fonts")
     LabelBase.register(
         name="NotoSans-Regular",
         fn_regular=resource_find("fonts/NotoSansTC-Regular.ttf")
