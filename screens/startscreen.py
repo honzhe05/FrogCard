@@ -42,7 +42,7 @@ class StartScreen(Screen):
         
         #title frog
         self.titlefrog = Image(
-            source = resource_find('assets/titlefrog.png') ,
+            source = resource_find('assets/TitleFrog.png') ,
             size_hint= (0.15, 0.15),
             pos = (Window.width, -50) ,
             allow_stretch = True ,
