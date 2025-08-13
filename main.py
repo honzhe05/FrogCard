@@ -1,4 +1,5 @@
 #main.py
+import webbrowser
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.button import Button
@@ -14,6 +15,35 @@ from screens.gamescreen import GameScreen
 from screens.cardgallery import CardGalleryScreen
 from screens.shop import ShopPanel
 from utils.error_handler import log_error
+from update_checker import check_update
+from config import APP_VERSION
+
+update_info = check_update(APP_VERSION)
+
+def show_update_popup(data):
+    layout = BoxLayout(orientation='vertical', spacing=10, padding=10)
+    label = Label(
+        text=f"有新版本 {data['version']}！\n\n{data['changelog']}",                    font_name="NotoSans-Regular"
+    )
+    btn = Button(
+        text="前往下載",
+        font_name = "NotoSans-Regular",
+        background_color = (0.444, 0.64, 0.736, 1),
+        size_hint=(1, 0.3)
+    )
+    layout.add_widget(label)
+    layout.add_widget(btn)
+    popup = Popup(
+        title="Update Notification!!",
+        background = ' ',
+        background_color = (0.444, 0.64, 0.736, 1),
+        content=layout,
+        size_hint=(0.7, 0.25),
+        auto_dismiss=False
+    )
+    btn.bind(on_release=lambda *args: webbrowser.open(data["apk_url"]))
+    btn.bind(on_release=popup.dismiss)
+    popup.open()
 
 try:
     LabelBase.register(
@@ -70,6 +100,14 @@ class MyApp(App):
         sm.add_widget(ShopPanel(name='shop'))
         Window.bind(on_key_down=self.on_key)
         return sm
+        
+    def on_start(self):
+        Clock.schedule_once(self.check_for_update, 1)
+
+    def check_for_update(self, dt):
+        update_info = check_update(APP_VERSION)
+        if update_info:
+            show_update_popup(update_info)
         
     def on_stop(self):
         if self.skip_save_on_exit:
@@ -145,8 +183,6 @@ class MyApp(App):
 
     def stop_app(self, *args):
         self.stop()
-     
-import traceback
 
 if __name__ == '__main__':
     try:
