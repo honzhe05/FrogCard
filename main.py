@@ -1,4 +1,5 @@
 #main.py
+import traceback
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.button import Button
@@ -146,5 +147,18 @@ class MyApp(App):
     def stop_app(self, *args):
         self.stop()
      
-if __name__ == '__main__' :
-    MyApp().run()
+import traceback
+
+if __name__ == '__main__':
+    try:
+        MyApp().run()
+    except Exception as e:
+        print("❌ App crashed:", e)
+        try:
+            with open("error.log", "a", encoding="utf-8") as f:
+                f.write("[Main Function Exception]\n")
+                f.write(f"{e}\n")
+                f.write(traceback.format_exc())
+                f.write("\n\n")
+        except Exception as log_err:
+            print("⚠️ Failed to write error log:", log_err)
