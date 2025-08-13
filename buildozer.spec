@@ -17,7 +17,7 @@ package.domain = tw.honzhe
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,ogg
+source.include_exts = py,png,jpg,kv,atlas,ogg,ttf
 
 # (list) List of inclusions using pattern matching
 source.include_patterns = data/*.png, sound/*.ogg
