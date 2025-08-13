@@ -1,11 +1,14 @@
+#main.py
 import os
 import kivy
+import traceback
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.core.text import LabelBase
 from kivy.uix.boxlayout import BoxLayout
+from kivy.clock import Clock
 from kivy.uix.popup import Popup
 from kivy.resources import resource_find
 from kivy.uix.screenmanager import ScreenManager , Screen , FadeTransition
@@ -13,6 +16,9 @@ from screens.startscreen import StartScreen
 from screens.gamescreen import GameScreen
 from screens.cardgallery import CardGalleryScreen
 from screens.shop import ShopPanel
+
+if Window is None:
+    print("[警告] Window 初始化失敗，無法啟動遊戲")
 
 try:
     kivy.resources.resource_add_path("fonts")
@@ -32,8 +38,18 @@ except Exception as e:
     with open("error.log", "a", encoding="utf-8") as f:
         f.write(f"[LabelBase.Register] {e}\n")
         
-Window.clearcolor = (0.66 , 0.36 , 0.17 , 1)
-        
+def safe_set_clearcolor(first_try=True):
+    try:
+        Window.clearcolor = (0.66, 0.36, 0.17, 1)
+    except Exception as e:
+        if first_try:
+            Clock.schedule_once(lambda dt: safe_set_clearcolor(False), 0.5)
+        else:
+            with open("error.log", "a", encoding="utf-8") as f:
+                f.write(f"[Window_color_setting] {e}\n")
+
+safe_set_clearcolor()
+
 class MyApp(App):
     def build(self):
         self.skip_save_on_exit = False
@@ -48,7 +64,7 @@ class MyApp(App):
         
         #test
         #Window.size = (1080, 2000)
-        7
+        
         sm = ScreenManager(transition=FadeTransition(duration = 0.5 , clearcolor = (0.66 , 0.36 , 0.17 , 1)))
         sm.add_widget(StartScreen(name= 'start'))
         sm.add_widget(GameScreen(name='game'))

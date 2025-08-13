@@ -1,6 +1,5 @@
-import os
+#shop.py
 from kivy.app import App
-from kivy.uix.floatlayout import FloatLayout
 from kivy.resources import resource_find
 from kivy.uix.label import Label
 from kivy.uix.image import Image

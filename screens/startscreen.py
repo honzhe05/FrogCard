@@ -1,4 +1,4 @@
-import os
+#statrscreen.py
 from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
 from kivy.resources import resource_find
@@ -105,8 +105,12 @@ class StartScreen(Screen):
         self.anim_btn.start(self.startbtn)
         
     def contin(self):
-       self.manager.current = 'game'
-       
+        try:
+            self.manager.current = 'game'
+        except Exception as e:
+            with open("error.log", "a", encoding="utf-8") as f:
+                f.write(f"[StartScreen.contin] {e}\n")
+
     def on_enter(self):
         self.title_anim()
 

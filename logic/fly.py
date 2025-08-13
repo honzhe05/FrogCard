@@ -1,8 +1,7 @@
+#fly.py
 import random
-import os
 import math
 from kivy.app import App
-from kivy.uix.label import Label
 from kivy.resources import resource_find
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.image import Image

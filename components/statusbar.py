@@ -1,3 +1,4 @@
+#statusbar.py
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.animation import Animation
@@ -7,7 +8,6 @@ from kivy.uix.image import Image
 from kivy.resources import resource_find
 from components.XPcircle import ExpArc
 from components.imagebutton import ImageButton
-from kivy.graphics import PushMatrix, PopMatrix, Rotate
 
 class StatusBar(FloatLayout):
     def __init__(self, game_screen=None, **kwargs):
