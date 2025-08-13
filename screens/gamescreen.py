@@ -12,16 +12,16 @@ from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
 from logic.fly import MovingFly
 from components.imagebutton import ImageButton
-from components.XPcircle import ExpArc
 from logic.save_manager import save_game, load_game, clear_save
 from screens.shop import ShopPanel
+from components.XPcircle import ExpArc
 from screens.startscreen import StartScreen
+from components.statusbar import StatusBar
 
 class GameScreen(Screen):
     def __init__(self , **kwargs):
         super().__init__(**kwargs)
         self.app = App.get_running_app()
-        self.menu_open = False
         
         self.shop_panel = ShopPanel()
         self.layout = FloatLayout()
@@ -29,22 +29,14 @@ class GameScreen(Screen):
         self.fly_layer = FloatLayout()
         self.layout.add_widget(self.fly_layer)
         self.start_screen = StartScreen()
+        self.status_bar = StatusBar(game_screen=self)
+        self.status_bar.top_bar()
+        self.add_widget(self.status_bar)
+        
+        self.status_bar.set_game_screen(self)
         
         #top bar
-        topbar = Image(
-            source = resource_find('assets/Topbar.png' ) ,
-            size_hint = (None , None) ,
-            allow_stretch = True ,
-            keep_ratio = True
-        )
-        topbar.texture_update()
-        img_w, img_h = topbar.texture.size
-        screen_w, screen_h = Window.size
-        topbar.width = screen_w
-        topbar.height = screen_w * img_h / img_w
-        
-        topbar.pos = (0 , screen_h - topbar.height)
-        self.layout.add_widget(topbar)
+        self.status_bar.top_bar()
         
         # button bar
         buttonbar = Image(
@@ -60,12 +52,6 @@ class GameScreen(Screen):
         buttonbar.width = screen_w
         buttonbar.height = screen_w * img_h / img_w
         self.layout.add_widget(buttonbar)
-        
-        # money and diamond
-        self.money = self.create_label(str(self.app.mn), {'x': 0.8, 'y': 0.949})
-        self.diamond = self.create_label(str(self.app.dm), {'x': 0.4, 'y': 0.948})
-        self.layout.add_widget(self.money)
-        self.layout.add_widget(self.diamond)
         
         #shop menu
         self.shop_menu = ImageButton(
@@ -87,40 +73,7 @@ class GameScreen(Screen):
         self.layout.add_widget(self.cardmenu)
         self.cardmenu.bind(on_release = self.open_card)
             
-        #menu button
-        self.menu_button = ImageButton(
-            source = resource_find('assets/Menu.png'),
-            size_hint = (None , None) ,
-            size = (100 , 80),
-            allow_stretch = True ,
-            keep_ratio = True ,
-            pos_hint = {'x' : 0.9 , 'y' : 0.895}
-        )
-        self.layout.add_widget(self.menu_button)
-        self.menu_button.bind(on_release = self.open_menu)
-        
-        #garbage button
-        self.garbage = ImageButton(
-            source = os.path.join('assets' , 'Garbage.png') ,
-            size_hint = (None , None) ,
-            allow_stretch = True ,
-            keep_ratio = True ,
-            pos_hint = {'x' : 0.9 , 'y' : 0.85}
-        )
-        self.garbage.bind(on_release = self.gb_clear)
-        self.layout.add_widget(self.garbage)
-        self.garbage.opacity = 0
-        self.garbage.disabled = True
-        
         #exp bar
-        size_bar = 200
-        self.exp_bar = ExpArc(
-            size_hint = (None , None),
-            size=(size_bar*2, size_bar*2),
-            pos=(-size_bar, Window.height - size_bar)
-        )
-        self.layout.add_widget(self.exp_bar)
-        self.create_exp_level_label()
         self.load()
         
     def hide_flies(self):
@@ -147,69 +100,11 @@ class GameScreen(Screen):
         except Exception as e:
             with open("error.log", "a", encoding="utf-8") as f:
                 f.write(f"[GameScreen.spawn_flies] {e}\n")
-                
-    #money hint
-    def money_hint(self , money):
-        money_label = Label(
-            text = str(money) ,
-            font_name = 'NotoSans-Regular' ,
-            size_hint=(None, None),
-            size=(100, 80),
-            pos=(
-                Window.width*0.82 ,
-                Window.height*0.85
-            ) ,
-            halign="center",
-            valign="middle",
-            color=(1, 1, 1, 1),
-            outline_color=(0, 0, 0, 1),
-            outline_width=2
-            )
-        self.layout.add_widget(money_label)
-            
-        anim_mn = Animation(y=money_label.y + 180 ,  opacity=0 , duration = 0.7)
-        anim_mn.bind(on_complete=lambda *args: self.layout.remove_widget(money_label))
-        anim_mn.start(money_label)
-                
-    def create_exp_level_label(self):
-        if hasattr(self, 'exp_level') and self.exp_level.parent:
-            self.layout.remove_widget(self.exp_level)
-        
-        self.exp_level = Label(
-            text=str(self.exp_bar.level),
-            font_name='NotoSans-Light',
-            size_hint=(None, None),
-            font_size= 90,
-            pos_hint={'x': 0.03 , 'y': 0.941},
-            halign="center",
-            valign="middle",
-            color=(1, 1, 1, 1),
-            outline_color=(0, 0, 0, 1),
-            outline_width=2
-        )
-        self.layout.add_widget(self.exp_level)
-    
-    def update_exp_level_label(self):
-        self.exp_level.text = str(self.exp_bar.level)
-            
-    def create_label(self, text, pos_hint):
-            return Label(
-                text=text,
-                font_name = 'NotoSans-Regular' ,
-                size_hint=(None, None),
-                size=(100, 50),
-                pos_hint=pos_hint,
-                halign="center",
-                valign="middle",
-                color=(1, 1, 1, 1),
-                outline_color=(0, 0, 0, 1),
-                outline_width=2
-            )
-            
+                                     
     def open_card(self, *args):
         self.manager.current = 'card'
     
-    def gb_clear(self , *args):    
+    def gb_clear(self , *args):
         self.confirm_del()
         
     def do_del(self , button_instance):
@@ -299,17 +194,6 @@ class GameScreen(Screen):
     def remove_all_flies(self):
         self.fly_layer.clear_widgets()
     
-    def open_menu(self, button):
-        self.menu_open = not self.menu_open
-        if self.menu_open:
-            button.source = resource_find('assets/Menu2.png')
-            self.garbage.opacity = 1
-            self.garbage.disabled = False
-        else:
-            button.source = resource_find('assets/Menu.png')
-            self.garbage.opacity = 0
-            self.garbage.disabled = True
-    
     def open_shop(self, *args):
         self.manager.current = 'shop'
        
@@ -318,11 +202,12 @@ class GameScreen(Screen):
             save_game(
                 self.app.mn,
                 self.app.dm,
-                self.exp_bar.current_exp,
-                self.exp_bar.level,
+                self.status_bar.exp_bar.current_exp,
+                self.app.level,
                 self.app.quan,
                 self.app.quan_level,
-                self.app.quan_mn
+                self.app.quan_mn,
+                self.app.max_exp
             )
         except Exception as e:
             with open("error.log", "a", encoding="utf-8") as f:
@@ -334,16 +219,18 @@ class GameScreen(Screen):
             if data:
                 self.app.mn = data.get("money", 100)
                 self.app.dm = data.get("diamond", 10)
-                self.exp_bar.current_exp = data.get("exp", 0)
-                self.exp_bar.level = data.get("level", 1)
+                self.status_bar.exp_bar.current_exp = data.get("exp", 0)
+                self.app.level = data.get("level", 1)
+                self.status_bar.exp_bar.level = self.app.level
                 self.app.quan = data.get("quan", 5)
                 self.app.quan_level = data.get("quan_level", 1)
                 self.app.quan_mn = data.get("quan_mn", 50)
-                self.exp_bar.update_arc()
-                self.create_exp_level_label()
-    
-                self.money.text = str(self.app.mn)
-                self.diamond.text = str(self.app.dm)
+                self.app.exp_max = data.get("exp_max", 100)
+                self.status_bar.exp_bar.update_arc()
+                self.status_bar.create_exp_level_label()
+                
+                self.status_bar.money.text = str(self.app.mn)
+                self.status_bar.diamond.text = str(self.app.dm)
                 self.shop_panel.fly_quan.text = str(self.app.quan)
                 self.spawn_flies(self.app.quan)
                 self.shop_panel.quan_level_label.text = "LV. " + str(self.app.quan_level)

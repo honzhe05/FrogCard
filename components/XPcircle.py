@@ -1,17 +1,17 @@
 from kivy.uix.widget import Widget
 from kivy.graphics import Color, Ellipse , Line
+from kivy.app import App
 
 class ExpArc(Widget):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.max_exp = 110
+        self.app = App.get_running_app()
         self.current_exp = 0
-        self.level = 1
 
         self.bind(pos=self.update_arc, size=self.update_arc)
 
     def get_angle(self):
-         return 90 + 90 * (self.current_exp / self.max_exp)
+         return 90 + 90 * (self.current_exp / self.app.max_exp)
 
     def update_arc(self, *args):
         self.canvas.clear()
@@ -27,10 +27,10 @@ class ExpArc(Widget):
     def add_exp(self, amount):
         try:
             self.current_exp += amount
-            while self.current_exp >= self.max_exp:
-                self.current_exp -= self.max_exp
-                self.level += 1
-                self.max_exp = int(self.max_exp * 1.1)
+            while self.current_exp >= self.app.max_exp:
+                self.current_exp -= self.app.max_exp
+                self.app.level += 1
+                self.app.max_exp = int(self.app.max_exp * 1.1)
             self.update_arc()
         except Exception as e:
             with open("error.log", "a", encoding="utf-8") as f:

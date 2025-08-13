@@ -42,10 +42,13 @@ class MyApp(App):
         self.quan = 5
         self.quan_level = 1
         self.quan_mn = 50
+        self.exp = 0
+        self.level = 1
+        self.max_exp = 100
         
         #test
         #Window.size = (1080, 2000)
-        
+        7
         sm = ScreenManager(transition=FadeTransition(duration = 0.5 , clearcolor = (0.66 , 0.36 , 0.17 , 1)))
         sm.add_widget(StartScreen(name= 'start'))
         sm.add_widget(GameScreen(name='game'))

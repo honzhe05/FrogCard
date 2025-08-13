@@ -11,7 +11,7 @@ def log_error(prefix, e):
         f.write(f"[{prefix}] {str(e)}\n")
         f.write(traceback.format_exc() + "\n")
 
-def save_game(money, diamond, exp, level, quan, quan_level, quan_mn):
+def save_game(money, diamond, exp, level, quan, quan_level, quan_mn, max_exp):
     game_data = {
         "money": money,
         "diamond": diamond,
@@ -19,7 +19,8 @@ def save_game(money, diamond, exp, level, quan, quan_level, quan_mn):
         "level": level,
         "quan": quan,
         "quan_level": quan_level,
-        "quan_mn": quan_mn
+        "quan_mn": quan_mn,
+        "max_exp": max_exp 
     }
     try:
         with open(SAVE_PATH, "w", encoding="utf-8") as f:
@@ -39,7 +40,8 @@ def load_game():
                 "level": data.get("level", 1),
                 "quan": data.get("quan", 5),
                 "quan_level": data.get("quan_level", 1),
-                "quan_mn": data.get("quan_mn", 50)
+                "quan_mn": data.get("quan_mn", 50),
+                "max_exp": data.get("max_exp", 100)
             }
         except Exception as e:
             log_error("load_game", e)
@@ -50,7 +52,8 @@ def load_game():
         "level": 1,
         "quan": 5,
         "quan_level": 1,
-        "quan_mn": 50
+        "quan_mn": 50,
+        "max_exp": 100
     }
 
 def clear_save():

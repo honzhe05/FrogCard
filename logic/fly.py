@@ -40,10 +40,13 @@ class MovingFly(ButtonBehavior , Image):
                 self.app.mn += 5
     
                 game_screen = self.app.root.get_screen('game')
-                game_screen.money.text = str(self.app.mn)
-                game_screen.money_hint("+5")
-                self.app.root.get_screen('game').exp_bar.add_exp(18)
-                game_screen.update_exp_level_label()
+                shop_panel = self.app.root.get_screen('shop')
+                game_screen.status_bar.money.text = str(self.app.mn)
+                shop_panel.status_bar.money.text = str(self.app.mn)
+                game_screen.status_bar.money_hint("+5")
+                self.app.root.get_screen('game').status_bar.exp_bar.add_exp(18)
+                game_screen.status_bar.update_exp_level_label()
+    
     
                 self.source = resource_find('assets/Particle.png')
                 fade_out = Animation(opacity=0, duration=0.5)
@@ -57,7 +60,7 @@ class MovingFly(ButtonBehavior , Image):
 
     def recover(self, dt):
         self.opacity = 1
-        self.source = os.path.join('assets', 'Fly.png')
+        self.source = resource_find('assets/Fly.png')
         self.disabled = False
         
         random_size = random.randint(140, 160)

@@ -8,12 +8,15 @@ from kivy.uix.button import Button
 from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen
 from components.XPcircle import ExpArc
+from components.statusbar import StatusBar
 
 class ShopPanel(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.app = App.get_running_app()
-       
+        self.status_bar = StatusBar()
+        self.add_widget(self.status_bar)
+                
         bg = Image(
             source=resource_find('assets/Shop.png'),
             size_hint=(None, None),
@@ -23,26 +26,8 @@ class ShopPanel(Screen):
         )
         self.add_widget(bg)
         
-        topbar = Image(
-            source = resource_find('assets/Topbar.png' ) ,
-            size_hint = (None , None) ,
-            allow_stretch = True ,
-            keep_ratio = True
-        )
-        topbar.texture_update()
-        img_w, img_h = topbar.texture.size
-        screen_w, screen_h = Window.size
-        topbar.width = screen_w
-        topbar.height = screen_w * img_h / img_w
-        
-        topbar.pos = (0 , screen_h - topbar.height)
-        self.add_widget(topbar)
-        
-        self.money = self.create_label(str(self.app.mn), {'x': 0.8, 'y': 0.949})
-        self.diamond = self.create_label(str(self.app.dm), {'x': 0.4, 'y': 0.948})
-        self.add_widget(self.money)
-        self.add_widget(self.diamond)
-        
+        self.status_bar.top_bar()
+                          
         self.fly_quan = Label(
             text = str(self.app.quan),
             font_name = 'NotoSans-Regular',
@@ -114,10 +99,21 @@ class ShopPanel(Screen):
         close_btn.bind(on_release=self.hide)
     
     def on_enter(self):
-        self.game_screen = App.get_running_app().root.get_screen('game')
+        app = App.get_running_app()
+        self.game_screen = app.root.get_screen('game')
+        
+        self.status_bar = StatusBar(game_screen=self)
+        self.status_bar.top_bar()
+        self.add_widget(self.status_bar)
+        
+        self.status_bar.exp_bar.level = self.app.quan_level
+        self.status_bar.exp_bar.current_exp = self.app.exp
+        self.status_bar.exp_bar.update_arc()
+        self.status_bar.update_exp_level_label()
+    
         if self.game_screen:
             self.game_screen.hide_flies()
-
+    
     def on_leave(self):
         if self.game_screen:
             self.game_screen.show_flies()
@@ -125,26 +121,13 @@ class ShopPanel(Screen):
     def hide(self, *args): 
         self.manager.current = 'game'
     
-    def create_label(self, text, pos_hint):
-            return Label(
-                text=text,
-                font_name = 'NotoSans-Regular' ,
-                size_hint=(None, None),
-                size=(100, 50),
-                pos_hint=pos_hint,
-                halign="center",
-                valign="middle",
-                color=(1, 1, 1, 1),
-                outline_color=(0, 0, 0, 1),
-                outline_width=2
-            )
-        
     def buy_quan(self, *args):
         try:
             if self.app.mn >= self.app.quan_mn:
                 self.app.mn -= self.app.quan_mn
-                self.game_screen.money.text = str(self.app.mn)
-                self.money.text = str(self.app.mn)
+                self.status_bar.money.text = str(self.app.mn)
+                self.game_screen.status_bar.money.text = str(self.app.mn)
+                self.status_bar.money_hint("-" + str(self.app.quan_mn))
                 self.app.quan_level += 1
                 self.app.quan_mn += 20 * (self.app.quan_level - 1)
                 self.app.quan += 1
