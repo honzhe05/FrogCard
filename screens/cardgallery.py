@@ -16,7 +16,6 @@ class CardGallery(ScrollView):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        # 外層：一欄式排版（每個分類佔一行）
         outer = GridLayout(cols=1, spacing=20, padding=10, size_hint_y=None)
         outer.bind(minimum_height=outer.setter('height'))
         try:
@@ -26,7 +25,6 @@ class CardGallery(ScrollView):
             log_error("get_card_info_json", e)
 
         for rarity, cards in all_cards.items():
-            # 標題：佔一整行
             title = Label(
                 text=rarity,
                 font_name='NotoSans-Light',
@@ -35,7 +33,6 @@ class CardGallery(ScrollView):
             )
             outer.add_widget(title)
 
-            # 卡片區：三欄排版
             grid = GridLayout(cols=3, spacing=10, size_hint_y=None)
             grid.bind(minimum_height=grid.setter('height'))
             
