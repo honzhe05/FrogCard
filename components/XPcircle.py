@@ -2,6 +2,7 @@
 from kivy.uix.widget import Widget
 from kivy.graphics import Color, Ellipse , Line
 from kivy.app import App
+from utils.error_handler import log_error
 
 class ExpArc(Widget):
     def __init__(self, **kwargs):
@@ -34,5 +35,4 @@ class ExpArc(Widget):
                 self.app.max_exp = int(self.app.max_exp * 1.1)
             self.update_arc()
         except Exception as e:
-            with open("error.log", "a", encoding="utf-8") as f:
-                f.write(f"[ExpArc.add_exp] {e}\n")
+            log_error("ExpArc.add_exp", e)

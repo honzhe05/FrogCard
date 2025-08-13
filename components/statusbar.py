@@ -8,6 +8,7 @@ from kivy.uix.image import Image
 from kivy.resources import resource_find
 from components.XPcircle import ExpArc
 from components.imagebutton import ImageButton
+from utils.error_handler import log_error
 
 class StatusBar(FloatLayout):
     def __init__(self, game_screen=None, **kwargs):
@@ -75,7 +76,10 @@ class StatusBar(FloatLayout):
         self.game_screen = game_screen
     
     def _on_garbage(self, *args):
-        self.game_screen.gb_clear()   
+        try:
+            self.game_screen.gb_clear()   
+        except Exception as e:
+            log_error("_on_garbage_clear_save", e)
         
     def create_label(self, text, pos_hint):
             return Label(
@@ -134,12 +138,15 @@ class StatusBar(FloatLayout):
         self.exp_level.text = str(self.app.level)
         
     def open_menu(self, button):
-        self.menu_open = not self.menu_open
-        if self.menu_open:
-            button.source = resource_find('assets/Menu2.png')
-            self.garbage.opacity = 1
-            self.garbage.disabled = False
-        else:
-            button.source = resource_find('assets/Menu.png')
-            self.garbage.opacity = 0
-            self.garbage.disabled = True
+        try:
+            self.menu_open = not self.menu_open
+            if self.menu_open:
+                button.source = resource_find('assets/Menu2.png')
+                self.garbage.opacity = 1
+                self.garbage.disabled = False
+            else:
+                button.source = resource_find('assets/Menu.png')
+                self.garbage.opacity = 0
+                self.garbage.disabled = True
+        except Exception as e:
+            log_error("open_menu", e)

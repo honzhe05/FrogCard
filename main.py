@@ -14,9 +14,7 @@ from screens.startscreen import StartScreen
 from screens.gamescreen import GameScreen
 from screens.cardgallery import CardGalleryScreen
 from screens.shop import ShopPanel
-
-if Window is None:
-    print("[警告] Window 初始化失敗，無法啟動遊戲")
+from utils.error_handler import log_error
 
 try:
     LabelBase.register(
@@ -32,8 +30,7 @@ try:
         fn_regular=resource_find("fonts/NotoSansTC-Light.ttf")
     )
 except Exception as e:
-    with open("error.log", "a", encoding="utf-8") as f:
-        f.write(f"[LabelBase.Register] {e}\n")
+    log_error("LabelBase.Register", e)
         
 def safe_set_clearcolor(first_try=True):
     try:
@@ -42,8 +39,7 @@ def safe_set_clearcolor(first_try=True):
         if first_try:
             Clock.schedule_once(lambda dt: safe_set_clearcolor(False), 0.5)
         else:
-            with open("error.log", "a", encoding="utf-8") as f:
-                f.write(f"[Window_color_setting] {e}\n")
+            log_error("Window_color_setting", e)
 
 safe_set_clearcolor()
 
@@ -78,8 +74,7 @@ class MyApp(App):
             if hasattr(game_screen, 'save'):
                 game_screen.save()
         except Exception as e:
-            with open("error.log", "a", encoding="utf-8") as f:
-                f.write(f"[on_stop] {e}\n")
+            log_error("on_stop", e)
                 
     def on_key(self, window, key, *args):
         if key==27:
@@ -91,8 +86,7 @@ class MyApp(App):
                     self.show_exit_popup()
                 return True
             except Exception as e:
-                with open("error.log", "a", encoding="utf-8") as f:
-                    f.write(f"[go_to_game.screen] {e}\n")
+                log_error("go_to_game.screen", e)
                 return True
         return False
          
@@ -153,12 +147,4 @@ if __name__ == '__main__':
     try:
         MyApp().run()
     except Exception as e:
-        print("❌ App crashed:", e)
-        try:
-            with open("error.log", "a", encoding="utf-8") as f:
-                f.write("[Main Function Exception]\n")
-                f.write(f"{e}\n")
-                f.write(traceback.format_exc())
-                f.write("\n\n")
-        except Exception as log_err:
-            print("⚠️ Failed to write error log:", log_err)
+        log_error("Main_Function_Exception", e)

@@ -5,6 +5,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen
+from utils.error_handler import log_error
 
 class CardGalleryScreen(Screen):
     def __init__(self, **kwargs):
@@ -18,9 +19,11 @@ class CardGallery(ScrollView):
         # 外層：一欄式排版（每個分類佔一行）
         outer = GridLayout(cols=1, spacing=20, padding=10, size_hint_y=None)
         outer.bind(minimum_height=outer.setter('height'))
-
-        with open('data/cardinfo.json', encoding='utf-8') as f:
-            all_cards = json.load(f)
+        try:
+            with open('data/cardinfo.json', encoding='utf-8') as f:
+                all_cards = json.load(f)
+        except Exception as e:
+            log_error("get_card_info_json", e)
 
         for rarity, cards in all_cards.items():
             # 標題：佔一整行
@@ -35,16 +38,19 @@ class CardGallery(ScrollView):
             # 卡片區：三欄排版
             grid = GridLayout(cols=3, spacing=10, size_hint_y=None)
             grid.bind(minimum_height=grid.setter('height'))
-
-            for card in cards:
-                btn = Button(
-                    text=card['name'],
-                    font_name='NotoSans-Light',
-                    size_hint_y=None,
-                    height=200
-                )
-                grid.add_widget(btn)
-
-            outer.add_widget(grid)
+            
+            try:
+                for card in cards:
+                    btn = Button(
+                        text=card['name'],
+                        font_name='NotoSans-Light',
+                        size_hint_y=None,
+                        height=200
+                    )
+                    grid.add_widget(btn)
+    
+                outer.add_widget(grid)
+            except Exception as e:
+                log_error("add_card_button", e)
 
         self.add_widget(outer)

@@ -18,6 +18,7 @@ from screens.shop import ShopPanel
 from components.XPcircle import ExpArc
 from screens.startscreen import StartScreen
 from components.statusbar import StatusBar
+from utils.error_handler import log_error
 
 class GameScreen(Screen):
     def __init__(self , **kwargs):
@@ -99,8 +100,7 @@ class GameScreen(Screen):
                 )
                 self.fly_layer.add_widget(fly)
         except Exception as e:
-            with open("error.log", "a", encoding="utf-8") as f:
-                f.write(f"[GameScreen.spawn_flies] {e}\n")
+            log_error("GameScreen.spawn_flies", e)
                                      
     def open_card(self, *args):
         self.manager.current = 'card'
@@ -211,8 +211,7 @@ class GameScreen(Screen):
                 self.app.max_exp
             )
         except Exception as e:
-            with open("error.log", "a", encoding="utf-8") as f:
-                f.write(f"[GameScreen.save] {e}\n")
+            log_error(f"GameScreen.save", e)
     
     def load(self):
         try:
@@ -237,8 +236,7 @@ class GameScreen(Screen):
                 self.shop_panel.quan_level_label.text = "LV. " + str(self.app.quan_level)
                 self.shop_panel.quan_need_mn.text = str(self.app.quan_mn)
         except Exception as e:
-            with open("error.log", "a", encoding="utf-8") as f:
-                f.write(f"[GameScreen.load] {e}\n")
+            log_error(f"GameScreen.load", e)
             
     def clear_saved(self, *args):
         clear_save()

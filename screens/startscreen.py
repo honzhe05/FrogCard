@@ -7,6 +7,7 @@ from kivy.uix.image import Image
 from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen
 from components.imagebutton import ImageButton
+from utils.error_handler import log_error
 
 class StartScreen(Screen):
     def __init__(self , **kwargs):
@@ -83,8 +84,7 @@ class StartScreen(Screen):
             self.anim.stop(self.title)
             self.title.source = resource_find('assets/Titleb.png')
         except Exception as e:
-            with open("error.log", "a", encoding="utf-8") as f:
-                f.write(f"[title_change_image] {e}\n")
+            log_error("title_chage_image", e)
 
     def start_jump_animation(self):
         try:
@@ -92,8 +92,7 @@ class StartScreen(Screen):
             anim.bind(on_complete=self.reset_position)
             anim.start(self.titlefrog)
         except Exception as e:
-            with open("error.log", "a", encoding="utf-8") as f:
-                f.write(f"[start_jump_animation] {e}\n")
+            log_error("start_jump_animation", e)
 
     def reset_position(self, *args):
         self.titlefrog.x = Window.width
@@ -108,8 +107,7 @@ class StartScreen(Screen):
         try:
             self.manager.current = 'game'
         except Exception as e:
-            with open("error.log", "a", encoding="utf-8") as f:
-                f.write(f"[StartScreen.contin] {e}\n")
+            log_error("StartScreen.contin", e)
 
     def on_enter(self):
         self.title_anim()

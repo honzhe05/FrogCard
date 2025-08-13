@@ -8,6 +8,7 @@ from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen
 from components.XPcircle import ExpArc
 from components.statusbar import StatusBar
+from utils.error_handler import log_error
 
 class ShopPanel(Screen):
     def __init__(self, **kwargs):
@@ -133,8 +134,7 @@ class ShopPanel(Screen):
                 self.update_quan(self.app.quan)
                 self.game_screen.spawn_flies(1)
         except Exception as e:
-            with open("error.log", "a", encoding="utf-8") as f:
-                f.write(f"[ShopPanel.buy_quan] {e}\n")
+            log_error("ShopPanel.buy_quan", e)
 
     def update_quan(self, new_value):
         self.app.quan = new_value

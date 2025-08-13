@@ -1,15 +1,14 @@
 #save_manager.py
 import json
 import os
-import traceback
+from utils.error_handler import log_error
+from plyer import storagepath
 
-SAVE_PATH = "data/savegame.json"
-ERROR_LOG = "error.log"
-
-def log_error(prefix, e):
-    with open(ERROR_LOG, "a", encoding="utf-8") as f:
-        f.write(f"[{prefix}] {str(e)}\n")
-        f.write(traceback.format_exc() + "\n")
+try:
+    bath_path = storagepath.get_documents_dir()
+    SAVE_PATH = os.path.join(bath_path, "FrogCard", "data", "savegame.json")
+except Exception as e:
+    log_error("create_save_folder", e)
 
 def ensure_data_dir():
     try:

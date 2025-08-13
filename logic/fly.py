@@ -8,6 +8,7 @@ from kivy.uix.image import Image
 from kivy.animation import Animation
 from kivy.clock import Clock
 from kivy.core.window import Window
+from utils.error_handler import log_error
 
 class MovingFly(ButtonBehavior , Image):
     def __init__(self , money=None , **kwargs):
@@ -46,7 +47,6 @@ class MovingFly(ButtonBehavior , Image):
                 self.app.root.get_screen('game').status_bar.exp_bar.add_exp(18)
                 game_screen.status_bar.update_exp_level_label()
     
-    
                 self.source = resource_find('assets/Particle.png')
                 fade_out = Animation(opacity=0, duration=0.5)
                 fade_out.bind(on_complete=self.fade_complete)
@@ -54,8 +54,7 @@ class MovingFly(ButtonBehavior , Image):
                 self.disabled = True
                 Clock.schedule_once(self.recover, 5)
         except Exception as e:
-            with open("error.log", "a", encoding="utf-8") as f:
-                f.write(f"[MovingFly.on_release] {e}\n")
+            log_error("MovingFly.on_release", e)
 
     def recover(self, dt):
         self.opacity = 1
