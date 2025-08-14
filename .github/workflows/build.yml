@@ -11,17 +11,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1
-        id: buildozer
-        with:
-          workdir: .
-          buildozer_version: stable
-
-      - name: Fix Permission 
-        run: |
-          sudo chmod -R 777 bin/
-
       - name: Set up Android SDK
         uses: android-actions/setup-android@v2
         with:
@@ -32,6 +21,18 @@ jobs:
 
       - name: Install build-tools 29.0.3
         run: yes | sdkmanager "build-tools;29.0.3"
+
+      - name: Build with Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
+        id: buildozer
+        with:
+          workdir: .
+          buildozer_version: stable
+          command: buildozer android release
+
+      - name: Fix Permission 
+        run: |
+          sudo chmod -R 777 bin/
 
       - uses: r0adkll/sign-android-release@v1
         name: Sign app APK

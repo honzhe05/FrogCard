@@ -194,7 +194,7 @@ android.sdk = 27
 #android.copy_libs = 1
 
 # (str) The Android arch to build for, choices: armeabi-v7a, arm64-v8a, x86
-android.arch = arm64-v8a
+android.archs = arm64-v8a
 
 # 加快構建速度
 android.accept_sdk_license = True
