@@ -1,28 +1,27 @@
 name: Build
-on:
-  push:
-  pull_request:
+on: [push, pull_request]
 
 jobs:
+  # Build job. Builds app for Android with Buildozer
   build-android:
     name: Build for Android
     runs-on: ubuntu-latest
 
     steps:
-      # 1) 拉取程式碼並設定 Git 安全
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Mark repo as safe
-        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - name: Build with Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
+        id: buildozer
+        with:
+          workdir: .
+          buildozer_version: stable
 
-      - name: Ensure .git/config exists
+      - name: Fix Permission 
         run: |
-          mkdir -p .git
-          touch .git/config
-          chmod 664 .git/config
+          sudo chmod -R 777 bin/
 
-      # 2) 安裝 Android SDK/NDK（API 33 / Build-Tools 33.0.2 / NDK 25.2.9519653）
       - name: Set up Android SDK
         uses: android-actions/setup-android@v2
         with:
@@ -31,48 +30,13 @@ jobs:
           target: android-33
           ndk: 25.2.9519653
 
-      # 3) 安裝新版 cmdline-tools 並映射到 Buildozer 預期的舊路徑
-      - name: Install cmdline-tools and patch sdkmanager path
-        run: |
-          mkdir -p $ANDROID_HOME/cmdline-tools/latest
-          cd $ANDROID_HOME/cmdline-tools/latest
-          curl -o sdk-tools.zip \
-            https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
-          unzip -q sdk-tools.zip && rm sdk-tools.zip
-          echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
+      - name: Install build-tools 29.0.3
+        run: yes | sdkmanager "build-tools;29.0.3"
 
-          mkdir -p .buildozer_global/android/platform/android-sdk/tools/bin
-          ln -sf \
-            $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager \
-            .buildozer_global/android/platform/android-sdk/tools/bin/sdkmanager
-
-      # 4) 安裝 build-tools 並映射 aidl 到 Buildozer 的 SDK 路徑
-      - name: Install build-tools and link to Buildozer SDK
-        run: |
-          yes | sdkmanager "build-tools;33.0.2"
-          mkdir -p .buildozer_global/android/platform/android-sdk/build-tools
-          ln -sf \
-            $ANDROID_HOME/build-tools/33.0.2 \
-            .buildozer_global/android/platform/android-sdk/build-tools/33.0.2
-          ls -l $ANDROID_HOME/build-tools/33.0.2/aidl
-
-      # 5) 用 Buildozer 打包 APK
-      - name: Build with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1
-        id: buildozer
-        with:
-          workdir: .
-          buildozer_version: stable
-          command: buildozer android release
-
-      # 6) 修正 bin/ 權限，避免簽名步驟讀取失敗
-      - name: Fix permission for bin
-        run: sudo chmod -R 777 bin/ || true
-
-      # 7) 還原 keystore 並自動簽名
-      - name: Restore and Sign APK
+      - uses: r0adkll/sign-android-release@v1
+        name: Sign app APK
+        # ID used to access action output
         id: sign_app
-        uses: r0adkll/sign-android-release@v1
         with:
           releaseDirectory: bin/
           signingKeyBase64: ${{ secrets.SIGNINGKEYBASE64 }}
@@ -80,9 +44,7 @@ jobs:
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.KEYSTORE_PASSWORD }}
 
-      # 8) 上傳簽名後的 APK
-      - name: Upload signed artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: Signed app bundle
-          path: ${{ steps.sign_app.outputs.signedReleaseFile }}
+          path: ${{steps.sign_app.outputs.signedReleaseFile}}

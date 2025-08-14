@@ -32,7 +32,7 @@ source.include_patterns = assets/*,images/*,fonts/*,*.kv
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 1.0.2-developer-beta
+version = 1.0.0
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
@@ -40,7 +40,7 @@ version = 1.0.2-developer-beta
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,plyer
+requirements = python3,kivy,plyer,android
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -93,10 +93,13 @@ android.permissions = INTERNET,CHANGE_WIFI_MULTICAST_STATE,ACCESS_NETWORK_STATE,
 
 # (int) Android API to use
 # see https://developer.android.com/distribute/best-practices/develop/target-sdk
-android.api = 33
+android.api = 27
 
 # (int) Minimum API required
-android.minapi = 21
+#android.minapi = 19
+
+# (int) Android SDK version to use
+android.sdk = 23
 
 # (str) Android NDK version to use
 #android.ndk = 10.3.2
@@ -105,7 +108,7 @@ android.minapi = 21
 #android.private_storage = True
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
-#android.ndk_path = ~/Desktop/crystax-ndk-10.3.2
+android.ndk_path = ~/Desktop/crystax-ndk-10.3.2
 
 # (str) Android SDK directory (if empty, it will be automatically downloaded.)
 #android.sdk_path = ~/Desktop/platform-tools
@@ -191,14 +194,7 @@ android.minapi = 21
 #android.copy_libs = 1
 
 # (str) The Android arch to build for, choices: armeabi-v7a, arm64-v8a, x86
-android.archs = arm64-v8a
-
-# 加快構建速度
-android.accept_sdk_license = True
-android.skip_update = False
-
-# 若你用的是 arm64-v8a，確保 bootstrap 是 sdl2
-p4a.bootstrap = sdl2
+android.arch = arm64-v8a
 
 #
 # Python for android (p4a) specific
@@ -238,7 +234,7 @@ p4a.bootstrap = sdl2
 [buildozer]
 
 # (int) Log level (0 = error only, 1 = info, 2 = debug (with command output))
-log_level = 2
+log_level = 0
 
 # (int) Display warning if buildozer is run as root (0 = False, 1 = True)
 warn_on_root = 1
