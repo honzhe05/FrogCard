@@ -7,7 +7,7 @@ def check_update(current_version):
         headers = {
             "User-Agent": "FrogCardApp/1.0"
         }
-       r = requests.get("https://api.github.com/repos/honzhe05/FrogCard/tags", headers=headers,  timeout=5)
+        r = requests.get("https://api.github.com/repos/honzhe05/FrogCard/tags", headers=headers,  timeout=5)
         r.raise_for_status()
         tags = r.json()
         if tags:
