@@ -210,13 +210,13 @@ class GameScreen(Screen):
         
     def open_decorate(self, *args):
        self.manager.current = 'decorate'
-       
+ 
     def save(self, dt):
         try:
             save_game(
                 self.app.mn,
                 self.app.dm,
-                self.status_bar.exp_bar.current_exp,
+                self.app.exp,
                 self.app.level,
                 self.app.quan,
                 self.app.quan_level,
@@ -233,7 +233,7 @@ class GameScreen(Screen):
             if data:
                 self.app.mn = data.get("money", 100)
                 self.app.dm = data.get("diamond", 10)
-                self.status_bar.exp_bar.current_exp = data.get("exp", 0)
+                self.app.exp = data.get("exp", 0)
                 self.app.level = data.get("level", 1)
                 self.status_bar.exp_bar.level = self.app.level
                 self.app.quan = data.get("quan", 5)

@@ -41,11 +41,15 @@ class MovingFly(ButtonBehavior , Image):
     
                 game_screen = self.app.root.get_screen('game')
                 shop_panel = self.app.root.get_screen('shop')
+                decorate_screen = self.app.root.get_screen('decorate')
                 game_screen.status_bar.money.text = str(self.app.mn)
                 shop_panel.status_bar.money.text = str(self.app.mn)
+                decorate_screen.status_bar.money.text = str(self.app.mn)
                 game_screen.status_bar.money_hint("+5")
                 self.app.root.get_screen('game').status_bar.exp_bar.add_exp(18)
                 game_screen.status_bar.update_exp_level_label()
+                shop_panel.status_bar.update_exp_level_label()
+                decorate_screen.status_bar.update_exp_level_label()
     
                 self.source = resource_find('assets/Particle.png')
                 fade_out = Animation(opacity=0, duration=0.5)

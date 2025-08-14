@@ -5,6 +5,7 @@ from kivy.uix.label import Label
 from kivy.uix.image import Image
 from kivy.uix.button import Button
 from kivy.core.window import Window
+from kivy.clock import Clock
 from kivy.uix.screenmanager import Screen
 from utils.error_handler import log_error
 from components.statusbar import StatusBar
@@ -57,8 +58,9 @@ class DecorateScreen(Screen):
         self.grass_btn.bind(on_release=self.buy_grass)
         
     def on_enter(self):
-        if self.app.level >= 1 and self.app.buy_grass:
+        if self.app.level >= 5 and self.app.buy_grass:
             self.grass_btn.disabled = False
+        Clock.schedule_once(lambda dt: self.status_bar.exp_bar.update_arc(), 0)
         
     def hide(self, *args): 
         self.manager.current = 'game'
@@ -67,7 +69,13 @@ class DecorateScreen(Screen):
         try:
             if self.app.mn >= self.grass_mn:
                 self.app.mn -= self.grass_mn
-                self.status_bar.money.text = str(self.app.mn)
+                game_screen = self.app.root.get_screen('game')
+                shop_panel = self.app.root.get_screen('shop')
+                decorate_screen = self.app.root.get_screen('decorate')
+                game_screen.status_bar.money.text = str(self.app.mn)
+                shop_panel.status_bar.money.text = str(self.app.mn)
+                decorate_screen.status_bar.money.text = str(self.app.mn)
+                
                 self.status_bar.money_hint("-100")
                 self.grass_btn.disabled = True
                 self.app.buy_grass = False

@@ -120,7 +120,6 @@ class StatusBar(FloatLayout):
         move_anim.start(label)
         
     def create_exp_level_label(self):
-        # 如果已經有 exp_level，先移除
         if hasattr(self, 'exp_level') and self.exp_level.parent:
             self.layout.remove_widget(self.exp_level)
         self.exp_level = Label(

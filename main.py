@@ -17,7 +17,7 @@ from screens.shop import ShopPanel
 from screens.decoratescreen import DecorateScreen
 from utils.error_handler import log_error
 from update_checker import check_update
-from config import APP_VERSION
+from config import APP_VERSION , DEVELOPER
 
 update_info = check_update(APP_VERSION)
 
@@ -131,9 +131,10 @@ class MyApp(App):
         Clock.schedule_once(self.check_for_update, 1)
 
     def check_for_update(self, dt):
-        update_info = check_update(APP_VERSION)
-        if update_info:
-            show_update_popup(update_info)
+        if not DEVELOPER:
+            update_info = check_update(APP_VERSION)
+            if update_info:
+                show_update_popup(update_info)
         
     def on_stop(self):
         if self.skip_save_on_exit:

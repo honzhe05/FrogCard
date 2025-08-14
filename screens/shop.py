@@ -5,6 +5,7 @@ from kivy.uix.label import Label
 from kivy.uix.image import Image
 from kivy.uix.button import Button
 from kivy.core.window import Window
+from kivy.clock import Clock
 from kivy.uix.screenmanager import Screen
 from components.XPcircle import ExpArc
 from components.statusbar import StatusBar
@@ -15,7 +16,7 @@ class ShopPanel(Screen):
         super().__init__(**kwargs)
         self.app = App.get_running_app()
         self.status_bar = StatusBar()
-                
+        
         bg = Image(
             source=resource_find('assets/Shop.png'),
             size_hint=(None, None),
@@ -101,6 +102,7 @@ class ShopPanel(Screen):
     def on_enter(self):
         app = App.get_running_app()
         self.game_screen = app.root.get_screen('game')
+        Clock.schedule_once(lambda dt: self.status_bar.exp_bar.update_arc(), 0)
     
         if self.game_screen:
             self.game_screen.hide_flies()
@@ -116,8 +118,10 @@ class ShopPanel(Screen):
         try:
             if self.app.mn >= self.app.quan_mn:
                 self.app.mn -= self.app.quan_mn
+                self.decorate_screen = self.app.root.get_screen('decorate')
                 self.status_bar.money.text = str(self.app.mn)
                 self.game_screen.status_bar.money.text = str(self.app.mn)
+                self.decorate_screen.status_bar.money.text = str(self.app.mn)
                 self.status_bar.money_hint("-" + str(self.app.quan_mn))
                 self.app.quan_level += 1
                 self.app.quan_mn += 20 * (self.app.quan_level - 1)
