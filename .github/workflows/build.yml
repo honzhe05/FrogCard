@@ -2,23 +2,25 @@ name: Build
 on: [push, pull_request]
 
 jobs:
-  # Build job. Builds app for Android with Buildozer
   build-android:
     name: Build for Android
     runs-on: ubuntu-latest
 
     steps:
+      # 1) 基礎準備
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Mark repo as safe
-        run: git config --global --add safe.directory  "$GITHUB_WORKSPACE"
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
       - name: Ensure .git/config exists
         run: |
           mkdir -p .git
           touch .git/config
+          chmod 664 .git/config
 
-      - name: Checkout
-        uses: actions/checkout@v4
-
+      # 2) 安裝並固定 Android 工具鏈
       - name: Set up Android SDK
         uses: android-actions/setup-android@v2
         with:
@@ -27,11 +29,23 @@ jobs:
           target: android-33
           ndk: 25.2.9519653
 
-      - name: Install build-tools
+      - name: Install build-tools (aidl)
         run: |
-          sdkmanager "build-tools;33.0.2"
-          echo "export PATH=$ANDROID_HOME/build-tools/33.0.2:$PATH" >> $GITHUB_ENV
+          yes | sdkmanager "build-tools;33.0.2"
+          # 也把 aidl 路徑加到 runner 的 PATH（供非容器步驟使用）
+          echo "$ANDROID_HOME/build-tools/33.0.2" >> $GITHUB_PATH
 
+      # 3) 把 runner 的 build-tools 映射到 Buildozer 預設 SDK 路徑（容器內也看得到）
+      - name: Link build-tools to Buildozer SDK path
+        run: |
+          mkdir -p .buildozer_global/android/platform/android-sdk/build-tools
+          if [ ! -e .buildozer_global/android/platform/android-sdk/build-tools/33.0.2 ]; then
+            ln -s "$ANDROID_HOME/build-tools/33.0.2" .buildozer_global/android/platform/android-sdk/build-tools/33.0.2
+          fi
+          # 額外檢查 aidl 是否存在
+          ls -l "$ANDROID_HOME/build-tools/33.0.2/aidl"
+
+      # 4) 進行 Buildozer 打包（在 Docker 中執行）
       - name: Build with Buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
         id: buildozer
@@ -40,14 +54,14 @@ jobs:
           buildozer_version: stable
           command: buildozer android release
 
-      - name: Fix Permission 
-        run: |
-          sudo chmod -R 777 bin/
+      # 5) 簽名前，確保 bin/ 可讀寫
+      - name: Fix permission for bin
+        run: sudo chmod -R 777 bin/ || true
 
-      - uses: r0adkll/sign-android-release@v1
-        name: Sign app APK
-        # ID used to access action output
+      # 6) 簽名
+      - name: Sign app APK
         id: sign_app
+        uses: r0adkll/sign-android-release@v1
         with:
           releaseDirectory: bin/
           signingKeyBase64: ${{ secrets.SIGNINGKEYBASE64 }}
@@ -55,7 +69,9 @@ jobs:
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.KEYSTORE_PASSWORD }}
 
-      - uses: actions/upload-artifact@v4
+      # 7) 上傳簽名後產物
+      - name: Upload signed artifact
+        uses: actions/upload-artifact@v4
         with:
           name: Signed app bundle
-          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+          path: ${{ steps.sign_app.outputs.signedReleaseFile }}
