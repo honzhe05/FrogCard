@@ -40,7 +40,7 @@ version = 1.0.2-developer-beta
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,plyer,android
+requirements = python3,kivy,plyer
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -99,7 +99,7 @@ android.api = 27
 #android.minapi = 19
 
 # (int) Android SDK version to use
-android.sdk = 23
+android.sdk = 27
 
 # (str) Android NDK version to use
 #android.ndk = 10.3.2
@@ -195,6 +195,13 @@ android.ndk_path = ~/Desktop/crystax-ndk-10.3.2
 
 # (str) The Android arch to build for, choices: armeabi-v7a, arm64-v8a, x86
 android.arch = arm64-v8a
+
+# 加快構建速度
+android.accept_sdk_license = True
+android.skip_update = True
+
+# 若你用的是 arm64-v8a，確保 bootstrap 是 sdl2
+p4a.bootstrap = sdl2
 
 #
 # Python for android (p4a) specific
