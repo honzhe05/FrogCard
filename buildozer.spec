@@ -195,7 +195,7 @@ android.archs = arm64-v8a
 
 # 加快構建速度
 android.accept_sdk_license = True
-android.skip_update = True
+android.skip_update = False
 
 # 若你用的是 arm64-v8a，確保 bootstrap 是 sdl2
 p4a.bootstrap = sdl2
