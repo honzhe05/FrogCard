@@ -4,10 +4,12 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.resources import resource_find
 from kivy.animation import Animation
 from kivy.uix.image import Image
+from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen
 from components.imagebutton import ImageButton
 from utils.error_handler import log_error
+from config import APP_VERSION
 
 class StartScreen(Screen):
     def __init__(self , **kwargs):
@@ -24,6 +26,27 @@ class StartScreen(Screen):
             keep_ratio = False
         )
         layout.add_widget(background)
+        
+        #version
+        version_text = Label(
+            text=(f"[size=30]Game Version: {APP_VERSION}\n"
+                  "[size=28]Did you know? I created two new bugs while trying to fix one.\n"
+                  "[size=28]Spent over two hours tweaking and debugging... still couldn't fix it.\n"
+                  "[size=28]Game Developer: honzhe and copilot. wait nooo\n"),
+            markup = True,
+            font_name='NotoSans-Light',
+            size_hint=(None, None),
+            size=(Window.width * 0.8, Window.height * 0.01),
+            font_size=30,
+            pos_hint={'x': 0, 'y': 0.94},
+            halign="left",
+            valign="top",
+            color=(1, 1, 1, 1),
+            outline_color=(0, 0, 0, 1),
+            outline_width=2
+        )
+        version_text.bind(size=version_text.setter('text_size'))
+        layout.add_widget(version_text)
         
         #title
         img_width = Window.width * 0.85

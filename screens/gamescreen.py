@@ -74,8 +74,7 @@ class GameScreen(Screen):
         )
         self.layout.add_widget(self.cardmenu)
         self.cardmenu.bind(on_release = self.open_card)
-            
-        #exp bar
+        
         self.load()
         
     def hide_flies(self):

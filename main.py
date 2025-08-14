@@ -21,27 +21,46 @@ from config import APP_VERSION
 update_info = check_update(APP_VERSION)
 
 def show_update_popup(data):
-    layout = BoxLayout(orientation='vertical', spacing=10, padding=10)
-    label = Label(
-        text=f"有新版本 {data['version']}！\n\n{data['changelog']}",                    font_name="NotoSans-Regular"
+    layout = BoxLayout(
+        orientation='vertical',
+        spacing=10,
+        padding=10
     )
-    btn = Button(
+    label = Label(
+        text=f"有新版本 {data['version']} ！",                            font_name="NotoSans-Regular"
+    )
+    update_btn_layout = BoxLayout(
+            size_hint_y=None,
+            height='40dp',
+            spacing=10
+        )
+    down_btn = Button(
         text="前往下載",
         font_name = "NotoSans-Regular",
         background_color = (0.444, 0.64, 0.736, 1),
-        size_hint=(1, 0.3)
+        size_hint=(0.5, 0.8)
+    )
+    btn = Button(
+        text="稍後下載",
+        font_name = "NotoSans-Regular",
+        background_color = (0.444, 0.64, 0.736, 1),
+        size_hint=(0.5, 0.8)
     )
     layout.add_widget(label)
-    layout.add_widget(btn)
+    
+    update_btn_layout.add_widget(btn)
+    update_btn_layout.add_widget(down_btn)
+    layout.add_widget(update_btn_layout)
+    
     popup = Popup(
         title="Update Notification!!",
         background = ' ',
         background_color = (0.444, 0.64, 0.736, 1),
         content=layout,
-        size_hint=(0.7, 0.25),
+        size_hint=(0.7, 0.23),
         auto_dismiss=False
     )
-    btn.bind(on_release=lambda *args: webbrowser.open(data["apk_url"]))
+    down_btn.bind(on_release=lambda *args: webbrowser.open(data["apk_url"]))
     btn.bind(on_release=popup.dismiss)
     popup.open()
 
@@ -136,7 +155,7 @@ class MyApp(App):
     def show_exit_popup(self):
         layout = BoxLayout(
             orientation='vertical',
-            padding=10,
+            padding=0,
             spacing=10
         )
         label = Label(
@@ -151,12 +170,12 @@ class MyApp(App):
 
         btn_yes = Button(
             text='Yes',
-            size_hint=(0.5, 1),
+            size_hint=(0.5, 0.8),
             background_color = (0.544, 0.74, 0.836, 1)
         )
         btn_no = Button(
             text='No',
-            size_hint=(0.5, 1),
+            size_hint=(0.5, 0.8),
             background_color = (0.544, 0.74, 0.836, 1)
         )
 
@@ -171,7 +190,7 @@ class MyApp(App):
             content=layout,
             background = ' ',
             background_color = (0.444, 0.64, 0.736, 1),
-            size_hint=(0.7, 0.25),
+            size_hint=(0.65, 0.2),
             auto_dismiss=False
         )
 
@@ -185,7 +204,4 @@ class MyApp(App):
         self.stop()
 
 if __name__ == '__main__':
-    try:
-        MyApp().run()
-    except Exception as e:
-        log_error("Main_Function_Exception", e)
+    MyApp().run()

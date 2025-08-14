@@ -15,7 +15,6 @@ class ShopPanel(Screen):
         super().__init__(**kwargs)
         self.app = App.get_running_app()
         self.status_bar = StatusBar()
-        self.add_widget(self.status_bar)
                 
         bg = Image(
             source=resource_find('assets/Shop.png'),
@@ -27,6 +26,7 @@ class ShopPanel(Screen):
         self.add_widget(bg)
         
         self.status_bar.top_bar()
+        self.add_widget(self.status_bar)
                           
         self.fly_quan = Label(
             text = str(self.app.quan),
