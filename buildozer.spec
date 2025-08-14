@@ -93,13 +93,10 @@ android.permissions = INTERNET,CHANGE_WIFI_MULTICAST_STATE,ACCESS_NETWORK_STATE,
 
 # (int) Android API to use
 # see https://developer.android.com/distribute/best-practices/develop/target-sdk
-android.api = 27
+android.api = 33
 
 # (int) Minimum API required
-#android.minapi = 19
-
-# (int) Android SDK version to use
-android.sdk = 27
+#android.minapi = 21
 
 # (str) Android NDK version to use
 #android.ndk = 10.3.2
@@ -241,7 +238,7 @@ p4a.bootstrap = sdl2
 [buildozer]
 
 # (int) Log level (0 = error only, 1 = info, 2 = debug (with command output))
-log_level = 0
+log_level = 2
 
 # (int) Display warning if buildozer is run as root (0 = False, 1 = True)
 warn_on_root = 1
