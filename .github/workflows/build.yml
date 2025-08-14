@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1) 基礎準備
+      # 1) 基本準備
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -20,7 +20,7 @@ jobs:
           touch .git/config
           chmod 664 .git/config
 
-      # 2) 安裝並固定 Android 工具鏈
+      # 2) 安裝 Android SDK/NDK
       - name: Set up Android SDK
         uses: android-actions/setup-android@v2
         with:
@@ -29,23 +29,29 @@ jobs:
           target: android-33
           ndk: 25.2.9519653
 
-      - name: Install build-tools (aidl)
+      # 3) 安裝新版 cmdline-tools，並映射成 Buildozer 預期的舊路徑
+      - name: Install cmdline-tools and patch sdkmanager path
+        run: |
+          mkdir -p $ANDROID_HOME/cmdline-tools/latest
+          cd $ANDROID_HOME/cmdline-tools/latest
+          curl -o sdk-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+          unzip -q sdk-tools.zip
+          rm sdk-tools.zip
+          echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
+
+          # 建立 Buildozer 預設的 sdkmanager 路徑
+          mkdir -p .buildozer_global/android/platform/android-sdk/tools/bin
+          ln -sf $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager .buildozer_global/android/platform/android-sdk/tools/bin/sdkmanager
+
+      # 4) 安裝 build-tools 並映射 aidl 到 Buildozer 預設 SDK
+      - name: Install build-tools and link to Buildozer SDK
         run: |
           yes | sdkmanager "build-tools;33.0.2"
-          # 也把 aidl 路徑加到 runner 的 PATH（供非容器步驟使用）
-          echo "$ANDROID_HOME/build-tools/33.0.2" >> $GITHUB_PATH
-
-      # 3) 把 runner 的 build-tools 映射到 Buildozer 預設 SDK 路徑（容器內也看得到）
-      - name: Link build-tools to Buildozer SDK path
-        run: |
           mkdir -p .buildozer_global/android/platform/android-sdk/build-tools
-          if [ ! -e .buildozer_global/android/platform/android-sdk/build-tools/33.0.2 ]; then
-            ln -s "$ANDROID_HOME/build-tools/33.0.2" .buildozer_global/android/platform/android-sdk/build-tools/33.0.2
-          fi
-          # 額外檢查 aidl 是否存在
-          ls -l "$ANDROID_HOME/build-tools/33.0.2/aidl"
+          ln -sf $ANDROID_HOME/build-tools/33.0.2 .buildozer_global/android/platform/android-sdk/build-tools/33.0.2
+          ls -l $ANDROID_HOME/build-tools/33.0.2/aidl
 
-      # 4) 進行 Buildozer 打包（在 Docker 中執行）
+      # 5) 執行 Buildozer 打包
       - name: Build with Buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
         id: buildozer
@@ -54,11 +60,11 @@ jobs:
           buildozer_version: stable
           command: buildozer android release
 
-      # 5) 簽名前，確保 bin/ 可讀寫
+      # 6) 修正 bin/ 權限（避免簽名時讀不到）
       - name: Fix permission for bin
         run: sudo chmod -R 777 bin/ || true
 
-      # 6) 簽名
+      # 7) 簽名 APK
       - name: Sign app APK
         id: sign_app
         uses: r0adkll/sign-android-release@v1
@@ -69,7 +75,7 @@ jobs:
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.KEYSTORE_PASSWORD }}
 
-      # 7) 上傳簽名後產物
+      # 8) 上傳簽名後產物
       - name: Upload signed artifact
         uses: actions/upload-artifact@v4
         with:
