@@ -79,5 +79,6 @@ class DecorateScreen(Screen):
                 self.status_bar.money_hint("-100")
                 self.grass_btn.disabled = True
                 self.app.buy_grass = False
+                game_screen.load_decorate()
         except Exception as e:
             log_error("ShopPanel.buy_grass", e)

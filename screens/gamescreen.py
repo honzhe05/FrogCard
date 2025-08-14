@@ -55,6 +55,7 @@ class GameScreen(Screen):
         buttonbar.width = screen_w
         buttonbar.height = screen_w * img_h / img_w
         self.layout.add_widget(buttonbar)
+        self.btn_h = buttonbar.height
         
         #shop menu
         self.shop_menu = ImageButton(
@@ -85,14 +86,26 @@ class GameScreen(Screen):
         )
         self.layout.add_widget(self.decorate_menu)
         self.decorate_menu.bind(on_release = self.open_decorate)
-        
+            
         self.load()
+        self.load_decorate()
         
     def hide_flies(self):
             self.fly_layer.opacity = 0
 
     def show_flies(self):
         self.fly_layer.opacity = 1
+        
+    def load_decorate(self):
+        if not self.app.buy_grass:
+            grass_image = Image(
+                source = resource_find('assets/Grass.png' ) ,
+                size_hint = (0.25 , 0.15) ,
+                allow_stretch = True ,
+                keep_ratio = True ,
+                pos = (Window.width * 0.4, 150)
+            )
+            self.layout.add_widget(grass_image)
         
     #fly
     def spawn_flies(self, count):

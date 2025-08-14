@@ -9,7 +9,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.clock import Clock
 from kivy.uix.popup import Popup
 from kivy.resources import resource_find
-from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
+from kivy.uix.screenmanager import ScreenManager , Screen , FadeTransition
 from screens.startscreen import StartScreen
 from screens.gamescreen import GameScreen
 from screens.cardgallery import CardGalleryScreen
@@ -17,7 +17,7 @@ from screens.shop import ShopPanel
 from screens.decoratescreen import DecorateScreen
 from utils.error_handler import log_error
 from update_checker import check_update
-from config import APP_VERSION, DEVELOPER
+from config import APP_VERSION , DEVELOPER
 
 update_info = check_update(APP_VERSION)
 
@@ -28,8 +28,7 @@ def show_update_popup(data):
         padding=10
     )
     label = Label(
-        text=f"有新版本 {data['version']} ！",
-        font_name="NotoSans-Regular",
+        text=f"有新版本 {data['version']} ！",                            font_name="NotoSans-Regular"
     )
     update_btn_layout = BoxLayout(
             size_hint_y=None,
@@ -38,14 +37,14 @@ def show_update_popup(data):
         )
     down_btn = Button(
         text="前往下載",
-        font_name="NotoSans-Regular",
-        background_color=(0.444, 0.64, 0.736, 1),
+        font_name = "NotoSans-Regular",
+        background_color = (0.444, 0.64, 0.736, 1),
         size_hint=(0.5, 0.8)
     )
     btn = Button(
         text="稍後下載",
-        font_name="NotoSans-Regular",
-        background_color=(0.444, 0.64, 0.736, 1),
+        font_name = "NotoSans-Regular",
+        background_color = (0.444, 0.64, 0.736, 1),
         size_hint=(0.5, 0.8)
     )
     layout.add_widget(label)
@@ -56,8 +55,8 @@ def show_update_popup(data):
     
     popup = Popup(
         title="Update Notification!!",
-        background=' ',
-        background_color=(0.444, 0.64, 0.736, 1),
+        background = ' ',
+        background_color = (0.444, 0.64, 0.736, 1),
         content=layout,
         size_hint=(0.7, 0.23),
         auto_dismiss=False
@@ -116,11 +115,11 @@ class MyApp(App):
         #Window.size = (1080, 2000)
         sm = ScreenManager(transition=FadeTransition(duration = 0.5 , clearcolor = (0.66 , 0.36 , 0.17 , 1)))
         self.game_screen = GameScreen(name='game')
-        sm.add_widget(StartScreen(name='start'))
+        sm.add_widget(StartScreen(name= 'start'))
         sm.add_widget(self.game_screen)
         sm.add_widget(CardGalleryScreen(name='card'))
         sm.add_widget(ShopPanel(name='shop'))
-        sm.add_widget(DecorateScreen(name='decorate'))
+        sm.add_widget(DecorateScreen(name= 'decorate'))
         Window.bind(on_key_down=self.on_key)
         try:
             Clock.schedule_interval(self.game_screen.save, 360)
@@ -146,7 +145,7 @@ class MyApp(App):
             log_error("on_stop", e)
     
     def on_pause(self):
-         if self.skip_save_on_exit:
+        if self.skip_save_on_exit:
             return
         try:
             self.game_screen.save(0)
@@ -176,8 +175,8 @@ class MyApp(App):
             spacing=10
         )
         label = Label(
-            text='你真的想要退出嗎？(盯',
-            font_name='NotoSans-Regular'
+            text= '你真的想要退出嗎？(盯',
+            font_name = 'NotoSans-Regular'
         )
         btn_layout = BoxLayout(
             size_hint_y=None,
@@ -188,12 +187,12 @@ class MyApp(App):
         btn_yes = Button(
             text='Yes',
             size_hint=(0.5, 0.8),
-            background_color=(0.544, 0.74, 0.836, 1)
+            background_color = (0.544, 0.74, 0.836, 1)
         )
         btn_no = Button(
             text='No',
             size_hint=(0.5, 0.8),
-            background_color=(0.544, 0.74, 0.836, 1)
+            background_color = (0.544, 0.74, 0.836, 1)
         )
 
         btn_layout.add_widget(btn_yes)
@@ -203,10 +202,10 @@ class MyApp(App):
         layout.add_widget(btn_layout)
 
         popup = Popup(
-            title='Are You Sure?',
+            title= 'Are You Sure?',
             content=layout,
-            background=' ',
-            background_color=(0.444, 0.64, 0.736, 1),
+            background = ' ',
+            background_color = (0.444, 0.64, 0.736, 1),
             size_hint=(0.65, 0.2),
             auto_dismiss=False
         )
