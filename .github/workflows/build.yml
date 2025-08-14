@@ -46,5 +46,5 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: Signed app bundle
+          name: FrogCard-android-signed
           path: ${{steps.sign_app.outputs.signedReleaseFile}}
