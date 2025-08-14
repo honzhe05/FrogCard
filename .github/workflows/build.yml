@@ -23,7 +23,9 @@ jobs:
           ndk: 25.2.9519653
 
       - name: Install build-tools
-        run: yes | sdkmanager "build-tools;33.0.2"
+        run: |
+          sdkmanager "build-tools;33.0.2"
+          echo "export PATH=$ANDROID_HOME/build-tools/33.0.2:$PATH" >> $GITHUB_ENV
 
       - name: Build with Buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
