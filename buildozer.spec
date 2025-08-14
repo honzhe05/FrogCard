@@ -194,7 +194,7 @@ android.ndk_path = ~/Desktop/crystax-ndk-10.3.2
 #android.copy_libs = 1
 
 # (str) The Android arch to build for, choices: armeabi-v7a, arm64-v8a, x86
-android.arch = arm64-v8a
+android.archs = armeabi-v7a, arm64-v8a
 
 #
 # Python for android (p4a) specific
