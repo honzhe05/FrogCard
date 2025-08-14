@@ -11,6 +11,11 @@ jobs:
       - name: Mark repo as safe
         run: git config --global --add safe.directory  "$GITHUB_WORKSPACE"
 
+      - name: Ensure .git/config exists
+        run: |
+          mkdir -p .git
+          touch .git/config
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -53,4 +58,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: Signed app bundle
-          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+          path: ${{steps.sign_app.outputs.signedReleaseFile}
