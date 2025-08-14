@@ -211,7 +211,7 @@ class GameScreen(Screen):
     def open_decorate(self, *args):
        self.manager.current = 'decorate'
        
-    def save(self):
+    def save(self, dt):
         try:
             save_game(
                 self.app.mn,

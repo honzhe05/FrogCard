@@ -55,7 +55,7 @@ def show_update_popup(data):
     
     popup = Popup(
         title="Update Notification!!",
-        # background = ' ',
+        background = ' ',
         background_color = (0.444, 0.64, 0.736, 1),
         content=layout,
         size_hint=(0.7, 0.23),
@@ -114,12 +114,17 @@ class MyApp(App):
         #test
         #Window.size = (1080, 2000)
         sm = ScreenManager(transition=FadeTransition(duration = 0.5 , clearcolor = (0.66 , 0.36 , 0.17 , 1)))
+        self.game_screen = GameScreen(name='game')
         sm.add_widget(StartScreen(name= 'start'))
-        sm.add_widget(GameScreen(name='game'))
+        sm.add_widget(self.game_screen)
         sm.add_widget(CardGalleryScreen(name='card'))
         sm.add_widget(ShopPanel(name='shop'))
         sm.add_widget(DecorateScreen(name= 'decorate'))
         Window.bind(on_key_down=self.on_key)
+        try:
+            Clock.schedule_interval(self.game_screen.save, 360)
+        except Exception as e:
+            log_error("auto_save", e)
         return sm
         
     def on_start(self):
@@ -134,11 +139,17 @@ class MyApp(App):
         if self.skip_save_on_exit:
             return
         try:
-            game_screen = self.root.get_screen('game')
-            if hasattr(game_screen, 'save'):
-                game_screen.save()
+            self.game_screen.save(0)
         except Exception as e:
             log_error("on_stop", e)
+    
+    def on_pause(self):
+        try:
+            self.game_screen.save(0)
+            return True
+        except Exception as e:
+            log_error("on_pause", e)
+            return True
                 
     def on_key(self, window, key, *args):
         if key==27:
@@ -190,7 +201,7 @@ class MyApp(App):
         popup = Popup(
             title= 'Are You Sure?',
             content=layout,
-            # background = ' ',
+            background = ' ',
             background_color = (0.444, 0.64, 0.736, 1),
             size_hint=(0.65, 0.2),
             auto_dismiss=False
