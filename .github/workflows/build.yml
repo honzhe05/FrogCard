@@ -11,6 +11,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Get short Git commit hash
+        run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Replace version and update channel in config.py
+        run: |
+          sed -i 's/APP_VERSION = ".*"/APP_VERSION = "'$COMMIT_HASH'-nightly"/' src/config.py
+          sed -i 's/UPDATE_CHANNEL = ".*"/UPDATE_CHANNEL = "nightly"/' src/config.py
+          sed -i 's/DEVELOPER = .*/DEVELOPER = True/' src/config.py
+          sed -i 's/version = .*/version = "'$COMMIT_HASH'-nightly"/' buildozer.spec
+
       - name: Build with Buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
         id: buildozer
