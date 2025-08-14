@@ -101,15 +101,6 @@ class ShopPanel(Screen):
     def on_enter(self):
         app = App.get_running_app()
         self.game_screen = app.root.get_screen('game')
-        
-        self.status_bar = StatusBar(game_screen=self)
-        self.status_bar.top_bar()
-        self.add_widget(self.status_bar)
-        
-        self.status_bar.exp_bar.level = self.app.quan_level
-        self.status_bar.exp_bar.current_exp = self.app.exp
-        self.status_bar.exp_bar.update_arc()
-        self.status_bar.update_exp_level_label()
     
         if self.game_screen:
             self.game_screen.hide_flies()

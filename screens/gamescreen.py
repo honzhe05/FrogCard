@@ -19,6 +19,7 @@ from components.XPcircle import ExpArc
 from screens.startscreen import StartScreen
 from components.statusbar import StatusBar
 from utils.error_handler import log_error
+from screens.decoratescreen import DecorateScreen
 
 class GameScreen(Screen):
     def __init__(self , **kwargs):
@@ -74,6 +75,16 @@ class GameScreen(Screen):
         )
         self.layout.add_widget(self.cardmenu)
         self.cardmenu.bind(on_release = self.open_card)
+        
+        #decorate menu
+        self.decorate_menu = ImageButton(
+            source = resource_find('assets/Tree.png'),
+            size_hint = (None , None),
+            size = (200, 150),
+            pos_hint = {'x': 0.78 , 'y' : 0.006}
+        )
+        self.layout.add_widget(self.decorate_menu)
+        self.decorate_menu.bind(on_release = self.open_decorate)
         
         self.load()
         
@@ -196,6 +207,9 @@ class GameScreen(Screen):
     
     def open_shop(self, *args):
         self.manager.current = 'shop'
+        
+    def open_decorate(self, *args):
+       self.manager.current = 'decorate'
        
     def save(self):
         try:
@@ -207,7 +221,8 @@ class GameScreen(Screen):
                 self.app.quan,
                 self.app.quan_level,
                 self.app.quan_mn,
-                self.app.max_exp
+                self.app.max_exp,
+                self.app.buy_grass
             )
         except Exception as e:
             log_error(f"GameScreen.save", e)
@@ -225,6 +240,7 @@ class GameScreen(Screen):
                 self.app.quan_level = data.get("quan_level", 1)
                 self.app.quan_mn = data.get("quan_mn", 50)
                 self.app.exp_max = data.get("exp_max", 100)
+                self.app.buy_grass = data.get("buy_grass", True)
                 self.status_bar.exp_bar.update_arc()
                 self.status_bar.create_exp_level_label()
                 

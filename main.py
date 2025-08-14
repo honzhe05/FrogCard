@@ -14,6 +14,7 @@ from screens.startscreen import StartScreen
 from screens.gamescreen import GameScreen
 from screens.cardgallery import CardGalleryScreen
 from screens.shop import ShopPanel
+from screens.decoratescreen import DecorateScreen
 from utils.error_handler import log_error
 from update_checker import check_update
 from config import APP_VERSION
@@ -108,15 +109,16 @@ class MyApp(App):
         self.exp = 0
         self.level = 1
         self.max_exp = 100
+        self.buy_grass= True
         
         #test
         #Window.size = (1080, 2000)
-        
         sm = ScreenManager(transition=FadeTransition(duration = 0.5 , clearcolor = (0.66 , 0.36 , 0.17 , 1)))
         sm.add_widget(StartScreen(name= 'start'))
         sm.add_widget(GameScreen(name='game'))
         sm.add_widget(CardGalleryScreen(name='card'))
         sm.add_widget(ShopPanel(name='shop'))
+        sm.add_widget(DecorateScreen(name= 'decorate'))
         Window.bind(on_key_down=self.on_key)
         return sm
         

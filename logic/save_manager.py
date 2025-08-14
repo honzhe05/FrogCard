@@ -16,7 +16,7 @@ def ensure_data_dir():
     except Exception as e:
         log_error("ensure_data_dir", e)
 
-def save_game(money, diamond, exp, level, quan, quan_level, quan_mn, max_exp):
+def save_game(money, diamond, exp, level, quan, quan_level, quan_mn, max_exp, buy_grass):
     game_data = {
         "money": money,
         "diamond": diamond,
@@ -25,7 +25,8 @@ def save_game(money, diamond, exp, level, quan, quan_level, quan_mn, max_exp):
         "quan": quan,
         "quan_level": quan_level,
         "quan_mn": quan_mn,
-        "max_exp": max_exp
+        "max_exp": max_exp,
+        "buy_grass": buy_grass
     }
     try:
         ensure_data_dir()
@@ -43,7 +44,8 @@ def load_game():
         "quan": 5,
         "quan_level": 1,
         "quan_mn": 50,
-        "max_exp": 100
+        "max_exp": 100,
+        "buy_grass": True
     }
     if os.path.exists(SAVE_PATH) and os.path.getsize(SAVE_PATH) > 0:
         try:

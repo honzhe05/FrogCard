@@ -6,9 +6,9 @@ from kivy.core.window import Window
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import Image
 from kivy.resources import resource_find
-from components.XPcircle import ExpArc
 from components.imagebutton import ImageButton
 from utils.error_handler import log_error
+from components.XPcircle import ExpArc
 
 class StatusBar(FloatLayout):
     def __init__(self, game_screen=None, **kwargs):
