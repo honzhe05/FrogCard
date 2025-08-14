@@ -20,7 +20,7 @@ class StatusBar(FloatLayout):
         
     def top_bar(self):
         topbar = Image(
-            source = resource_find('assets/Topbar.png' ) ,
+            source = resource_find('assets/Topbar.png') ,
             size_hint = (None , None) ,
             allow_stretch = True ,
             keep_ratio = True
@@ -120,12 +120,15 @@ class StatusBar(FloatLayout):
         move_anim.start(label)
         
     def create_exp_level_label(self):
+        # 如果已經有 exp_level，先移除
+        if hasattr(self, 'exp_level') and self.exp_level.parent:
+            self.layout.remove_widget(self.exp_level)
         self.exp_level = Label(
             text=str(self.app.level),
             font_name='NotoSans-Light',
             size_hint=(None, None),
-            font_size= 90,
-            pos_hint={'x': 0.03 , 'y': 0.941},
+            font_size=90,
+            pos_hint={'x': 0.03, 'y': 0.941},
             halign="center",
             valign="middle",
             color=(1, 1, 1, 1),
