@@ -18,6 +18,9 @@ jobs:
   build-android-release:
     name: Build Android Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      discussions: write
 
     steps:
       - name: Checkout
