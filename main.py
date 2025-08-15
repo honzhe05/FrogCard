@@ -1,5 +1,4 @@
-#main.py
-import webbrowser
+importwebbrowser
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.button import Button
@@ -49,7 +48,7 @@ def show_update_popup(data):
         size_hint=(0.5, 0.8)
     )
     web_btn = Button(
-        text="查看更新內容",
+        text="更新內容",
         font_name="NotoSans-Regular",
         background_color=(0.444, 0.64, 0.736, 1),
         size_hint=(0.5, 0.8)
