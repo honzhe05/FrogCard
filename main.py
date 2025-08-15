@@ -17,7 +17,7 @@ from screens.shop import ShopPanel
 from screens.decoratescreen import DecorateScreen
 from utils.error_handler import log_error
 from update_checker import check_update
-from config import APP_VERSION , DEVELOPER
+from config import APP_VERSION
 
 update_info = check_update(APP_VERSION)
 
@@ -48,8 +48,15 @@ def show_update_popup(data):
         background_color=(0.444, 0.64, 0.736, 1),
         size_hint=(0.5, 0.8)
     )
+    web_btn = Button(
+        text="查看更新內容",
+        font_name="NotoSans-Regular",
+        background_color=(0.444, 0.64, 0.736, 1),
+        size_hint=(0.5, 0.8)
+    )
     layout.add_widget(label)
     
+    update_btn_layout.add_widget(web_btn)
     update_btn_layout.add_widget(btn)
     update_btn_layout.add_widget(down_btn)
     layout.add_widget(update_btn_layout)
@@ -64,6 +71,7 @@ def show_update_popup(data):
     )
     down_btn.bind(on_release=lambda *args: webbrowser.open(data["apk_url"]))
     btn.bind(on_release=popup.dismiss)
+    web_btn.bind(on_release=lambda *args: webbrowser.open(data["html_url"]))
     popup.open()
 
 try:
@@ -132,10 +140,9 @@ class MyApp(App):
         Clock.schedule_once(self.check_for_update, 1)
 
     def check_for_update(self, dt):
-        if not DEVELOPER:
-            update_info = check_update(APP_VERSION)
-            if update_info:
-                show_update_popup(update_info)
+        update_info = check_update(APP_VERSION)
+        if update_info:
+            show_update_popup(update_info)
         
     def on_stop(self):
         if self.skip_save_on_exit:
