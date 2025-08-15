@@ -1,4 +1,4 @@
-importwebbrowser
+import webbrowser
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.button import Button
