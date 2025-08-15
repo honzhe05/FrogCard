@@ -16,7 +16,7 @@ def ensure_data_dir():
     except Exception as e:
         log_error("ensure_data_dir", e)
 
-def save_game(money, diamond, exp, level, quan, quan_level, quan_mn, max_exp, buy_grass, buy_more_grass):
+def save_game(money, diamond, exp, level, quan, quan_level, quan_mn, max_exp, buy_grass, buy_more_grass, buy_cloud, buy_tree):
     game_data = {
         "money": money,
         "diamond": diamond,
@@ -27,7 +27,9 @@ def save_game(money, diamond, exp, level, quan, quan_level, quan_mn, max_exp, bu
         "quan_mn": quan_mn,
         "max_exp": max_exp,
         "buy_grass": buy_grass,
-        "buy_more_grass": buy_more_grass
+        "buy_more_grass": buy_more_grass,
+        "buy_cloud": buy_cloud,
+        "buy_tree": buy_tree
     }
     try:
         ensure_data_dir()
@@ -47,13 +49,14 @@ def load_game():
         "quan_mn": 50,
         "max_exp": 100,
         "buy_grass": True,
-        "buy_more_grass": True
+        "buy_more_grass": True,
+        "buy_cloud": True,
+        "buy_tree": True
     }
     if os.path.exists(SAVE_PATH) and os.path.getsize(SAVE_PATH) > 0:
         try:
             with open(SAVE_PATH, "r", encoding="utf-8") as f:
                 data = json.load(f)
-            # 確保必要欄位都有值
             for key, val in default_data.items():
                 if key not in data:
                     data[key] = val
