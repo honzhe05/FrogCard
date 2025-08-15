@@ -9,7 +9,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.clock import Clock
 from kivy.uix.popup import Popup
 from kivy.resources import resource_find
-from kivy.uix.screenmanager import ScreenManager , Screen , FadeTransition
+from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from screens.startscreen import StartScreen
 from screens.gamescreen import GameScreen
 from screens.cardgallery import CardGalleryScreen
@@ -28,7 +28,8 @@ def show_update_popup(data):
         padding=10
     )
     label = Label(
-        text=f"有新版本 {data['version']} ！",                            font_name="NotoSans-Regular"
+        text=f"有新版本 {data['version']} ！",
+        font_name="NotoSans-Regular",
     )
     update_btn_layout = BoxLayout(
             size_hint_y=None,
@@ -37,14 +38,14 @@ def show_update_popup(data):
         )
     down_btn = Button(
         text="前往下載",
-        font_name = "NotoSans-Regular",
-        background_color = (0.444, 0.64, 0.736, 1),
+        font_name="NotoSans-Regular",
+        background_color=(0.444, 0.64, 0.736, 1),
         size_hint=(0.5, 0.8)
     )
     btn = Button(
         text="稍後下載",
-        font_name = "NotoSans-Regular",
-        background_color = (0.444, 0.64, 0.736, 1),
+        font_name="NotoSans-Regular",
+        background_color=(0.444, 0.64, 0.736, 1),
         size_hint=(0.5, 0.8)
     )
     layout.add_widget(label)
@@ -55,8 +56,8 @@ def show_update_popup(data):
     
     popup = Popup(
         title="Update Notification!!",
-        background = ' ',
-        background_color = (0.444, 0.64, 0.736, 1),
+        background=' ',
+        background_color=(0.444, 0.64, 0.736, 1),
         content=layout,
         size_hint=(0.7, 0.23),
         auto_dismiss=False
@@ -109,17 +110,17 @@ class MyApp(App):
         self.exp = 0
         self.level = 1
         self.max_exp = 100
-        self.buy_grass= True
+        self.buy_grass = True
         
         #test
         #Window.size = (1080, 2000)
-        sm = ScreenManager(transition=FadeTransition(duration = 0.5 , clearcolor = (0.66 , 0.36 , 0.17 , 1)))
+        sm = ScreenManager(transition=FadeTransition(duration=0.5, clearcolor=(0.66 , 0.36 , 0.17 , 1)))
         self.game_screen = GameScreen(name='game')
-        sm.add_widget(StartScreen(name= 'start'))
+        sm.add_widget(StartScreen(name='start'))
         sm.add_widget(self.game_screen)
         sm.add_widget(CardGalleryScreen(name='card'))
         sm.add_widget(ShopPanel(name='shop'))
-        sm.add_widget(DecorateScreen(name= 'decorate'))
+        sm.add_widget(DecorateScreen(name='decorate'))
         Window.bind(on_key_down=self.on_key)
         try:
             Clock.schedule_interval(self.game_screen.save, 360)
@@ -172,7 +173,7 @@ class MyApp(App):
         layout = BoxLayout(
             orientation='vertical',
             padding=0,
-            spacing=10
+            spacing=10,
         )
         label = Label(
             text= '你真的想要退出嗎？(盯',
@@ -181,18 +182,18 @@ class MyApp(App):
         btn_layout = BoxLayout(
             size_hint_y=None,
             height='40dp',
-            spacing=10
+            spacing=10,
         )
 
         btn_yes = Button(
             text='Yes',
             size_hint=(0.5, 0.8),
-            background_color = (0.544, 0.74, 0.836, 1)
+            background_color=(0.544, 0.74, 0.836, 1)
         )
         btn_no = Button(
             text='No',
             size_hint=(0.5, 0.8),
-            background_color = (0.544, 0.74, 0.836, 1)
+            background_color=(0.544, 0.74, 0.836, 1)
         )
 
         btn_layout.add_widget(btn_yes)
@@ -202,12 +203,12 @@ class MyApp(App):
         layout.add_widget(btn_layout)
 
         popup = Popup(
-            title= 'Are You Sure?',
+            title='Are You Sure?',
             content=layout,
-            background = ' ',
-            background_color = (0.444, 0.64, 0.736, 1),
+            background=' ',
+            background_color=(0.444, 0.64, 0.736, 1),
             size_hint=(0.65, 0.2),
-            auto_dismiss=False
+            auto_dismiss=False,
         )
 
         btn_yes.bind(on_release=self.stop_app)
