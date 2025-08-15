@@ -103,7 +103,17 @@ class GameScreen(Screen):
                 size_hint = (0.25 , 0.15) ,
                 allow_stretch = True ,
                 keep_ratio = True ,
-                pos = (Window.width * 0.4, 150)
+                pos = (Window.width * 0.4, 140)
+            )
+            self.layout.add_widget(grass_image)
+            
+        if not self.app.buy_more_grass:
+            grass_image = Image(
+                source = resource_find('assets/Grass.png' ) ,
+                size_hint = (0.23 , 0.13) ,
+                allow_stretch = True ,
+                keep_ratio = True ,
+                pos = (Window.width * 0.7, 160)
             )
             self.layout.add_widget(grass_image)
         
@@ -235,7 +245,8 @@ class GameScreen(Screen):
                 self.app.quan_level,
                 self.app.quan_mn,
                 self.app.max_exp,
-                self.app.buy_grass
+                self.app.buy_grass,
+                self.app.buy_more_grass
             )
         except Exception as e:
             log_error(f"GameScreen.save", e)
@@ -254,6 +265,7 @@ class GameScreen(Screen):
                 self.app.quan_mn = data.get("quan_mn", 50)
                 self.app.exp_max = data.get("exp_max", 100)
                 self.app.buy_grass = data.get("buy_grass", True)
+                self.app.buy_more_grass = data.get("buy_more_grass", True)
                 self.status_bar.exp_bar.update_arc()
                 self.status_bar.create_exp_level_label()
                 

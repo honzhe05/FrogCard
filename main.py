@@ -119,6 +119,7 @@ class MyApp(App):
         self.level = 1
         self.max_exp = 100
         self.buy_grass = True
+        self.buy_more_grass = True
         
         #test
         #Window.size = (1080, 2000)
