@@ -37,9 +37,9 @@ jobs:
 
       - name: Replace version and update channel in config.py
         run: |
-          sed -i 's/APP_VERSION = ".*"/APP_VERSION = "${{ github.event.inputs.release_tag }}"/' config.py
-          sed -i 's/UPDATE_CHANNEL = ".*"/UPDATE_CHANNEL = "release"/' config.py
-          sed -i 's/HASH = ".*"/HASH = \ "$COMMIT_HASH\" /" config.py
+          sed -i "s/APP_VERSION = \".*\"/APP_VERSION = \"${{ github.event.inputs.release_tag }}\"/" config.py
+          sed -i "s/UPDATE_CHANNEL = \".*\"/UPDATE_CHANNEL = \"release\"/" config.py
+          sed -i "s/HASH = \".*\"/HASH = \"$COMMIT_HASH\"/" config.py
 
       - name: Build with Buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
