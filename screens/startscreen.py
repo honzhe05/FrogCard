@@ -9,7 +9,7 @@ from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen
 from components.imagebutton import ImageButton
 from utils.error_handler import log_error
-from config import APP_VERSION
+from config import FULL_VERSION
 
 class StartScreen(Screen):
     def __init__(self , **kwargs):
@@ -29,7 +29,7 @@ class StartScreen(Screen):
         
         #version
         version_text = Label(
-            text=(f"[size=30]Game Version: {APP_VERSION}\n"
+            text=(f"[size=30]Game Version: {FULL_VERSION}\n"
                   "[size=28]Did you know? I created two new bugs while trying to fix one.\n"
                   "[size=28]Spent over two hours tweaking and debugging... still couldn't fix it.\n"
                   "[size=28]Game Developer: honzhe and copilot. wait nooo\n"),
