@@ -32,7 +32,7 @@ class StartScreen(Screen):
             text=(f"[size=30]Game Version: {FULL_VERSION}\n"
                   "[size=28]Did you know? I created two new bugs while trying to fix one.\n"
                   "[size=28]Spent over two hours tweaking and debugging... still couldn't fix it.\n"
-                  "[size=28]Game Developer: honzhe and copilot. wait nooo\n"),
+                  "[size=28]Game Developer: Honzhe, AvianJay and copilot. wait nooo\n"),
             markup = True,
             font_name='NotoSans-Light',
             size_hint=(None, None),
