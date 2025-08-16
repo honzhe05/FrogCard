@@ -31,7 +31,6 @@ class CardGalleryScreen(Screen):
 
         self.add_widget(layout)
 
-        # 綁定滑動事件
         self.gallery.bind(scroll_y=self.on_scroll)
 
     def on_scroll(self, instance, value):
