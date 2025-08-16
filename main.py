@@ -134,9 +134,10 @@ class MyApp(App):
         self.game_screen = GameScreen(name='game')
         sm.add_widget(StartScreen(name='start'))
         sm.add_widget(self.game_screen)
-        sm.add_widget(CardGalleryScreen(name='card'))
-        sm.add_widget(ShopPanel(name='shop'))
-        sm.add_widget(DecorateScreen(name='decorate'))
+        Clock.schedule_once(lambda dt: sm.add_widget(CardGalleryScreen(name='card')), 1)
+        Clock.schedule_once(lambda dt: sm.add_widget(ShopPanel(name='shop')), 1.1)
+        Clock.schedule_once(lambda dt: sm.add_widget(DecorateScreen(name='decorate')), 1.2)
+        Clock.schedule_interval(lambda dt: self.game_screen.save(dt), 360)
         Window.bind(on_key_down=self.on_key)
         try:
             Clock.schedule_interval(self.game_screen.save, 360)
@@ -145,7 +146,7 @@ class MyApp(App):
         return sm
         
     def on_start(self):
-        Clock.schedule_once(self.check_for_update, 1)
+        Clock.schedule_once(self.check_for_update, 2)
 
     def check_for_update(self, dt):
         update_info = check_update(APP_VERSION)

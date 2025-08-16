@@ -31,7 +31,7 @@ class GameScreen(Screen):
         self.add_widget(self.layout)
         self.start_screen = StartScreen()
         self.status_bar = StatusBar(game_screen=self)
-        self.status_bar.top_bar()
+        Clock.schedule_once(lambda dt: self.status_bar.top_bar(), 0.2)
         self.add_widget(self.status_bar)
         self.fly_layer = FloatLayout()
         self.layout.add_widget(self.fly_layer)
@@ -92,7 +92,7 @@ class GameScreen(Screen):
         self.decorate_menu.bind(on_release = self.open_decorate)
             
         self.load()
-        self.load_decorate()
+        Clock.schedule_once(self.load_decorate, 0.5)
         
     def hide_flies(self):
             self.fly_layer.opacity = 0
@@ -100,7 +100,7 @@ class GameScreen(Screen):
     def show_flies(self):
         self.fly_layer.opacity = 1
         
-    def load_decorate(self):
+    def load_decorate(self, dt):
         if not self.app.buy_grass and self.g:
             grass_image = Image(
                 source = resource_find('assets/Grass.png' ) ,
@@ -193,7 +193,7 @@ class GameScreen(Screen):
             for _ in range(count):
                 random_size = random.randint(50, 250)
                 fly = MovingFly(
-                    source=resource_find('assets/Fly.png'),
+                    source = resource_find('assets/Fly.png'),
                     size_hint=(None, None),
                     size=(random_size, random_size)
                 )
