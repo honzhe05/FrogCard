@@ -114,6 +114,10 @@ class MyApp(App):
         self.quan = 5
         self.quan_level = 1
         self.quan_mn = 50
+        self.xp = 2
+        self.xp_level = 1
+        self.xp_mn = 100
+        self.xp = 2
         self.exp = 0
         self.level = 1
         self.max_exp = 100
@@ -121,9 +125,11 @@ class MyApp(App):
         self.buy_more_grass = True
         self.buy_cloud = True
         self.buy_tree = True
+        self.buy_apple = True
         
         #test
         #Window.size = (1080, 2000)
+        
         sm = ScreenManager(transition=FadeTransition(duration=0.5, clearcolor=(0.66 , 0.36 , 0.17 , 1)))
         self.game_screen = GameScreen(name='game')
         sm.add_widget(StartScreen(name='start'))

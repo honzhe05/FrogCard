@@ -36,6 +36,11 @@ class GameScreen(Screen):
         self.fly_layer = FloatLayout()
         self.layout.add_widget(self.fly_layer)
         self.status_bar.set_game_screen(self)
+        self.g = True
+        self.mg = True
+        self.c = True
+        self.t = True
+        self.a = True
         
         #top bar
         self.status_bar.top_bar()
@@ -96,7 +101,7 @@ class GameScreen(Screen):
         self.fly_layer.opacity = 1
         
     def load_decorate(self):
-        if not self.app.buy_grass:
+        if not self.app.buy_grass and self.g:
             grass_image = Image(
                 source = resource_find('assets/Grass.png' ) ,
                 size_hint = (0.25 , 0.15) ,
@@ -105,18 +110,20 @@ class GameScreen(Screen):
                 pos = (Window.width * 0.4, 140)
             )
             self.layout.add_widget(grass_image)
+            self.g = False
             
-        if not self.app.buy_more_grass:
-            grass_image = Image(
+        if not self.app.buy_more_grass and self.mg:
+            more_grass_image = Image(
                 source = resource_find('assets/Grass.png' ) ,
                 size_hint = (0.23 , 0.13) ,
                 allow_stretch = True ,
                 keep_ratio = True ,
                 pos = (Window.width * 0.7, 160)
             )
-            self.layout.add_widget(grass_image)
+            self.layout.add_widget(more_grass_image)
+            self.mg = False
             
-        if not self.app.buy_cloud:
+        if not self.app.buy_cloud and self.c:
             cloud_image = Image(
                 source = resource_find('assets/Cloud.png' ) ,
                 size_hint = (0.3 , 0.2) ,
@@ -130,16 +137,52 @@ class GameScreen(Screen):
             anim = cloud_anim_st + cloud_anim_en
             anim.repeat = True
             anim.start(cloud_image)
-            
-        if not self.app.buy_tree:
+            self.c = False
+          
+        if not self.app.buy_tree and self.t:
             tree_image = Image(
                 source = resource_find('assets/Tree.png' ) ,
-                size_hint = (0.7 , 0.8) ,
+                size_hint = (None, None) ,
+                size = (1250, 1300),
                 allow_stretch = True ,
                 keep_ratio = True ,
-                pos = (-200, -75)
+                pos_hint = {'x': -0.4, 'y': 0.09}
             )
             self.layout.add_widget(tree_image)
+            self.t = False
+            self.a = True
+            
+        if not self.app.buy_apple and self.a:
+            apple_image = Image(
+                source = resource_find('assets/Apple.png' ) ,
+                size_hint = (None, None) ,
+                size = (120, 120),
+                allow_stretch = True ,
+                keep_ratio = True ,
+                pos = (100, Window.height * 0.57)
+            )
+            self.layout.add_widget(apple_image)
+            
+            apple2_image = Image(
+                source = resource_find('assets/Apple.png' ) ,
+                size_hint = (None, None) ,
+                size = (110, 110),
+                allow_stretch = True ,
+                keep_ratio = True ,
+                pos = (Window.width * 0.31, Window.height * 0.4)
+            )
+            self.layout.add_widget(apple2_image)
+                
+            apple3_image = Image(
+                source = resource_find('assets/Apple.png' ) ,
+                size_hint = (None, None) ,
+                size = (100, 100),
+                allow_stretch = True ,
+                keep_ratio = True ,
+                pos = (Window.width * 0.38, Window.height * 0.5)
+            )
+            self.layout.add_widget(apple3_image)
+            self.a = False
             
         self.layout.remove_widget(self.fly_layer)
         self.layout.add_widget(self.fly_layer)
@@ -266,16 +309,20 @@ class GameScreen(Screen):
             save_game(
                 self.app.mn,
                 self.app.dm,
+                self.app.xp,
                 self.app.exp,
                 self.app.level,
                 self.app.quan,
                 self.app.quan_level,
                 self.app.quan_mn,
+                self.app.xp_level,
+                self.app.xp_mn,
                 self.app.max_exp,
                 self.app.buy_grass,
                 self.app.buy_more_grass,
                 self.app.buy_cloud,
-                self.app.buy_tree
+                self.app.buy_tree,
+                self.app.buy_apple
             )
         except Exception as e:
             log_error(f"GameScreen.save", e)
@@ -286,17 +333,21 @@ class GameScreen(Screen):
             if data:
                 self.app.mn = data.get("money", 100)
                 self.app.dm = data.get("diamond", 10)
+                self.app.xp = data.get("xp", 2)
                 self.app.exp = data.get("exp", 0)
                 self.app.level = data.get("level", 1)
                 self.status_bar.exp_bar.level = self.app.level
                 self.app.quan = data.get("quan", 5)
                 self.app.quan_level = data.get("quan_level", 1)
                 self.app.quan_mn = data.get("quan_mn", 50)
+                self.app.xp_level = data.get("xp_level", 1)
+                self.app.xp_mn = data.get("xp_mn", 100)
                 self.app.exp_max = data.get("exp_max", 100)
                 self.app.buy_grass = data.get("buy_grass", True)
                 self.app.buy_more_grass = data.get("buy_more_grass", True)
                 self.app.buy_cloud = data.get("buy_cloud", True)
                 self.app.buy_tree = data.get("buy_tree", True)
+                self.app.buy_apple = data.get("buy_apple", True)
                 self.status_bar.exp_bar.update_arc()
                 self.status_bar.create_exp_level_label()
                 

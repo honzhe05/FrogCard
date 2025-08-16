@@ -43,6 +43,20 @@ class ShopPanel(Screen):
         )
         self.add_widget(self.fly_quan)
         
+        self.xp_quan = Label(
+            text = str(self.app.xp),
+            font_name = 'NotoSans-Regular',
+            size_hint=(None , None), 
+            font_size = 60,
+            pos_hint = {'x' : 0.56, 'y' : 0.408},
+            halign="center",
+            valign="middle",
+            color=(1, 1, 1, 1),
+            outline_color=(0, 0, 0, 1),
+            outline_width=2
+        )
+        self.add_widget(self.xp_quan)
+        
         self.quan_level_label = Label(
             text = "LV. " + str(self.app.quan_level),
             font_name = 'NotoSans-Light',
@@ -57,6 +71,20 @@ class ShopPanel(Screen):
         )
         self.add_widget(self.quan_level_label)
         
+        self.xp_level_label = Label(
+            text = "LV. " + str(self.app.xp_level),
+            font_name = 'NotoSans-Light',
+            size_hint=(None , None), 
+            font_size = 40,
+            pos_hint = {'x' : 0.26, 'y' : 0.438},
+            halign="center",
+            valign="middle",
+            color=(1, 1, 1, 1),
+            outline_color=(0, 0, 0, 1),
+            outline_width=2
+        )
+        self.add_widget(self.xp_level_label)
+        
         self.quan_need_mn = Label(
             text = str(self.app.quan_mn),
             font_name = 'NotoSans-Light',
@@ -70,6 +98,36 @@ class ShopPanel(Screen):
             outline_width=2
         )
         self.add_widget(self.quan_need_mn)
+        
+        self.xp_btn = Button(
+            text = '購買',
+            font_name = 'NotoSans-Regular',
+            size_hint=(None , None), 
+            size = (160, 100),
+            color=(0, 0, 0, 1),  
+            background_normal = '' ,
+            background_color = (0.265, 0.44, 0.108, 1),
+            pos_hint = {'x': 0.65 , 'y': 0.408}
+        )
+        self.add_widget(self.xp_btn)
+        self.xp_btn.bind(on_release=self.buy_xp)
+        if self.app.xp_level >= 5:
+            self.xp_btn.disabled = True
+            self.app.xp_mn = "MAX"
+        
+        self.xp_need_mn = Label(
+            text = str(self.app.xp_mn),
+            font_name = 'NotoSans-Light',
+            size_hint=(None , None), 
+            font_size = 50,
+            pos_hint = {'x' : 0.82, 'y' : 0.408},
+            halign="center",
+            valign="middle",
+            color=(1, 1, 1, 1),
+            outline_color=(0, 0, 0, 1),
+            outline_width=2
+        )
+        self.add_widget(self.xp_need_mn)
         
         quan_btn = Button(
             text = '購買',
@@ -114,6 +172,24 @@ class ShopPanel(Screen):
     
     def hide(self, *args): 
         self.manager.current = 'game'
+        
+    def buy_xp(self, *args):
+        try:
+            if self.app.mn >= self.app.xp_mn:
+                self.app.mn -= self.app.xp_mn
+                self.decorate_screen = self.app.root.get_screen('decorate')
+                self.status_bar.money.text = str(self.app.mn)
+                self.game_screen.status_bar.money.text = str(self.app.mn)
+                self.decorate_screen.status_bar.money.text = str(self.app.mn)
+                self.status_bar.money_hint("-" + str(self.app.xp_mn))
+                self.app.xp_level += 1
+                
+                self.app.xp_mn = 100 + ((50 * int(self.app.xp_level)) * (int(self.app.xp_level) - 1))
+                self.app.xp = int(self.app.xp * 1.5)
+                self.update_xp(self.app.xp)
+                
+        except Exception as e:
+            log_error("ShopPanel.buy_xp", e)
     
     def buy_quan(self, *args):
         try:
@@ -137,3 +213,12 @@ class ShopPanel(Screen):
         self.fly_quan.text = str(self.app.quan)
         self.quan_level_label.text = "LV. " + str(self.app.quan_level)
         self.quan_need_mn.text = str(self.app.quan_mn)    
+        
+    def update_xp(self, new_value):
+        self.app.xp = new_value
+        self.xp_quan.text = str(self.app.xp)
+        self.xp_level_label.text = "LV. " + str(self.app.xp_level)
+        self.xp_need_mn.text = str(self.app.xp_mn) 
+        if self.app.xp_level >= 5:
+            self.xp_btn.disabled = True
+            self.xp_need_mn.text = "MAX"

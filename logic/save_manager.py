@@ -16,20 +16,24 @@ def ensure_data_dir():
     except Exception as e:
         log_error("ensure_data_dir", e)
 
-def save_game(money, diamond, exp, level, quan, quan_level, quan_mn, max_exp, buy_grass, buy_more_grass, buy_cloud, buy_tree):
+def save_game(money, diamond, xp, exp, level, quan, quan_level, quan_mn, xp_level, xp_mn, max_exp, buy_grass, buy_more_grass, buy_cloud, buy_tree, buy_apple):
     game_data = {
         "money": money,
         "diamond": diamond,
+        "xp": xp,
         "exp": exp,
         "level": level,
         "quan": quan,
         "quan_level": quan_level,
         "quan_mn": quan_mn,
+        "xp_level": xp_level,
+        "xp_mn": xp_mn,
         "max_exp": max_exp,
         "buy_grass": buy_grass,
         "buy_more_grass": buy_more_grass,
         "buy_cloud": buy_cloud,
-        "buy_tree": buy_tree
+        "buy_tree": buy_tree,
+        "buy_apple": buy_apple
     }
     try:
         ensure_data_dir()
@@ -42,16 +46,20 @@ def load_game():
     default_data = {
         "money": 100,
         "diamond": 10,
+        "xp": 2,
         "exp": 0,
         "level": 1,
         "quan": 5,
         "quan_level": 1,
         "quan_mn": 50,
+        "xp_level": 1,
+        "xp_mn": 100,
         "max_exp": 100,
         "buy_grass": True,
         "buy_more_grass": True,
         "buy_cloud": True,
-        "buy_tree": True
+        "buy_tree": True,
+        "buy_apple": True
     }
     if os.path.exists(SAVE_PATH) and os.path.getsize(SAVE_PATH) > 0:
         try:

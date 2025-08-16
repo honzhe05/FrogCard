@@ -51,15 +51,20 @@ class DecorateScreen(Screen):
         self.cloud_btn = self.create_btn({'x': 0.73 , 'y': 0.41})
         self.tree_mn = 500
         self.tree_btn = self.create_btn({'x': 0.73 , 'y': 0.305})
+        self.apple_mn = 500
+        self.apple_btn = self.create_btn({'x': 0.73 , 'y': 0.205})
         
         self.add_widget(self.grass_btn)
         self.add_widget(self.more_grass_btn)
         self.add_widget(self.cloud_btn)
         self.add_widget(self.tree_btn)
+        self.add_widget(self.apple_btn)
         self.grass_btn.bind(on_release=self.buy_grass)
         self.more_grass_btn.bind(on_release=self.buy_more_grass)
         self.cloud_btn.bind(on_release=self.buy_cloud)
         self.tree_btn.bind(on_release=self.buy_tree)
+        self.tree_btn.bind(on_release=self.buy_tree)
+        self.apple_btn.bind(on_release=self.buy_apple)
         
     def create_btn(self, pos_hint):
         return Button(
@@ -83,6 +88,8 @@ class DecorateScreen(Screen):
             self.cloud_btn.disabled = False
         if self.app.level >= 40 and self.app.buy_tree:
             self.tree_btn.disabled = False
+        if self.app.level >= 50 and self.app.buy_apple:
+            self.apple_btn.disabled = False
                 
         Clock.schedule_once(lambda dt: self.status_bar.exp_bar.update_arc(), 0)
         
@@ -140,6 +147,19 @@ class DecorateScreen(Screen):
                 self.game_screen.load_decorate()
         except Exception as e:
             log_error("ShopPanel.buy_tree", e)
+            
+    def buy_apple(self, *args):
+        try:
+            if self.app.mn >= self.apple_mn:
+                self.app.mn -= self.apple_mn
+                self.deco_update_mn()
+                
+                self.status_bar.money_hint("-1000")
+                self.apple_btn.disabled = True
+                self.app.buy_apple = False
+                self.game_screen.load_decorate()
+        except Exception as e:
+            log_error("ShopPanel.buy_apple", e)
             
     def deco_update_mn(self):
         try:

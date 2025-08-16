@@ -32,7 +32,7 @@ class ExpArc(Widget):
             while self.app.exp >= self.app.max_exp:
                 self.app.exp -= self.app.max_exp
                 self.app.level += 1
-                self.app.max_exp = 100 * (1.12 ** int(self.app.level))
+                self.app.max_exp = 100 * (1.1 ** int(self.app.level))
             Clock.schedule_once(lambda dt: self.update_arc(), 0)
         except Exception as e:
             log_error("ExpArc.add_exp", e)

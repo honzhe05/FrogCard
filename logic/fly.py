@@ -37,15 +37,16 @@ class MovingFly(ButtonBehavior , Image):
     def on_release(self):
         try:
             if not self.disabled:
+                self.xp = int(self.app.xp)
                 if self.size[0] < 91 and self.size[0] > 60:
-                    self.app.mn += 4
-                    self.size_mn = 4
+                    self.app.mn += self.xp * 2
+                    self.size_mn = self.xp * 2
                 elif self.size[0] < 61:
-                    self.app.mn += 10
-                    self.size_mn = 10
+                    self.app.mn += self.xp * 5
+                    self.size_mn = self.xp * 5
                 else:
-                    self.app.mn += 2
-                    self.size_mn = 2
+                    self.app.mn += self.xp
+                    self.size_mn = self.xp
         
                 game_screen = self.app.root.get_screen('game')
                 shop_panel = self.app.root.get_screen('shop')
