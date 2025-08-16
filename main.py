@@ -62,7 +62,7 @@ def show_update_popup(data):
     
     popup = Popup(
         title="Update Notification!!",
-        background=' ',
+        background='',
         background_color=(0.444, 0.64, 0.736, 1),
         content=layout,
         size_hint=(0.7, 0.23),
@@ -214,7 +214,7 @@ class MyApp(App):
         popup = Popup(
             title='Are You Sure?',
             content=layout,
-            background=' ',
+            background='',
             background_color=(0.444, 0.64, 0.736, 1),
             size_hint=(0.65, 0.2),
             auto_dismiss=False,

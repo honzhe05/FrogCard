@@ -75,9 +75,9 @@ class ShopPanel(Screen):
             text = '購買',
             font_name = 'NotoSans-Regular',
             size_hint=(None , None), 
-            size = (180, 100),
+            size = (160, 100),
             color=(0, 0, 0, 1),  
-            background_normal = ' ' ,
+            background_normal = '' ,
             background_color = (0.265, 0.44, 0.108, 1),
             pos_hint = {'x': 0.65 , 'y': 0.508}
         )
@@ -85,14 +85,15 @@ class ShopPanel(Screen):
         quan_btn.bind(on_release=self.buy_quan)
         
         close_btn = Button(
-            text='關閉', 
+            text='X', 
             font_name = 'NotoSans-Regular',
             size_hint=(None , None), 
-            size = (180, 100),
-            color=(0, 0, 0, 1),  
-            background_normal = ' ' ,
+            font_size = 55,
+            size = (100, 90),
+            color=(0.065, 0.24, 0, 1),
+            background_normal = '' ,
             background_color = (0.265, 0.44, 0.108, 1),
-            pos=(Window.width - 180, 
+            pos=(Window.width - 100, 
                 Window.height *0.591
             )
         )
@@ -124,7 +125,7 @@ class ShopPanel(Screen):
                 self.decorate_screen.status_bar.money.text = str(self.app.mn)
                 self.status_bar.money_hint("-" + str(self.app.quan_mn))
                 self.app.quan_level += 1
-                self.app.quan_mn += 20 * (self.app.quan_level - 1)
+                self.app.quan_mn = 50 + ((10 * int(self.app.quan_level)) * (int(self.app.quan_level) - 1))
                 self.app.quan += 1
                 self.update_quan(self.app.quan)
                 self.game_screen.spawn_flies(1)

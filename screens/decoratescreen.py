@@ -28,14 +28,15 @@ class DecorateScreen(Screen):
         self.add_widget(bg)
         
         close_btn = Button(
-            text='關閉', 
+            text='X', 
             font_name = 'NotoSans-Regular',
             size_hint=(None , None), 
-            size = (180, 100),
-            color=(0, 0, 0, 1),  
-            background_normal = ' ' ,
+            font_size = 55,
+            size = (100, 90),
+            color=(0.065, 0.24, 0, 1),
+            background_normal = '' ,
             background_color = (0.265, 0.44, 0.108, 1),
-            pos=(Window.width - 180, 
+            pos=(Window.width - 100, 
                 Window.height *0.688
             )
         )
@@ -65,9 +66,9 @@ class DecorateScreen(Screen):
             text = '購買',
             font_name = 'NotoSans-Regular',
             size_hint=(None , None), 
-            size = (170, 90),
+            size = (160, 90),
             color=(0, 0, 0, 1),  
-            background_normal = ' ' ,
+            background_normal = '' ,
             background_color = (0.265, 0.44, 0.108, 1),
             pos_hint = pos_hint,
             disabled = True
@@ -78,7 +79,7 @@ class DecorateScreen(Screen):
             self.grass_btn.disabled = False
         if self.app.level >= 15 and self.app.buy_more_grass:
             self.more_grass_btn.disabled = False
-        if self.app.level >= 30 and self.app.buy_cloud:
+        if self.app.level >= 25 and self.app.buy_cloud:
             self.cloud_btn.disabled = False
         if self.app.level >= 40 and self.app.buy_tree:
             self.tree_btn.disabled = False
