@@ -40,7 +40,7 @@ version = 1.0.5
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,plyer,android
+requirements = python3,kivy==2.3.1,plyer,android
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -69,17 +69,17 @@ orientation = portrait
 # author = © Copyright Info
 
 # change the major version of python used by the app
-osx.python_version = 3
+osx.python_version = 3.12.1
 
 # Kivy version to use
-osx.kivy_version = 1.10.1
+osx.kivy_version = 2.3.1
 
 #
 # Android specific
 #
 
 # (bool) Indicate if the application should be fullscreen or not
-fullscreen = 0
+fullscreen = 1
 
 # (string) Presplash background color (for new android toolchain)
 # Supported formats are: #RRGGBB #AARRGGBB or one of the following names:
@@ -94,10 +94,10 @@ android.permissions = INTERNET,ACCESS_NETWORK_STATE,WRITE_EXTERNAL_STORAGE,READ_
 
 # (int) Android API to use
 # see https://developer.android.com/distribute/best-practices/develop/target-sdk
-android.api = 27
+android.api = 33
 
 # (int) Minimum API required
-#android.minapi = 19
+android.minapi = 21
 
 # (int) Android SDK version to use
 android.sdk = 23
@@ -109,7 +109,7 @@ android.sdk = 23
 #android.private_storage = True
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
-android.ndk_path = ~/Desktop/crystax-ndk-10.3.2
+android.ndk_path = ~/Desktop/crystax-ndk-r25c
 
 # (str) Android SDK directory (if empty, it will be automatically downloaded.)
 #android.sdk_path = ~/Desktop/platform-tools

@@ -175,6 +175,7 @@ class MyApp(App):
     def on_key(self, window, key, *args):
         if key==27:
             sm = self.root
+            
             if self.con:
                 self.popup.dismiss()
                 self.con = False
