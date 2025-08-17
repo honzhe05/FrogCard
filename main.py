@@ -3,7 +3,6 @@ from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.button import Button
 from kivy.uix.label import Label
-from kivy.core.text import LabelBase
 from kivy.uix.boxlayout import BoxLayout
 from kivy.clock import Clock
 from kivy.uix.popup import Popup
@@ -17,78 +16,9 @@ from screens.decoratescreen import DecorateScreen
 from utils.error_handler import log_error
 from update_checker import check_update
 from config import APP_VERSION
+from ui.fonts import register_fonts
+from ui.update_popup import show_update_popup
 
-update_info = check_update(APP_VERSION)
-
-def show_update_popup(data):
-    layout = BoxLayout(
-        orientation='vertical',
-        spacing=10,
-        padding=10
-    )
-    label = Label(
-        text=f"有新版本 {data['version']} ！",
-        font_name="NotoSans-Regular",
-    )
-    update_btn_layout = BoxLayout(
-            size_hint_y=None,
-            height='40dp',
-            spacing=10
-        )
-    down_btn = Button(
-        text="前往下載",
-        font_name="NotoSans-Regular",
-        background_color=(0.444, 0.64, 0.736, 1),
-        size_hint=(0.5, 0.8)
-    )
-    btn = Button(
-        text="稍後下載",
-        font_name="NotoSans-Regular",
-        background_color=(0.444, 0.64, 0.736, 1),
-        size_hint=(0.5, 0.8)
-    )
-    web_btn = Button(
-        text="更新內容",
-        font_name="NotoSans-Regular",
-        background_color=(0.444, 0.64, 0.736, 1),
-        size_hint=(0.5, 0.8)
-    )
-    layout.add_widget(label)
-    
-    update_btn_layout.add_widget(web_btn)
-    update_btn_layout.add_widget(btn)
-    update_btn_layout.add_widget(down_btn)
-    layout.add_widget(update_btn_layout)
-    
-    popup = Popup(
-        title="Update Notification!!",
-        background='',
-        background_color=(0.444, 0.64, 0.736, 1),
-        content=layout,
-        size_hint=(0.7, 0.23),
-        auto_dismiss=False
-    )
-    down_btn.bind(on_release=lambda *args: webbrowser.open(data["apk_url"]))
-    btn.bind(on_release=popup.dismiss)
-    web_btn.bind(on_release=lambda *args: webbrowser.open(data["html_url"]))
-    popup.open()
-
-try:
-    LabelBase.register(
-        name="NotoSans-Regular",
-        fn_regular=resource_find("fonts/NotoSansTC-Regular.ttf")
-    )
-    LabelBase.register(
-        name="NotoSans-Bold",
-        fn_regular=resource_find("fonts/NotoSansTC-Bold.ttf")
-    )
-    LabelBase.register(
-        name="NotoSans-Light",
-        fn_regular=resource_find("fonts/NotoSansTC-Light.ttf")
-    )
-except Exception as e:
-    log_error("LabelBase.Register", e)
-        
 def safe_set_clearcolor(first_try=True):
     try:
         Window.clearcolor = (0.66, 0.36, 0.17, 1)
@@ -108,6 +38,7 @@ class MyApp(App):
         except:
             pass
         
+        register_fonts()
         self.skip_save_on_exit = False
         self.mn = 100
         self.dm = 10
@@ -178,7 +109,7 @@ class MyApp(App):
         if key==27:
             sm = self.root
 
-            if self.con and self.popup.is_open and self.is_exiting:
+            if self.con and hasattr(self, 'popup') and self.popup._window is not None and self.is_exiting:
                 self.popup.dismiss()
                 self.con = False
                 return True
@@ -209,7 +140,7 @@ class MyApp(App):
             height='40dp',
             spacing=10,
         )
-
+    
         btn_yes = Button(
             text='Yes',
             size_hint=(0.5, 0.8),
@@ -220,13 +151,13 @@ class MyApp(App):
             size_hint=(0.5, 0.8),
             background_color=(0.544, 0.74, 0.836, 1)
         )
-
+    
         btn_layout.add_widget(btn_yes)
         btn_layout.add_widget(btn_no)
-
+    
         layout.add_widget(label)
         layout.add_widget(btn_layout)
-
+    
         self.popup = Popup(
             title='Are You Sure?',
             content=layout,
@@ -235,15 +166,15 @@ class MyApp(App):
             size_hint=(0.65, 0.2),
             auto_dismiss=False,
         )
-
+    
         btn_yes.bind(on_release=self.stop_app)
         btn_yes.bind(on_release=self.popup.dismiss)
         btn_no.bind(on_release=self.popup.dismiss)
-
+    
         self.popup.open()
-
+    
     def stop_app(self, *args):
         self.stop()
-
+    
 if __name__ == '__main__':
     MyApp().run()
