@@ -1,6 +1,7 @@
 #gamescreen.py
 import random
 import os
+import time
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.resources import resource_find
@@ -91,9 +92,9 @@ class GameScreen(Screen):
         self.layout.add_widget(self.decorate_menu)
         self.decorate_menu.bind(on_release = self.open_decorate)
             
-        self.load()
-        Clock.schedule_once(self.load_decorate, 0.5)
-        
+        Clock.schedule_once(self.load, 0.5)
+        Clock.schedule_once(self.load_decorate, 0.7)
+            
     def hide_flies(self):
             self.fly_layer.opacity = 0
 
@@ -304,7 +305,7 @@ class GameScreen(Screen):
     def open_decorate(self, *args):
        self.manager.current = 'decorate'
  
-    def save(self, dt):
+    def save(self, dt=None):
         try:
             save_game(
                 self.app.mn,
@@ -327,7 +328,7 @@ class GameScreen(Screen):
         except Exception as e:
             log_error(f"GameScreen.save", e)
     
-    def load(self):
+    def load(self, dt=None):
         try:
             data = load_game()
             if data:

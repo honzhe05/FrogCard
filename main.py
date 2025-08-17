@@ -137,7 +137,6 @@ class MyApp(App):
         Clock.schedule_once(lambda dt: sm.add_widget(CardGalleryScreen(name='card')), 1)
         Clock.schedule_once(lambda dt: sm.add_widget(ShopPanel(name='shop')), 1.1)
         Clock.schedule_once(lambda dt: sm.add_widget(DecorateScreen(name='decorate')), 1.2)
-        Clock.schedule_interval(lambda dt: self.game_screen.save(dt), 360)
         Window.bind(on_key_down=self.on_key)
         try:
             Clock.schedule_interval(self.game_screen.save, 360)
