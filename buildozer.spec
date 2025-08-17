@@ -17,10 +17,10 @@ package.domain = tw.honzhe
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,ttf,wav,mp3,json
+source.include_exts = py,png,jpg,ttf,json
 
 # (list) List of inclusions using pattern matching
-source.include_patterns = assets/*,images/*,fonts/*,*.kv
+source.include_patterns = assets/*,images/*,fonts/*.ttf
 
 # (list) Source files to exclude (let empty to not exclude anything)
 #source.exclude_exts = spec
@@ -30,6 +30,13 @@ source.include_patterns = assets/*,images/*,fonts/*,*.kv
 
 # (list) List of exclusions using pattern matching
 #source.exclude_patterns = license,images/*/*.jpg
+[app:source.exclude_patterns]
+*.psd
+*.xcf
+*.bak
+*.tmp
+images/original/*
+assets/test/*
 
 # (str) Application versioning (method 1)
 version = 1.0.5
@@ -189,7 +196,7 @@ android.minapi = 21
 #android.logcat_filters = *:S python:D
 
 # (bool) Copy library instead of making a libpymodules.so
-#android.copy_libs = 1
+#android.copy_libs = 0
 
 # (str) The Android arch to build for, choices: armeabi-v7a, arm64-v8a, x86
 android.archs = armeabi-v7a, arm64-v8a
