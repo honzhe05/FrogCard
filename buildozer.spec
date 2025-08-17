@@ -99,9 +99,6 @@ android.api = 33
 # (int) Minimum API required
 android.minapi = 21
 
-# (int) Android SDK version to use
-android.sdk = 23
-
 # (str) Android NDK version to use
 #android.ndk = 10.3.2
 
@@ -109,7 +106,7 @@ android.sdk = 23
 #android.private_storage = True
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
-android.ndk_path = ~/Desktop/crystax-ndk-r25c
+android.ndk_path = ~/Desktop/android-ndk-r25c
 
 # (str) Android SDK directory (if empty, it will be automatically downloaded.)
 #android.sdk_path = ~/Desktop/platform-tools
