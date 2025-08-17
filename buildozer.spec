@@ -32,7 +32,7 @@ source.include_patterns = assets/*,images/*,fonts/*,*.kv
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 1.0.4
+version = 1.0.5
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
@@ -89,7 +89,8 @@ fullscreen = 0
 #android.presplash_color = #FFFFFF
 
 # (list) Permissions
-android.permissions = INTERNET,CHANGE_WIFI_MULTICAST_STATE,ACCESS_NETWORK_STATE,ACCESS_WIFI_STATE,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
+android.permissions = INTERNET,ACCESS_NETWORK_STATE,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
+# CHANGE_WIFI_MULTICAST_STATE,ACCESS_WIFI_STATE
 
 # (int) Android API to use
 # see https://developer.android.com/distribute/best-practices/develop/target-sdk

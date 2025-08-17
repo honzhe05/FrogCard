@@ -128,9 +128,9 @@ class MyApp(App):
         self.buy_apple = True
         self.con = False
         
-        #test
+        # test
         # w_width = 
-        Window.size = (720, 1520)
+        # Window.size = (720, 1520)
         
         sm = ScreenManager(transition=FadeTransition(duration=0.5, clearcolor=(0.66 , 0.36 , 0.17 , 1)))
         self.game_screen = GameScreen(name='game')
