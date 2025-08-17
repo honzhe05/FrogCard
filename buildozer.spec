@@ -40,7 +40,7 @@ version = 1.0.5
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3==3.10.0,kivy==2.3.0,plyer,android
+requirements = python3==3.10.0,kivy==2.3.1,plyer,android
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -89,7 +89,8 @@ fullscreen = 1
 #android.presplash_color = #FFFFFF
 
 # (list) Permissions
-android.permissions = INTERNET,ACCESS_NETWORK_STATE,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
+android.permissions = INTERNET,ACCESS_NETWORK_STATE
+# WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
 # CHANGE_WIFI_MULTICAST_STATE,ACCESS_WIFI_STATE
 
 # (int) Android API to use
@@ -103,7 +104,7 @@ android.minapi = 21
 #android.ndk = 10.3.2
 
 # (bool) Use --private data storage (True) or --dir public storage (False)
-#android.private_storage = True
+android.private_storage = True
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
 #android.ndk_path = ~/Desktop/android-ndk-r25c

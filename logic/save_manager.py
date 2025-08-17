@@ -2,14 +2,13 @@
 import json
 import os
 from utils.error_handler import log_error
-from plyer import storagepath
+from android.storage import app_storage_path
 
 try:
-    bath_path = storagepath.get_documents_dir()
-    SAVE_PATH = os.path.join(bath_path, "FrogCard", "data", "savegame.json")
+    SAVE_PATH = os.path.join(app_storage_path(), "save.json")
 except Exception as e:
     log_error("create_save_folder", e)
-
+    
 def ensure_data_dir():
     try:
         os.makedirs(os.path.dirname(SAVE_PATH), exist_ok=True)
