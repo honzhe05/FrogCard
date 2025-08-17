@@ -32,26 +32,6 @@ safe_set_clearcolor()
 
 class MyApp(App):
     def build(self):
-        try:
-            from android.permissions import request_permissions, check_permission, Permission
-            from jnius import autoclass, cast
-            
-            def ensure_permissions():
-                if not check_permission(Permission.WRITE_EXTERNAL_STORAGE):
-                    request_permissions([Permission.WRITE_EXTERNAL_STORAGE])
-                    
-                    PythonActivity = autoclass('org.kivy.android.PythonActivity')
-                    Intent = autoclass('android.content.Intent')
-                    Uri = autoclass('android.net.Uri')
-            
-                    context = PythonActivity.mActivity
-                    intent = Intent(Intent.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    uri = Uri.parse("package:" + context.getPackageName())
-                    intent.setData(uri)
-                    context.startActivity(intent)
-        except:
-            pass
-        
         register_fonts()
         self.skip_save_on_exit = False
         self.mn = 100
