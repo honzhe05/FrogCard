@@ -30,13 +30,6 @@ source.include_patterns = assets/*,images/*,fonts/*.ttf
 
 # (list) List of exclusions using pattern matching
 #source.exclude_patterns = license,images/*/*.jpg
-[app:source.exclude_patterns]
-*.psd
-*.xcf
-*.bak
-*.tmp
-images/original/*
-assets/test/*
 
 # (str) Application versioning (method 1)
 version = 1.0.5
