@@ -20,8 +20,10 @@ class StartScreen(Screen):
         #background
         background = Image(
             source = resource_find('assets/Background.jpg') ,
-            size_hint = (1 , 1) ,
-            pos = (0 , 0)
+            size_hint = (1, 1) ,
+            pos = (0 , 0),
+            allow_stretch = True,
+            keep_ratio = False
         )
         layout.add_widget(background)
         
@@ -52,6 +54,7 @@ class StartScreen(Screen):
         self.title = ImageButton(
             source = resource_find('assets/Title.png') ,
             size_hint = (0.85, 0.85),
+            allow_stretch = True,
             pos = (center_x, center_y)
         )
         

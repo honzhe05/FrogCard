@@ -99,7 +99,7 @@ class GameScreen(Screen):
     def show_flies(self):
         self.fly_layer.opacity = 1
         
-    def load_decorate(self, dt):
+    def load_decorate(self, dt=None):
         if not self.app.buy_grass and self.g:
             grass_image = Image(
                 source = resource_find('assets/Grass.png' ) ,

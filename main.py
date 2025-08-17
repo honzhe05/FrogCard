@@ -127,6 +127,7 @@ class MyApp(App):
         self.buy_tree = True
         self.buy_apple = True
         self.con = False
+        self.is_exiting = True
         
         # test
         # w_width = 
@@ -155,6 +156,7 @@ class MyApp(App):
             show_update_popup(update_info)
         
     def on_stop(self):
+        self.is_exiting = False
         if self.skip_save_on_exit:
             return
         try:
@@ -176,7 +178,7 @@ class MyApp(App):
         if key==27:
             sm = self.root
 
-            if self.con and self.popup.is_open:
+            if self.con and self.popup.is_open and self.is_exiting:
                 self.popup.dismiss()
                 self.con = False
                 return True
