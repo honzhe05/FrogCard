@@ -39,8 +39,6 @@ class StartScreen(Screen):
             size=(Window.width * 0.8, Window.height * 0.01),
             font_size=30,
             pos_hint={'x': 0, 'y': 0.94},
-            halign="left",
-            valign="top",
             color=(1, 1, 1, 1),
             outline_color=(0, 0, 0, 1),
             outline_width=2

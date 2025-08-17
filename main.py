@@ -126,9 +126,11 @@ class MyApp(App):
         self.buy_cloud = True
         self.buy_tree = True
         self.buy_apple = True
+        self.con = False
         
         #test
-        #Window.size = (1080, 2000)
+        # w_width = 
+        Window.size = (720, 1520)
         
         sm = ScreenManager(transition=FadeTransition(duration=0.5, clearcolor=(0.66 , 0.36 , 0.17 , 1)))
         self.game_screen = GameScreen(name='game')
@@ -173,6 +175,11 @@ class MyApp(App):
     def on_key(self, window, key, *args):
         if key==27:
             sm = self.root
+            if self.con:
+                self.popup.dismiss()
+                self.con = False
+                return True
+            self.con = True
             try:
                 if sm.current != 'game' and sm.current != 'start':
                     sm.current = 'game'
@@ -217,7 +224,7 @@ class MyApp(App):
         layout.add_widget(label)
         layout.add_widget(btn_layout)
 
-        popup = Popup(
+        self.popup = Popup(
             title='Are You Sure?',
             content=layout,
             background='',
@@ -227,10 +234,10 @@ class MyApp(App):
         )
 
         btn_yes.bind(on_release=self.stop_app)
-        btn_yes.bind(on_release=popup.dismiss)
-        btn_no.bind(on_release=popup.dismiss)
+        btn_yes.bind(on_release=self.popup.dismiss)
+        btn_no.bind(on_release=self.popup.dismiss)
 
-        popup.open()
+        self.popup.open()
 
     def stop_app(self, *args):
         self.stop()

@@ -208,6 +208,7 @@ __marimo__/
 /data/savegame.json
 /error.log
 /test/test.py
+/.devcontainer/devcontainer.json
 /.kivy/
 node_modules/
 yarn.lock
