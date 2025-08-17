@@ -24,7 +24,7 @@ def safe_set_clearcolor(first_try=True):
         Window.clearcolor = (0.66, 0.36, 0.17, 1)
     except Exception as e:
         if first_try:
-            Clock.schedule_once(lambda dt: safe_set_clearcolor(False), 0.5)
+            Clock.schedule_once(lambda dt: safe_set_clearcolor(False), 0.2)
         else:
             log_error("Window_color_setting", e)
 
@@ -33,8 +33,22 @@ safe_set_clearcolor()
 class MyApp(App):
     def build(self):
         try:
-            from android.permissions import request_permissions, Permission
-            request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+            from android.permissions import request_permissions, check_permission, Permission
+            from jnius import autoclass, cast
+            
+            def ensure_permissions():
+                if not check_permission(Permission.WRITE_EXTERNAL_STORAGE):
+                    request_permissions([Permission.WRITE_EXTERNAL_STORAGE])
+                    
+                    PythonActivity = autoclass('org.kivy.android.PythonActivity')
+                    Intent = autoclass('android.content.Intent')
+                    Uri = autoclass('android.net.Uri')
+            
+                    context = PythonActivity.mActivity
+                    intent = Intent(Intent.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    uri = Uri.parse("package:" + context.getPackageName())
+                    intent.setData(uri)
+                    context.startActivity(intent)
         except:
             pass
         
@@ -68,18 +82,18 @@ class MyApp(App):
         self.game_screen = GameScreen(name='game')
         sm.add_widget(StartScreen(name='start'))
         sm.add_widget(self.game_screen)
-        Clock.schedule_once(lambda dt: sm.add_widget(CardGalleryScreen(name='card')), 1)
-        Clock.schedule_once(lambda dt: sm.add_widget(ShopPanel(name='shop')), 1.1)
-        Clock.schedule_once(lambda dt: sm.add_widget(DecorateScreen(name='decorate')), 1.2)
-        Window.bind(on_key_down=self.on_key)
+        Clock.schedule_once(lambda dt: sm.add_widget(CardGalleryScreen(name='card')), 2)
+        Clock.schedule_once(lambda dt: sm.add_widget(ShopPanel(name='shop')), 1.5)
+        Clock.schedule_once(lambda dt: sm.add_widget(DecorateScreen(name='decorate')), 1)
+        Clock.schedule_once(lambda dt: Window.bind(on_key_down=self.on_key), 0.5)
         try:
-            Clock.schedule_interval(self.game_screen.save, 360)
+            Clock.schedule_once(lambda dt: Clock.schedule_interval(self.game_screen.save, 360), 5)
         except Exception as e:
             log_error("auto_save", e)
         return sm
         
     def on_start(self):
-        Clock.schedule_once(self.check_for_update, 2)
+        Clock.schedule_once(self.check_for_update, 3)
 
     def check_for_update(self, dt):
         update_info = check_update(APP_VERSION)
