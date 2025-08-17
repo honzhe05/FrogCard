@@ -106,7 +106,7 @@ android.minapi = 21
 #android.private_storage = True
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
-android.ndk_path = ~/Desktop/android-ndk-r25c
+#android.ndk_path = ~/Desktop/android-ndk-r25c
 
 # (str) Android SDK directory (if empty, it will be automatically downloaded.)
 #android.sdk_path = ~/Desktop/platform-tools

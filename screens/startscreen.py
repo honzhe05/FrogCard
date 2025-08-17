@@ -21,9 +21,7 @@ class StartScreen(Screen):
         background = Image(
             source = resource_find('assets/Background.jpg') ,
             size_hint = (1 , 1) ,
-            pos = (0 , 0) ,
-            allow_stretch = True ,
-            keep_ratio = False
+            pos = (0 , 0)
         )
         layout.add_widget(background)
         
@@ -54,9 +52,7 @@ class StartScreen(Screen):
         self.title = ImageButton(
             source = resource_find('assets/Title.png') ,
             size_hint = (0.85, 0.85),
-            pos = (center_x, center_y),
-            allow_stretch = True ,
-            keep_ratio = True
+            pos = (center_x, center_y)
         )
         
         layout.add_widget(self.title)
@@ -66,9 +62,7 @@ class StartScreen(Screen):
         self.titlefrog = Image(
             source = resource_find('assets/TitleFrog.png') ,
             size_hint= (0.15, 0.15),
-            pos = (Window.width, -50) ,
-            allow_stretch = True ,
-            keep_ratio = True
+            pos = (Window.width, -50)
         )
         layout.add_widget(self.titlefrog)
         
@@ -80,9 +74,7 @@ class StartScreen(Screen):
         self.startbtn = ImageButton(
             source = resource_find('assets/StartButton.png') ,
             size_hint = (0.4, 0.4) ,
-            pos = (img_width, center_y),
-            allow_stretch = True ,
-            keep_ratio = True
+            pos = (img_width, center_y)
         )
         layout.add_widget(self.startbtn)
         self.startbtn.bind(on_release = self.go_to_game)

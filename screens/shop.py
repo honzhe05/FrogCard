@@ -21,8 +21,7 @@ class ShopPanel(Screen):
             source=resource_find('assets/Shop.png'),
             size_hint=(None, None),
             size = Window.size,
-            pos=(0, 0),
-            allow_stretch=True
+            pos=(0, 0)
         )
         self.add_widget(bg)
         

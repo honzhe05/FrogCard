@@ -21,9 +21,7 @@ class StatusBar(FloatLayout):
     def top_bar(self):
         topbar = Image(
             source = resource_find('assets/Topbar.png') ,
-            size_hint = (None , None) ,
-            allow_stretch = True ,
-            keep_ratio = True
+            size_hint = (None , None)
         )
         topbar.texture_update()
         img_w, img_h = topbar.texture.size
@@ -53,8 +51,6 @@ class StatusBar(FloatLayout):
             source = resource_find('assets/Menu.png'),
             size_hint = (None , None) ,
             size = (100 , 80),
-            allow_stretch = True ,
-            keep_ratio = True ,
             pos_hint = {'x' : 0.9 , 'y' : 0.895}
         )
         self.layout.add_widget(self.menu_button)
@@ -62,9 +58,7 @@ class StatusBar(FloatLayout):
         
         self.garbage = ImageButton(
             source = resource_find('assets/Garbage.png') ,
-            size_hint = (None , None) ,
-            allow_stretch = True ,
-            keep_ratio = True ,
+            size_hint = (None , None),
             pos_hint = {'x' : 0.9 , 'y' : 0.85}
         )
         self.garbage.bind(on_release=self._on_garbage)

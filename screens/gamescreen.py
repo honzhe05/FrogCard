@@ -50,8 +50,6 @@ class GameScreen(Screen):
         buttonbar = Image(
             source = resource_find('assets/Buttonbar.png' ) ,
             size_hint = (None , None) ,
-            allow_stretch = True ,
-            keep_ratio = True ,
             pos = (0, 0)
         )
         buttonbar.texture_update()
@@ -106,8 +104,6 @@ class GameScreen(Screen):
             grass_image = Image(
                 source = resource_find('assets/Grass.png' ) ,
                 size_hint = (0.25 , 0.15) ,
-                allow_stretch = True ,
-                keep_ratio = True ,
                 pos = (Window.width * 0.4, 140)
             )
             self.layout.add_widget(grass_image)
@@ -117,8 +113,6 @@ class GameScreen(Screen):
             more_grass_image = Image(
                 source = resource_find('assets/Grass.png' ) ,
                 size_hint = (0.23 , 0.13) ,
-                allow_stretch = True ,
-                keep_ratio = True ,
                 pos = (Window.width * 0.7, 160)
             )
             self.layout.add_widget(more_grass_image)
@@ -128,8 +122,6 @@ class GameScreen(Screen):
             cloud_image = Image(
                 source = resource_find('assets/Cloud.png' ) ,
                 size_hint = (0.3 , 0.2) ,
-                allow_stretch = True ,
-                keep_ratio = True ,
                 pos = (Window.width * 0.6, Window.height * 0.75)
             )
             self.layout.add_widget(cloud_image)
@@ -145,8 +137,6 @@ class GameScreen(Screen):
                 source = resource_find('assets/Tree.png' ) ,
                 size_hint = (None, None) ,
                 size = (1250, 1300),
-                allow_stretch = True ,
-                keep_ratio = True ,
                 pos_hint = {'x': -0.4, 'y': 0.09}
             )
             self.layout.add_widget(tree_image)
@@ -158,8 +148,6 @@ class GameScreen(Screen):
                 source = resource_find('assets/Apple.png' ) ,
                 size_hint = (None, None) ,
                 size = (120, 120),
-                allow_stretch = True ,
-                keep_ratio = True ,
                 pos = (100, Window.height * 0.57)
             )
             self.layout.add_widget(apple_image)
@@ -168,8 +156,6 @@ class GameScreen(Screen):
                 source = resource_find('assets/Apple.png' ) ,
                 size_hint = (None, None) ,
                 size = (110, 110),
-                allow_stretch = True ,
-                keep_ratio = True ,
                 pos = (Window.width * 0.31, Window.height * 0.4)
             )
             self.layout.add_widget(apple2_image)
@@ -178,8 +164,6 @@ class GameScreen(Screen):
                 source = resource_find('assets/Apple.png' ) ,
                 size_hint = (None, None) ,
                 size = (100, 100),
-                allow_stretch = True ,
-                keep_ratio = True ,
                 pos = (Window.width * 0.38, Window.height * 0.5)
             )
             self.layout.add_widget(apple3_image)
