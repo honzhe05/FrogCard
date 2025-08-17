@@ -40,7 +40,7 @@ version = 1.0.5
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3==3.11.0,kivy==2.3.1,android
+requirements = python3==3.10.12,kivy==2.2.1,android
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -69,10 +69,10 @@ orientation = portrait
 # author = © Copyright Info
 
 # change the major version of python used by the app
-osx.python_version = 3.11.0
+osx.python_version = 3.10.12
 
 # Kivy version to use
-osx.kivy_version = 2.3.1
+osx.kivy_version = 2.2.1
 
 #
 # Android specific
