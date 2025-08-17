@@ -102,6 +102,11 @@ safe_set_clearcolor()
 
 class MyApp(App):
     def build(self):
+        try:
+            from android.permissions import request_permissions, Permission
+            request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+        except:
+            pass
         
         self.skip_save_on_exit = False
         self.mn = 100
