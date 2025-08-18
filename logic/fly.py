@@ -1,6 +1,7 @@
 #fly.py
 import random
 import math
+import logic.sound
 from kivy.app import App
 from kivy.resources import resource_find
 from kivy.uix.behaviors import ButtonBehavior
@@ -10,7 +11,7 @@ from kivy.clock import Clock
 from kivy.core.window import Window
 from utils.error_handler import log_error
 
-class MovingFly(ButtonBehavior , Image):
+class MovingFly(ButtonBehavior, Image):
     def __init__(self , money=None , **kwargs):
         super().__init__(**kwargs)
         self.money = money
@@ -65,6 +66,7 @@ class MovingFly(ButtonBehavior , Image):
                 fade_out.bind(on_complete=self.fade_complete)
                 fade_out.start(self)
                 self.disabled = True
+                logic.sound.play_sound_background("GotFly")
                 Clock.schedule_once(self.recover, 5)
         except Exception as e:
             log_error("MovingFly.on_release", e)
