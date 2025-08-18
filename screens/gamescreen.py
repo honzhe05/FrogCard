@@ -48,8 +48,8 @@ class GameScreen(Screen):
         
         # button bar
         buttonbar = Image(
-            source = resource_find('assets/Buttonbar.png' ) ,
-            size_hint = (None , None) ,
+            source = resource_find('assets/Buttonbar.png'),
+            size_hint = (None, None),
             pos = (0, 0)
         )
         buttonbar.texture_update()
@@ -63,9 +63,9 @@ class GameScreen(Screen):
         #shop menu
         self.shop_menu = ImageButton(
             source = resource_find('assets/Shopicon.png'),
-            size_hint = (None , None),
+            size_hint = (None, None),
             size = (200, 150),
-            pos_hint = {'x': 0.04 , 'y' : 0.006}
+            pos_hint = {'x': 0.04, 'y' : 0.006}
         )
         self.layout.add_widget(self.shop_menu)
         self.shop_menu.bind(on_release = self.open_shop)
@@ -73,9 +73,9 @@ class GameScreen(Screen):
         #card menu
         self.cardmenu = ImageButton(
             source = resource_find('assets/CardShop.png'),
-            size_hint = (None , None),
+            size_hint = (None, None),
             size = (250, 150),
-            pos_hint = {'x': 0.38 , 'y' : 0.006}
+            pos_hint = {'x': 0.38, 'y': 0.006}
         )
         self.layout.add_widget(self.cardmenu)
         self.cardmenu.bind(on_release = self.open_card)
@@ -83,9 +83,9 @@ class GameScreen(Screen):
         #decorate menu
         self.decorate_menu = ImageButton(
             source = resource_find('assets/Tree.png'),
-            size_hint = (None , None),
+            size_hint = (None, None),
             size = (200, 150),
-            pos_hint = {'x': 0.78 , 'y' : 0.006}
+            pos_hint = {'x': 0.78, 'y': 0.006}
         )
         self.layout.add_widget(self.decorate_menu)
         self.decorate_menu.bind(on_release = self.open_decorate)
@@ -102,8 +102,8 @@ class GameScreen(Screen):
     def load_decorate(self, dt=None):
         if not self.app.buy_grass and self.g:
             grass_image = Image(
-                source = resource_find('assets/Grass.png' ) ,
-                size_hint = (0.25 , 0.15) ,
+                source = resource_find('assets/Grass.png'),
+                size_hint = (0.25, 0.15) ,
                 pos = (Window.width * 0.4, 140)
             )
             self.layout.add_widget(grass_image)
@@ -111,8 +111,8 @@ class GameScreen(Screen):
             
         if not self.app.buy_more_grass and self.mg:
             more_grass_image = Image(
-                source = resource_find('assets/Grass.png' ) ,
-                size_hint = (0.23 , 0.13) ,
+                source = resource_find('assets/Grass.png'),
+                size_hint = (0.23, 0.13),
                 pos = (Window.width * 0.7, 160)
             )
             self.layout.add_widget(more_grass_image)
@@ -120,8 +120,8 @@ class GameScreen(Screen):
             
         if not self.app.buy_cloud and self.c:
             cloud_image = Image(
-                source = resource_find('assets/Cloud.png' ) ,
-                size_hint = (0.3 , 0.2) ,
+                source = resource_find('assets/Cloud.png'),
+                size_hint = (0.3, 0.2),
                 pos = (Window.width * 0.6, Window.height * 0.75)
             )
             self.layout.add_widget(cloud_image)
@@ -134,7 +134,7 @@ class GameScreen(Screen):
           
         if not self.app.buy_tree and self.t:
             tree_image = Image(
-                source = resource_find('assets/Tree.png' ) ,
+                source = resource_find('assets/Tree.png'),
                 size_hint = (None, None) ,
                 size = (1250, 1300),
                 pos_hint = {'x': -0.4, 'y': 0.09}
@@ -145,7 +145,7 @@ class GameScreen(Screen):
             
         if not self.app.buy_apple and self.a:
             apple_image = Image(
-                source = resource_find('assets/Apple.png' ) ,
+                source = resource_find('assets/Apple.png'),
                 size_hint = (None, None) ,
                 size = (120, 120),
                 pos = (100, Window.height * 0.57)
@@ -153,16 +153,16 @@ class GameScreen(Screen):
             self.layout.add_widget(apple_image)
             
             apple2_image = Image(
-                source = resource_find('assets/Apple.png' ) ,
-                size_hint = (None, None) ,
+                source = resource_find('assets/Apple.png'),
+                size_hint = (None, None),
                 size = (110, 110),
                 pos = (Window.width * 0.31, Window.height * 0.4)
             )
             self.layout.add_widget(apple2_image)
                 
             apple3_image = Image(
-                source = resource_find('assets/Apple.png' ) ,
-                size_hint = (None, None) ,
+                source = resource_find('assets/Apple.png'),
+                size_hint = (None, None),
                 size = (100, 100),
                 pos = (Window.width * 0.38, Window.height * 0.5)
             )
@@ -178,7 +178,7 @@ class GameScreen(Screen):
             for _ in range(count):
                 random_size = random.randint(50, 250)
                 fly = MovingFly(
-                    source = resource_find('assets/Fly.png'),
+                    source=resource_find('assets/Fly.png'),
                     size_hint=(None, None),
                     size=(random_size, random_size)
                 )
@@ -207,13 +207,13 @@ class GameScreen(Screen):
             font_name = 'NotoSans-Bold' ,
             size_hint = (None , None) ,
             font_size = 60 ,
-            pos_hint = {'x' : 0.45 , 'y' : 0.5} ,
+            pos_hint = {'x': 0.45, 'y': 0.5} ,
             color=(1, 1, 1, 1),  
             outline_color=(0, 0, 0, 1),  
             outline_width=2
         )
         self.layout.add_widget(self.clear_label)
-        Clock.schedule_once(self.reset_game , 1.5)
+        Clock.schedule_once(self.reset_game, 1.5)
         
     def not_del(self , button_instance):
         self.layout.remove_widget(self.confirm_btn)
@@ -222,39 +222,39 @@ class GameScreen(Screen):
         
     def confirm_del(self, *args):
         confirm_btn = Button(
-            text = "確認" ,
-            font_name = 'NotoSans-Regular' ,
-            size_hint = (None , None),
+            text = "確認",
+            font_name = 'NotoSans-Regular',
+            size_hint = (None, None),
             size = (200, 100),
             pos = (
                 Window.width / 2 + 5,
                 Window.height * 0.4
             ),
             color=(0, 0, 0, 1),  
-            background_normal = ' ' ,
-            background_color = (0.96 , 0.96 , 0.86 , 1)
+            background_normal = ' ',
+            background_color = (0.96, 0.96, 0.86, 1)
         )
         self.layout.add_widget(confirm_btn)
         
         cancel_btn = Button(
-            text = "取消" ,
-            font_name = 'NotoSans-Regular' ,
-            size_hint = (None , None),
+            text = "取消",
+            font_name = 'NotoSans-Regular',
+            size_hint = (None, None),
             size = (200, 100),
             pos = (
                 Window.width / 2 - 205,
                 Window.height * 0.4
             ),
             color=(0, 0, 0, 1),  
-            background_normal = ' ' ,
-            background_color = (0.96 , 0.96 , 0.86 , 1)
+            background_normal = ' ',
+            background_color = (0.96, 0.96, 0.86, 1)
         )
         self.layout.add_widget(cancel_btn)
         
         info_screen = Button(
-        text = "確定要刪除資料？" ,
-            font_name = 'NotoSans-Regular' ,
-            size_hint = (None , None),
+            text = "確定要刪除資料？",
+            font_name = 'NotoSans-Regular',
+            size_hint = (None, None),
             size = (410, 200),
             pos = (
                 Window.width / 2 - 205,
@@ -263,8 +263,8 @@ class GameScreen(Screen):
             disabled = True,
             opacity = 1,
             disabled_color=(0, 0, 0, 1),  
-            background_disabled_normal = ' ' ,
-            background_color = (0.96 , 0.96 , 0.86 , 1)
+            background_disabled_normal = ' ',
+            background_color = (0.96, 0.96, 0.86, 1)
         )
         self.layout.add_widget(info_screen)
         
