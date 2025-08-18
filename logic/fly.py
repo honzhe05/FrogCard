@@ -8,6 +8,7 @@ from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.image import Image
 from kivy.animation import Animation
 from kivy.clock import Clock
+from kivy.metrics import dp
 from kivy.core.window import Window
 from utils.error_handler import log_error
 
@@ -39,10 +40,10 @@ class MovingFly(ButtonBehavior, Image):
         try:
             if not self.disabled:
                 self.xp = int(self.app.xp)
-                if self.size[0] < 91 and self.size[0] > 60:
+                if self.size[0] < dp(30) and self.size[0] > dp(20):
                     self.app.mn += self.xp * 2
                     self.size_mn = self.xp * 2
-                elif self.size[0] < 61:
+                elif self.size[0] < dp(20.33):
                     self.app.mn += self.xp * 5
                     self.size_mn = self.xp * 5
                 else:
@@ -76,7 +77,7 @@ class MovingFly(ButtonBehavior, Image):
         self.source = resource_find('assets/Fly.png')
         self.disabled = False
         
-        random_size = random.randint(50, 250)
+        random_size = dp(random.uniform(16.67, 83.33))
         self.size = (random_size , random_size)
         self.pos = (
                random.randint(0 , Window.width - 100) ,

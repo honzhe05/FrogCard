@@ -5,6 +5,7 @@ from kivy.animation import Animation
 from kivy.core.window import Window
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import Image
+from kivy.metrics import dp
 from kivy.resources import resource_find
 from components.imagebutton import ImageButton
 from utils.error_handler import log_error
@@ -38,7 +39,7 @@ class StatusBar(FloatLayout):
         self.layout.add_widget(self.money)
         self.layout.add_widget(self.diamond)
         
-        size_bar = 200
+        size_bar = dp(75)
         self.exp_bar = ExpArc(
             size_hint = (None , None),
             size=(size_bar*2, size_bar*2),

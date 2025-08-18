@@ -12,6 +12,7 @@ from kivy.uix.button import Button
 from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
+from kivy.metrics import dp
 from logic.fly import MovingFly
 from components.imagebutton import ImageButton
 from logic.save_manager import save_game, load_game, clear_save
@@ -176,7 +177,7 @@ class GameScreen(Screen):
     def spawn_flies(self, count):
         try:
             for _ in range(count):
-                random_size = random.randint(50, 250)
+                random_size = dp(random.uniform(16.67, 83.33))
                 fly = MovingFly(
                     source=resource_find('assets/Fly.png'),
                     size_hint=(None, None),
