@@ -6,6 +6,7 @@ from kivy.core.window import Window
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import Image
 from kivy.metrics import dp
+from kivy.clock import Clock
 from kivy.resources import resource_find
 from components.imagebutton import ImageButton
 from utils.error_handler import log_error
@@ -29,9 +30,10 @@ class StatusBar(FloatLayout):
         screen_w, screen_h = Window.size
         topbar.width = screen_w
         topbar.height = screen_w * img_h / img_w
-        
+          
         topbar.pos = (0 , screen_h - topbar.height)
         self.layout.add_widget(topbar)
+     
         
         # money and diamond
         self.money = self.create_label(str(self.app.mn), {'x': 0.8, 'y': 0.949})
@@ -96,7 +98,7 @@ class StatusBar(FloatLayout):
         label = Label(
             text=str(money),
             font_name='NotoSans-Regular',
-            font_size = 42,
+            font_size = round(dp(15.6)),
             bold=True,
             size_hint=(None, None),
             size=(120, 100),

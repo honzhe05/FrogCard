@@ -5,7 +5,7 @@ import time
 
 def play_sound(name):
     try:
-        path = resource_find(f"audios/{name}")
+        path = resource_find(f"assets/audios/{name}")
         if not path:
             print(f"❌ 找不到音效檔：{name}")
             return

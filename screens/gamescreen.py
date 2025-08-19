@@ -68,8 +68,8 @@ class GameScreen(Screen):
         self.shop_menu = ImageButton(
             source = resource_find('assets/Shopicon.png'),
             size_hint = (None, None),
-            size = (w, h),
-            pos_hint = {'x': 0.03, 'y' : 0.006}
+            size = (w1, h),
+            pos_hint = {'x': 0.038, 'y' : 0.006}
         )
         self.layout.add_widget(self.shop_menu)
         self.shop_menu.bind(on_release = self.open_shop)
