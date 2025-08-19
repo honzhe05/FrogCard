@@ -19,7 +19,7 @@ def ensure_data_dir():
     except Exception as e:
         log_error("ensure_data_dir", e)
 
-def save_game(money, diamond, xp, exp, level, quan, quan_level, quan_mn, xp_level, xp_mn, max_exp, buy_grass, buy_more_grass, buy_cloud, buy_tree, buy_apple):
+def save_game(money, diamond, xp, exp, level, quan, quan_level, quan_mn, xp_level, xp_mn, max_exp, buy_grass, buy_more_grass, buy_cloud, buy_tree, buy_apple, music, sound):
     game_data = {
         "money": money,
         "diamond": diamond,
@@ -36,7 +36,9 @@ def save_game(money, diamond, xp, exp, level, quan, quan_level, quan_mn, xp_leve
         "buy_more_grass": buy_more_grass,
         "buy_cloud": buy_cloud,
         "buy_tree": buy_tree,
-        "buy_apple": buy_apple
+        "buy_apple": buy_apple,
+        "music": music,
+        "sound": sound
     }
     try:
         ensure_data_dir()
@@ -62,7 +64,9 @@ def load_game():
         "buy_more_grass": True,
         "buy_cloud": True,
         "buy_tree": True,
-        "buy_apple": True
+        "buy_apple": True,
+        "music": 100,
+        "sound": 100
     }
     try:
         path = get_save_path()

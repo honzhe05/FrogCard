@@ -19,6 +19,7 @@ from config import APP_VERSION
 from ui.fonts import register_fonts
 from ui.update_popup import show_update_popup
 import logic.sound
+from logic.bgm_player import MusicPlayer
 
 def safe_set_clearcolor(first_try=True):
     try:
@@ -53,7 +54,19 @@ class MyApp(App):
         self.buy_tree = True
         self.buy_apple = True
         self.con = False
+        self.music = 100
+        self.sound = 100
         self.is_exiting = True
+        
+        bgms = [
+            "HiddenAgenda.mp3",
+            "IfIHadaChicken.mp3",
+            "JauntyGumption.mp3",
+            "TheBuilder.mp3",
+            "Wallpaper.mp3",
+        ]
+        player = MusicPlayer(bgms)
+        player.play_next()
         
         # test
         # w_width = 
@@ -170,18 +183,6 @@ class MyApp(App):
     
     def stop_app(self, *args):
         self.stop()
-
-def bgm_player():
-    bgms = [
-        "HiddenAgenda.mp3",
-        "IfIHadaChicken.mp3",
-        "JauntyGumption.mp3",
-        "TheBuilder.mp3",
-        "Wallpaper.mp3",
-    ]
-    while True:
-        for bgm in bgms:
-            logic.sound.play_sound(bgm)
     
 if __name__ == '__main__':
     MyApp().run()

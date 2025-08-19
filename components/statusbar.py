@@ -5,18 +5,21 @@ from kivy.animation import Animation
 from kivy.core.window import Window
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import Image
+from kivy.uix.button import Button
 from kivy.metrics import dp
 from kivy.clock import Clock
 from kivy.resources import resource_find
 from components.imagebutton import ImageButton
 from utils.error_handler import log_error
 from components.XPcircle import ExpArc
+from config import FULL_VERSION_in_setting
 
 class StatusBar(FloatLayout):
     def __init__(self, game_screen=None, **kwargs):
         super().__init__(**kwargs)
         self.layout = FloatLayout()
         self.add_widget(self.layout)
+        self.setting_layout = FloatLayout()
         self.app = App.get_running_app()
         self.menu_open = False
         
@@ -33,7 +36,6 @@ class StatusBar(FloatLayout):
           
         topbar.pos = (0 , screen_h - topbar.height)
         self.layout.add_widget(topbar)
-     
         
         # money and diamond
         self.money = self.create_label(str(self.app.mn), {'x': 0.8, 'y': 0.949})
@@ -41,6 +43,7 @@ class StatusBar(FloatLayout):
         self.layout.add_widget(self.money)
         self.layout.add_widget(self.diamond)
         
+        #exp bar
         size_bar = dp(75)
         self.exp_bar = ExpArc(
             size_hint = (None , None),
@@ -50,6 +53,7 @@ class StatusBar(FloatLayout):
         self.layout.add_widget(self.exp_bar)
         self.create_exp_level_label()
         
+        #menu_button
         w = round(dp(37))
         h = round(dp(29.6))
         self.menu_button = ImageButton(
@@ -61,24 +65,83 @@ class StatusBar(FloatLayout):
         self.layout.add_widget(self.menu_button)
         self.menu_button.bind(on_release=self.open_menu)
         
-        self.garbage = ImageButton(
-            source = resource_find('assets/Garbage.png') ,
+        #self.setting
+        self.setting = ImageButton(
+            source = resource_find('assets/Setting.png') ,
             size_hint = (None , None),
             pos_hint = {'x' : 0.9 , 'y' : 0.85}
         )
+        self.setting.bind(on_release=self._on_setting)
+        self.layout.add_widget(self.setting)
+        self.setting.opacity = 0
+        self.setting.disabled = True
+        
+        #setting menu
+        setting_menu = Image(
+            source = resource_find('assets/SettingMenu.png'),
+            size_hint = (0.9, 0.8),
+            pos_hint = {"center_x": 0.5, "center_y": 0.5}
+        )
+        self.setting_layout.add_widget(setting_menu)
+        
+        #self.garbage
+        self.garbage = ImageButton(
+            source = resource_find('assets/Garbage.png') ,
+            size_hint = (None , None),
+            pos_hint = {'x' : 0.28, 'y' : 0.32}
+        )
         self.garbage.bind(on_release=self._on_garbage)
-        self.layout.add_widget(self.garbage)
-        self.garbage.opacity = 0
-        self.garbage.disabled = True
+        self.setting_layout.add_widget(self.garbage)
+        
+        close_btn = Button(
+            text='X', 
+            font_name = 'NotoSans-Regular',
+            size_hint=(None , None), 
+            font_size = 55,
+            size = (130, 90),
+            color=(0.065, 0.24, 0, 1),
+            background_normal = '' ,
+            background_color = (0.265, 0.44, 0.108, 1),
+            pos=(Window.width - 350, 
+                Window.height *0.7
+            )
+        )
+        self.setting_layout.add_widget(close_btn)
+        close_btn.bind(on_release=self.hide)
+        
+        nm = round(dp(10))
+        version_text = Label(
+            text=str(FULL_VERSION_in_setting),
+            font_name='NotoSans-Light',
+            size_hint=(None, None),
+            font_size=nm,
+            halign='center',
+            valign='middle',
+            pos_hint = {'x': 0.28, 'y': 0.397},
+            color=(1, 1, 1, 1),
+            outline_color=(0, 0, 0, 1),
+            outline_width=2
+        )
+        self.setting_layout.add_widget(version_text)
       
     def set_game_screen(self, game_screen):
         self.game_screen = game_screen
+        
+    def hide(self, *args):
+        self.remove_widget(self.setting_layout)
     
     def _on_garbage(self, *args):
         try:
+            self.remove_widget(self.setting_layout)
             self.game_screen.gb_clear()   
         except Exception as e:
             log_error("_on_garbage_clear_save", e)
+        
+    def _on_setting(self, *args):
+        try:
+            self.add_widget(self.setting_layout)
+        except Exception as e:
+            log_error("_on_setting", e)
         
     def create_label(self, text, pos_hint):
             return Label(
@@ -143,11 +206,11 @@ class StatusBar(FloatLayout):
             self.menu_open = not self.menu_open
             if self.menu_open:
                 button.source = resource_find('assets/Menu2.png')
-                self.garbage.opacity = 1
-                self.garbage.disabled = False
+                self.setting.opacity = 1
+                self.setting.disabled = False
             else:
                 button.source = resource_find('assets/Menu.png')
-                self.garbage.opacity = 0
-                self.garbage.disabled = True
+                self.setting.opacity = 0
+                self.setting.disabled = True
         except Exception as e:
             log_error("open_menu", e)

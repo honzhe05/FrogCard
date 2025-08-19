@@ -311,7 +311,9 @@ class GameScreen(Screen):
                 self.app.buy_more_grass,
                 self.app.buy_cloud,
                 self.app.buy_tree,
-                self.app.buy_apple
+                self.app.buy_apple,
+                self.app.music,
+                self.app.sound
             )
         except Exception as e:
             log_error(f"GameScreen.save", e)
@@ -337,6 +339,8 @@ class GameScreen(Screen):
                 self.app.buy_cloud = data.get("buy_cloud", True)
                 self.app.buy_tree = data.get("buy_tree", True)
                 self.app.buy_apple = data.get("buy_apple", True)
+                self.music = data.get("music", 100)
+                self.sound = data.get("sound", 100)
                 self.status_bar.exp_bar.update_arc()
                 self.status_bar.create_exp_level_label()
                 
