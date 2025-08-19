@@ -34,8 +34,8 @@ class StatusBar(FloatLayout):
         self.layout.add_widget(topbar)
         
         # money and diamond
-        self.money = self.create_label(str(self.app.mn), {'x': 0.8, 'y': 0.949})
-        self.diamond = self.create_label(str(self.app.dm), {'x': 0.4, 'y': 0.948})
+        self.money = self.create_label(str(self.app.mn), {'x': 0.8, 'y': dp(0.3616)})
+        self.diamond = self.create_label(str(self.app.dm), {'x': 0.4, 'y': dp(0.3615)})
         self.layout.add_widget(self.money)
         self.layout.add_widget(self.diamond)
         

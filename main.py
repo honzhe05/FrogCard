@@ -19,7 +19,6 @@ from config import APP_VERSION
 from ui.fonts import register_fonts
 from ui.update_popup import show_update_popup
 import logic.sound
-import threading
 
 def safe_set_clearcolor(first_try=True):
     try:
@@ -76,7 +75,6 @@ class MyApp(App):
         
     def on_start(self):
         Clock.schedule_once(self.check_for_update, 3)
-        threading.Thread(target=bgm_player, daemon=True).start()
 
     def check_for_update(self, dt):
         update_info = check_update(APP_VERSION)
