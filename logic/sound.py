@@ -4,7 +4,7 @@ import threading
 
 def play_sound(name):
     try:
-        path = resource_find(f"assets/{name}.wav")
+        path = resource_find(f"audios/{name}")
         if not path:
             print(f"❌ 找不到音效檔：{name}")
             return

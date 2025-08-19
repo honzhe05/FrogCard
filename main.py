@@ -18,6 +18,7 @@ from update_checker import check_update
 from config import APP_VERSION
 from ui.fonts import register_fonts
 from ui.update_popup import show_update_popup
+import logic.sound
 
 def safe_set_clearcolor(first_try=True):
     try:
@@ -169,6 +170,18 @@ class MyApp(App):
     
     def stop_app(self, *args):
         self.stop()
+
+def bgm_player():
+    bgms = [
+        "HiddenAgenda.mp3",
+        "IfIHadaChicken.mp3",
+        "JauntyGumption.mp3",
+        "TheBuilder.mp3",
+        "Wallpaper.mp3",
+    ]
+    while True:
+        for bgm in bgms:
+            logic.sound.play_sound(bgm)
     
 if __name__ == '__main__':
     MyApp().run()
