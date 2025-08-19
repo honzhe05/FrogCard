@@ -34,8 +34,8 @@ class StatusBar(FloatLayout):
         self.layout.add_widget(topbar)
         
         # money and diamond
-        self.money = self.create_label(str(self.app.mn), {'x': 0.8, 'y': dp(0.3616)})
-        self.diamond = self.create_label(str(self.app.dm), {'x': 0.4, 'y': dp(0.3615)})
+        self.money = self.create_label(str(self.app.mn), {'x': 0.8, 'y': 0.949})
+        self.diamond = self.create_label(str(self.app.dm), {'x': 0.4, 'y': 0.949})
         self.layout.add_widget(self.money)
         self.layout.add_widget(self.diamond)
         
@@ -48,10 +48,12 @@ class StatusBar(FloatLayout):
         self.layout.add_widget(self.exp_bar)
         self.create_exp_level_label()
         
+        w = round(dp(37))
+        h = round(dp(29.6))
         self.menu_button = ImageButton(
             source = resource_find('assets/Menu.png'),
             size_hint = (None , None) ,
-            size = (100 , 80),
+            size = (w, h),
             pos_hint = {'x' : 0.9 , 'y' : 0.895}
         )
         self.layout.add_widget(self.menu_button)
@@ -121,7 +123,7 @@ class StatusBar(FloatLayout):
             text=str(self.app.level),
             font_name='NotoSans-Light',
             size_hint=(None, None),
-            font_size=90,
+            font_size=dp(33.3),
             pos_hint={'x': 0.03, 'y': 0.941},
             halign="center",
             valign="middle",

@@ -62,11 +62,14 @@ class GameScreen(Screen):
         self.btn_h = buttonbar.height
         
         #shop menu
+        w = round(dp(92.6))
+        w1 = round(dp(74))
+        h = round(dp(55.6))
         self.shop_menu = ImageButton(
             source = resource_find('assets/Shopicon.png'),
             size_hint = (None, None),
-            size = (200, 150),
-            pos_hint = {'x': 0.04, 'y' : 0.006}
+            size = (w, h),
+            pos_hint = {'x': 0.03, 'y' : 0.006}
         )
         self.layout.add_widget(self.shop_menu)
         self.shop_menu.bind(on_release = self.open_shop)
@@ -75,7 +78,7 @@ class GameScreen(Screen):
         self.cardmenu = ImageButton(
             source = resource_find('assets/CardShop.png'),
             size_hint = (None, None),
-            size = (250, 150),
+            size = (w, h),
             pos_hint = {'x': 0.38, 'y': 0.006}
         )
         self.layout.add_widget(self.cardmenu)
@@ -85,7 +88,7 @@ class GameScreen(Screen):
         self.decorate_menu = ImageButton(
             source = resource_find('assets/Tree.png'),
             size_hint = (None, None),
-            size = (200, 150),
+            size = (w1, h),
             pos_hint = {'x': 0.78, 'y': 0.006}
         )
         self.layout.add_widget(self.decorate_menu)
