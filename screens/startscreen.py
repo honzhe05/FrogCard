@@ -6,6 +6,7 @@ from kivy.animation import Animation
 from kivy.uix.image import Image
 from kivy.uix.label import Label
 from kivy.core.window import Window
+from kivy.metrics import dp
 from kivy.uix.screenmanager import Screen
 from components.imagebutton import ImageButton
 from utils.error_handler import log_error
@@ -28,17 +29,19 @@ class StartScreen(Screen):
         layout.add_widget(background)
         
         #version
+        nm = round(dp(11))
+        nnm = round(dp(10))
         version_text = Label(
-            text=(f"[size=30]Game Version: {FULL_VERSION}\n"
-                  "[size=28]Did you know? I created two new bugs while trying to fix one.\n"
-                  "[size=28]Spent over two hours tweaking and debugging... still couldn't fix it.\n"
-                  "[size=28]Game Developer: Honzhe, AvianJay and copilot. wait nooo\n"),
+            text=(f"[size={nm}]Game Version: {FULL_VERSION}\n"
+                  f"[size={nnm}]Did you know? I created two new bugs while trying to fix one.\n"
+                  f"[size={nnm}]Spent over two hours tweaking and debugging... still couldn't fix it.\n"
+                  f"[size={nnm}]Game Developer: Honzhe, AvianJay and copilot. wait nooo\n"),
             markup = True,
             font_name='NotoSans-Light',
-            size_hint=(None, None),
+            #size_hint=(None, None),
             size=(Window.width * 0.8, Window.height * 0.01),
-            font_size=30,
-            pos_hint={'x': 0, 'y': 0.94},
+            font_size=nm,
+            pos=(10, Window.height * 0.899),
             color=(1, 1, 1, 1),
             outline_color=(0, 0, 0, 1),
             outline_width=2

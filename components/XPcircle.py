@@ -2,6 +2,7 @@
 from kivy.uix.widget import Widget
 from kivy.graphics import Color, Ellipse , Line
 from kivy.app import App
+from kivy.metrics import dp
 from utils.error_handler import log_error
 from kivy.clock import Clock
 
@@ -23,7 +24,7 @@ class ExpArc(Widget):
             Color(0.2, 0.8, 0.2, 1)
             Line(
                 circle=(self.center_x, self.center_y, size / 2, 90, self.get_angle()),
-                width=10
+                width=dp(3.3)
             )
             
     def add_exp(self, amount):
