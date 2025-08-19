@@ -1,6 +1,7 @@
 from kivy.resources import resource_find
 from kivy.core.audio import SoundLoader
 import threading
+import time
 
 def play_sound(name):
     try:
@@ -12,6 +13,7 @@ def play_sound(name):
         if sound:
             print(f"✅ 播放音效：{sound.source}（{sound.length:.3f} 秒）")
             sound.play()
+            time.sleep(sound.length + 0.5)
     except Exception as e:
         print(f"❌ 播放失敗：{e}")
 
