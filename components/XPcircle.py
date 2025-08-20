@@ -1,6 +1,6 @@
 # XPcircle.py
 from kivy.uix.widget import Widget
-from kivy.graphics import Color, Ellipse, Line
+from kivy.graphics import Color, Line
 from kivy.app import App
 from kivy.metrics import dp
 from utils.error_handler import log_error
