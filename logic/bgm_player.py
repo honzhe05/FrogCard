@@ -2,6 +2,7 @@
 from kivy.core.audio import SoundLoader
 from kivy.clock import Clock
 
+
 class MusicPlayer:
     def __init__(self, playlist):
         self.playlist = playlist

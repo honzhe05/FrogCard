@@ -12,8 +12,9 @@ from kivy.metrics import dp
 from kivy.core.window import Window
 from utils.error_handler import log_error
 
+
 class MovingFly(ButtonBehavior, Image):
-    def __init__(self , money=None , **kwargs):
+    def __init__(self, money=None, **kwargs):
         super().__init__(**kwargs)
         self.money = money
         speed = random.uniform(2, 8)
@@ -23,19 +24,19 @@ class MovingFly(ButtonBehavior, Image):
         Clock.schedule_interval(self.move, 1/60)
         self.app = App.get_running_app()
         self._move_event = None
-        
-    def move(self , dt):
+
+    def move(self, dt):
         if self.disabled:
             return
-            
-        self.x += self.vx 
+
+        self.x += self.vx
         self.y += self.vy
-        
+
         if self.x < 0 or self.x > Window.width - 100:
             self.vx *= -1
         if self.y < 200 or self.y > Window.height - 300:
             self.vy *= -1
-    
+
     def on_release(self):
         try:
             if not self.disabled:
@@ -49,7 +50,7 @@ class MovingFly(ButtonBehavior, Image):
                 else:
                     self.app.mn += self.xp
                     self.size_mn = self.xp
-        
+
                 game_screen = self.app.root.get_screen('game')
                 shop_panel = self.app.root.get_screen('shop')
                 decorate_screen = self.app.root.get_screen('decorate')
@@ -61,7 +62,7 @@ class MovingFly(ButtonBehavior, Image):
                 game_screen.status_bar.update_exp_level_label()
                 shop_panel.status_bar.update_exp_level_label()
                 decorate_screen.status_bar.update_exp_level_label()
-    
+
                 self.source = resource_find('assets/Particle.png')
                 fade_out = Animation(opacity=0, duration=0.5)
                 fade_out.bind(on_complete=self.fade_complete)
@@ -76,17 +77,17 @@ class MovingFly(ButtonBehavior, Image):
         self.opacity = 1
         self.source = resource_find('assets/Fly.png')
         self.disabled = False
-        
+
         random_size = dp(random.uniform(16.67, 83.33))
-        self.size = (random_size , random_size)
+        self.size = (random_size, random_size)
         self.pos = (
-               random.randint(0 , Window.width - 100) ,
-               random.randint(200 , Window.height - 300)
-            )
-            
-    def fade_complete(self , animation , widget):
-        widget.opacity = 0      
-        
+            random.randint(0, Window.width - 100),
+            random.randint(200, Window.height - 300)
+        )
+
+    def fade_complete(self, animation, widget):
+        widget.opacity = 0
+
     def on_parent(self, widget, parent):
         if parent is None and self._move_event:
             Clock.unschedule(self._move_event)

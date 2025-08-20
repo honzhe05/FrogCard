@@ -1,5 +1,4 @@
 # config.py
-from kivy.utils import platform
 
 APP_VERSION = "v1.0.7-beta"
 # DEVELOPER = True

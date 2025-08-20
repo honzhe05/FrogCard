@@ -1,6 +1,7 @@
 from kivy.app import App
 from kivy.clock import Clock
 
+
 class PlayTimer:
     def __init__(self):
         self.app = App.get_running_app()

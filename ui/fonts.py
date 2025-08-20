@@ -1,7 +1,8 @@
-#fonts.py
+# fonts.py
 from utils.error_handler import log_error
 from kivy.core.text import LabelBase
 from kivy.resources import resource_find
+
 
 def register_fonts():
     try:

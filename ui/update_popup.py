@@ -1,10 +1,10 @@
-#update_popup.py
+# update_popup.py
 import webbrowser
 from kivy.uix.popup import Popup
-from utils.error_handler import log_error
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
+
 
 def show_update_popup(data):
     layout = BoxLayout(
@@ -17,10 +17,10 @@ def show_update_popup(data):
         font_name="NotoSans-Regular",
     )
     update_btn_layout = BoxLayout(
-            size_hint_y=None,
-            height='40dp',
-            spacing=10
-        )
+        size_hint_y=None,
+        height='40dp',
+        spacing=10
+    )
     down_btn = Button(
         text="前往下載",
         font_name="NotoSans-Regular",
@@ -40,12 +40,12 @@ def show_update_popup(data):
         size_hint=(0.5, 0.8)
     )
     layout.add_widget(label)
-    
+
     update_btn_layout.add_widget(web_btn)
     update_btn_layout.add_widget(btn)
     update_btn_layout.add_widget(down_btn)
     layout.add_widget(update_btn_layout)
-    
+
     popup = Popup(
         title="Update Notification!!",
         background='',

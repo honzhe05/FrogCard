@@ -1,6 +1,7 @@
-#error_handler.py
+# error_handler.py
 from datetime import datetime
 import traceback
+
 
 def log_error(tag, e):
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

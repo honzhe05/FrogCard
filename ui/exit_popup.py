@@ -1,9 +1,9 @@
-#exit_popup.py
+# exit_popup.py
 from kivy.uix.popup import Popup
-from utils.error_handler import log_error
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
+
 
 def show_exit_popup(q):
     layout = BoxLayout(
@@ -12,8 +12,8 @@ def show_exit_popup(q):
         spacing=10,
     )
     label = Label(
-        text= '你真的想要退出嗎？(盯',
-        font_name = 'NotoSans-Regular'
+        text='你真的想要退出嗎？(盯',
+        font_name='NotoSans-Regular'
     )
     btn_layout = BoxLayout(
         size_hint_y=None,
@@ -38,7 +38,7 @@ def show_exit_popup(q):
     layout.add_widget(label)
     layout.add_widget(btn_layout)
 
-    self.popup = Popup(
+    popup = Popup(
         title='Are You Sure?',
         content=layout,
         background='',
@@ -47,11 +47,12 @@ def show_exit_popup(q):
         auto_dismiss=False,
     )
 
-    btn_yes.bind(on_release=self.stop_app)
-    btn_yes.bind(on_release=self.popup.dismiss)
-    btn_no.bind(on_release=self.popup.dismiss)
+    btn_yes.bind(on_release=stop_app)
+    btn_yes.bind(on_release=popup.dismiss)
+    btn_no.bind(on_release=popup.dismiss)
 
-    self.popup.open()
+    popup.open()
+
 
 def stop_app(self, *args):
     self.stop()

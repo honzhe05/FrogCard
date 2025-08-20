@@ -6,6 +6,7 @@ from kivy.animation import Animation
 from kivy.core.window import Window
 from math import cos, radians
 
+
 class FlipCardWidget(Widget):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -20,7 +21,7 @@ class FlipCardWidget(Widget):
             source='assets/TitleFrog.png',
             size_hint=(None, None),
             size=(500, 500),
-            pos=(center_x, start_y), 
+            pos=(center_x, start_y),
             opacity=0
         )
         self.card_back = Image(
@@ -37,7 +38,8 @@ class FlipCardWidget(Widget):
         for img in [self.card_front, self.card_back]:
             with img.canvas.before:
                 PushMatrix()
-                rot = Rotate(angle=self.angle, axis=(0, 0, 1), origin=img.center)
+                rot = Rotate(angle=self.angle, axis=(
+                    0, 0, 1), origin=img.center)
                 scale = Scale(x=1, y=1, z=1, origin=img.center)
             with img.canvas.after:
                 PopMatrix()
@@ -74,17 +76,19 @@ class FlipCardWidget(Widget):
 
     def finalize_card(self, *args):
         self.rotation_active = False
-    
+
         # 穩定定格：角色圖與背景圖都展開且完全顯示
         self.card_front.opacity = 1
         self.card_front._scale.x = 1
-    
+
         self.card_back.opacity = 1
         self.card_back._scale.x = 1  # ✅ 這一行是關鍵
+
 
 class FlipCardApp(App):
     def build(self):
         return FlipCardWidget()
+
 
 if __name__ == '__main__':
     FlipCardApp().run()

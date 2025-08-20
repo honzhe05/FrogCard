@@ -15,6 +15,7 @@ from components.XPcircle import ExpArc
 from config import FULL_VERSION_in_setting
 from utils.playtimer import PlayTimer
 
+
 class StatusBar(FloatLayout):
     def __init__(self, game_screen=None, **kwargs):
         super().__init__(**kwargs)
@@ -24,37 +25,39 @@ class StatusBar(FloatLayout):
         self.app = App.get_running_app()
         self.timer = PlayTimer()
         self.menu_open = False
-        
+
     def top_bar(self):
         topbar = Image(
-            source = resource_find('assets/Topbar.png') ,
-            size_hint = (None , None)
+            source=resource_find('assets/Topbar.png'),
+            size_hint=(None, None)
         )
         topbar.texture_update()
         img_w, img_h = topbar.texture.size
         screen_w, screen_h = Window.size
         topbar.width = screen_w
         topbar.height = screen_w * img_h / img_w
-          
-        topbar.pos = (0 , screen_h - topbar.height)
+
+        topbar.pos = (0, screen_h - topbar.height)
         self.layout.add_widget(topbar)
-        
+
         # money and diamond
-        self.money = self.create_label(str(self.app.mn), {'x': 0.8, 'y': 0.949})
-        self.diamond = self.create_label(str(self.app.dm), {'x': 0.4, 'y': 0.949})
+        self.money = self.create_label(
+            str(self.app.mn), {'x': 0.8, 'y': 0.949})
+        self.diamond = self.create_label(
+            str(self.app.dm), {'x': 0.4, 'y': 0.949})
         self.layout.add_widget(self.money)
         self.layout.add_widget(self.diamond)
-        
+
         # exp bar
         size_bar = dp(75)
         self.exp_bar = ExpArc(
-            size_hint = (None , None),
+            size_hint=(None, None),
             size=(size_bar*2, size_bar*2),
             pos=(-size_bar, Window.height - size_bar)
         )
         self.layout.add_widget(self.exp_bar)
         self.create_exp_level_label()
-        
+
         # menu_button
         w = round(dp(37))
         h = round(dp(29.6))
@@ -66,10 +69,10 @@ class StatusBar(FloatLayout):
         )
         self.layout.add_widget(self.menu_button)
         self.menu_button.bind(on_release=self.open_menu)
-        
+
         # self.setting
         self.setting = ImageButton(
-            source=resource_find('assets/Setting.png') ,
+            source=resource_find('assets/Setting.png'),
             size_hint=(None, None),
             pos_hint={'x': 0.9, 'y': 0.85},
         )
@@ -77,42 +80,42 @@ class StatusBar(FloatLayout):
         self.layout.add_widget(self.setting)
         self.setting.opacity = 0
         self.setting.disabled = True
-        
-        #setting menu
+
+        # setting menu
         setting_menu = Image(
             source=resource_find('assets/SettingMenu.png'),
             size_hint=(0.9, 0.8),
             pos_hint={"center_x": 0.5, "center_y": 0.5},
         )
         self.setting_layout.add_widget(setting_menu)
-        
-        #self.garbage
+
+        # self.garbage
         self.garbage = ImageButton(
-            source = resource_find('assets/Garbage.png'),
+            source=resource_find('assets/Garbage.png'),
             size_hint=(None, None),
             pos_hint={'x': 0.28, 'y': 0.32}
         )
         self.garbage.bind(on_release=self._on_garbage)
         self.setting_layout.add_widget(self.garbage)
-        
+
         close_btn = Button(
-            text='X', 
+            text='X',
             font_name='NotoSans-Regular',
-            size_hint=(None, None), 
+            size_hint=(None, None),
             font_size=55,
             size=(130, 90),
             color=(0.065, 0.24, 0, 1),
             background_normal='',
             background_color=(0.265, 0.44, 0.108, 1),
             pos=(
-                Window.width - 350, 
+                Window.width - 350,
                 Window.height * 0.7,
             ),
         )
         self.setting_layout.add_widget(close_btn)
         close_btn.bind(on_release=self.hide)
-        
-        #version text
+
+        # version text
         nm = round(dp(10))
         version_text = Label(
             text=str(FULL_VERSION_in_setting),
@@ -121,62 +124,63 @@ class StatusBar(FloatLayout):
             font_size=nm,
             halign='center',
             valign='middle',
-            pos_hint = {'x': 0.28, 'y': 0.397},
+            pos_hint={'x': 0.28, 'y': 0.397},
             color=(1, 1, 1, 1),
             outline_color=(0, 0, 0, 1),
             outline_width=2
         )
         self.setting_layout.add_widget(version_text)
-        
-        #time label
+
+        # time label
         time_label = Label(
-            text = self.timer.get_time_str(),
+            text=self.timer.get_time_str(),
             font_name='NotoSans-Light',
             size_hint=(None, None),
             font_size=nm * 1.5,
             halign='center',
             valign='middle',
-            pos_hint = {'x': 0.64, 'y': 0.4},
+            pos_hint={'x': 0.64, 'y': 0.4},
             color=(1, 1, 1, 1),
             outline_color=(0, 0, 0, 1),
             outline_width=2
         )
         self.setting_layout.add_widget(time_label)
-        Clock.schedule_interval(lambda dt: setattr(time_label, 'text', self.timer.get_time_str()), 1)
-      
+        Clock.schedule_interval(lambda dt: setattr(
+            time_label, 'text', self.timer.get_time_str()), 1)
+
     def set_game_screen(self, game_screen):
         self.game_screen = game_screen
-        
+
     def hide(self, *args):
         self.remove_widget(self.setting_layout)
-    
+
     def _on_garbage(self, *args):
         try:
             self.remove_widget(self.setting_layout)
-            self.game_screen.gb_clear()   
+            self.game_screen.gb_clear()
         except Exception as e:
             log_error("_on_garbage_clear_save", e)
-        
+
     def _on_setting(self, *args):
         try:
             self.add_widget(self.setting_layout)
         except Exception as e:
             log_error("_on_setting", e)
-        
+
     def create_label(self, text, pos_hint):
-            return Label(
-                text=text,
-                font_name = 'NotoSans-Regular' ,
-                size_hint=(None, None),
-                size=(100, 50),
-                pos_hint=pos_hint,
-                halign="center",
-                valign="middle",
-                color=(1, 1, 1, 1),
-                outline_color=(0, 0, 0, 1),
-                outline_width=2
-            )
-        
+        return Label(
+            text=text,
+            font_name='NotoSans-Regular',
+            size_hint=(None, None),
+            size=(100, 50),
+            pos_hint=pos_hint,
+            halign="center",
+            valign="middle",
+            color=(1, 1, 1, 1),
+            outline_color=(0, 0, 0, 1),
+            outline_width=2
+        )
+
     def money_hint(self, money):
         label = Label(
             text=str(money),
@@ -195,12 +199,12 @@ class StatusBar(FloatLayout):
             opacity=1
         )
         self.layout.add_widget(label)
-    
+
         move_anim = Animation(y=label.y + 100, opacity=0, duration=0.6)
-    
+
         move_anim.bind(on_complete=lambda *a: self.layout.remove_widget(label))
         move_anim.start(label)
-        
+
     def create_exp_level_label(self):
         if hasattr(self, 'exp_level') and self.exp_level.parent:
             self.layout.remove_widget(self.exp_level)
@@ -217,10 +221,10 @@ class StatusBar(FloatLayout):
             outline_width=2
         )
         self.layout.add_widget(self.exp_level)
-    
+
     def update_exp_level_label(self):
         self.exp_level.text = str(self.app.level)
-        
+
     def open_menu(self, button):
         try:
             self.menu_open = not self.menu_open

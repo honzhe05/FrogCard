@@ -2,12 +2,12 @@ import json
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
-from kivy.core.window import Window
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen
 from kivy.animation import Animation
 from utils.error_handler import log_error
+
 
 class CardGalleryScreen(Screen):
     def __init__(self, **kwargs):
@@ -27,7 +27,7 @@ class CardGalleryScreen(Screen):
             background_color=(1, 1, 1, 0),
         )
         layout.add_widget(self.back_btn)
-        self.back_btn.bind(on_release = self.close)
+        self.back_btn.bind(on_release=self.close)
 
         self.add_widget(layout)
 
@@ -40,9 +40,10 @@ class CardGalleryScreen(Screen):
             self.back_btn.disabled = True
         else:
             self.back_btn.disabled = False
-    
+
     def close(self, *args):
         self.manager.current = 'game'
+
 
 class CardGallery(ScrollView):
     def __init__(self, **kwargs):

@@ -1,9 +1,10 @@
-#save_manager.py
+# save_manager.py
 import json
 import os
 from kivy.app import App
 from utils.error_handler import log_error
 from config import UPDATE_CHANNEL
+
 
 def get_save_path():
     try:
@@ -16,7 +17,8 @@ def get_save_path():
             return os.path.join(base_path, "savegame.json")
     except Exception as e:
         log_error("get_save_path", e)
-        return "savegame.json" 
+        return "savegame.json"
+
 
 def ensure_data_dir():
     try:
@@ -25,7 +27,15 @@ def ensure_data_dir():
     except Exception as e:
         log_error("ensure_data_dir", e)
 
-def save_game(money, diamond, xp, exp, level, quan, quan_level, quan_mn, xp_level, xp_mn, max_exp, buy_grass, buy_more_grass, buy_cloud, buy_tree, buy_apple, music, sound, h, m, s):
+
+def save_game(
+            money, diamond, xp, exp, level,
+            quan, quan_level, quan_mn,
+            xp_level, xp_mn, max_exp,
+            buy_grass, buy_more_grass,
+            buy_cloud, buy_tree, buy_apple,
+            music, sound, h, m, s
+        ):
     game_data = {
         "money": money,
         "diamond": diamond,
@@ -55,6 +65,7 @@ def save_game(money, diamond, xp, exp, level, quan, quan_level, quan_mn, xp_leve
             json.dump(game_data, f, ensure_ascii=False, indent=4)
     except Exception as e:
         log_error("save_game", e)
+
 
 def load_game():
     default_data = {
@@ -92,6 +103,7 @@ def load_game():
     except Exception as e:
         log_error("load_game", e)
     return default_data
+
 
 def clear_save():
     try:

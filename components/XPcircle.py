@@ -6,27 +6,29 @@ from kivy.metrics import dp
 from utils.error_handler import log_error
 from kivy.clock import Clock
 
+
 class ExpArc(Widget):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.app = App.get_running_app()
-        
+
         self.bind(pos=self.update_arc, size=self.update_arc)
 
     def get_angle(self):
-         return 90 + 90 * (self.app.exp / self.app.max_exp)
+        return 90 + 90 * (self.app.exp / self.app.max_exp)
 
     def update_arc(self, *args):
         size = min(self.width, self.height)
-        
+
         self.canvas.clear()
         with self.canvas:
             Color(0.2, 0.8, 0.2, 1)
             Line(
-                circle=(self.center_x, self.center_y, size / 2, 90, self.get_angle()),
+                circle=(self.center_x, self.center_y,
+                        size / 2, 90, self.get_angle()),
                 width=dp(3.3)
             )
-            
+
     def add_exp(self, amount):
         try:
             self.app.exp += amount
