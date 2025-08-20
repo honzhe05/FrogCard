@@ -195,6 +195,8 @@ android.private_storage = True
 # (str) The Android arch to build for, choices: armeabi-v7a, arm64-v8a, x86
 android.archs = armeabi-v7a, arm64-v8a
 
+android.manifest.application.activity.meta_data = android:resizeableActivity=false
+
 #
 # Python for android (p4a) specific
 #
