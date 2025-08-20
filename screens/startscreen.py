@@ -1,4 +1,4 @@
-#statrscreen.py
+# startscreen.py
 from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
 from kivy.resources import resource_find
@@ -18,7 +18,7 @@ class StartScreen(Screen):
         layout = FloatLayout()
         self.app = App.get_running_app()
         
-        #background
+        # background
         background = Image(
             source = resource_find('assets/Background.jpg') ,
             size_hint = (1, 1) ,
@@ -28,7 +28,7 @@ class StartScreen(Screen):
         )
         layout.add_widget(background)
         
-        #version
+        # version
         nm = round(dp(11))
         nnm = round(dp(10))
         version_text = Label(
@@ -50,7 +50,7 @@ class StartScreen(Screen):
         version_text.bind(size=version_text.setter('text_size'))
         layout.add_widget(version_text)
         
-        #title
+        # title
         img_width = Window.width * 0.85
         center_x = (Window.width - img_width) / 2
         center_y = Window.height * 0.22
@@ -65,7 +65,7 @@ class StartScreen(Screen):
         layout.add_widget(self.title)
         self.title.bind(on_release = self.title_change_image)
         
-        #title frog
+        # title frog
         self.titlefrog = Image(
             source = resource_find('assets/TitleFrog.png') ,
             size_hint= (0.15, 0.15),
@@ -73,7 +73,7 @@ class StartScreen(Screen):
         )
         layout.add_widget(self.titlefrog)
         
-        #start button
+        # start button
         img_width = Window.width * 0.3
         center_x = (Window.width - img_width) / 2
         center_y = Window.height * 0.05

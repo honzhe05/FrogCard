@@ -1,4 +1,4 @@
-#update_checker.py
+# update_checker.py
 import requests
 import config
 from utils.error_handler import log_error

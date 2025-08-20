@@ -1,4 +1,4 @@
-#gamescreen.py
+# gamescreen.py
 import random
 import os
 import time
@@ -44,7 +44,7 @@ class GameScreen(Screen):
         self.t = True
         self.a = True
         
-        #top bar
+        # top bar
         self.status_bar.top_bar()
         
         # button bar
@@ -61,7 +61,7 @@ class GameScreen(Screen):
         self.layout.add_widget(buttonbar)
         self.btn_h = buttonbar.height
         
-        #shop menu
+        # shop menu
         w = round(dp(92.6))
         w1 = round(dp(74))
         h = round(dp(55.6))
@@ -74,7 +74,7 @@ class GameScreen(Screen):
         self.layout.add_widget(self.shop_menu)
         self.shop_menu.bind(on_release = self.open_shop)
         
-        #card menu
+        # card menu
         self.cardmenu = ImageButton(
             source = resource_find('assets/CardShop.png'),
             size_hint = (None, None),
@@ -84,7 +84,7 @@ class GameScreen(Screen):
         self.layout.add_widget(self.cardmenu)
         self.cardmenu.bind(on_release = self.open_card)
         
-        #decorate menu
+        # decorate menu
         self.decorate_menu = ImageButton(
             source = resource_find('assets/Tree.png'),
             size_hint = (None, None),
@@ -176,7 +176,7 @@ class GameScreen(Screen):
         self.layout.remove_widget(self.fly_layer)
         self.layout.add_widget(self.fly_layer)
             
-    #fly
+    # fly
     def spawn_flies(self, count):
         try:
             for _ in range(count):

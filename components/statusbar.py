@@ -1,4 +1,4 @@
-#statusbar.py
+# statusbar.py
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.animation import Animation
@@ -43,7 +43,7 @@ class StatusBar(FloatLayout):
         self.layout.add_widget(self.money)
         self.layout.add_widget(self.diamond)
         
-        #exp bar
+        # exp bar
         size_bar = dp(75)
         self.exp_bar = ExpArc(
             size_hint = (None , None),
@@ -53,23 +53,23 @@ class StatusBar(FloatLayout):
         self.layout.add_widget(self.exp_bar)
         self.create_exp_level_label()
         
-        #menu_button
+        # menu_button
         w = round(dp(37))
         h = round(dp(29.6))
         self.menu_button = ImageButton(
-            source = resource_find('assets/Menu.png'),
-            size_hint = (None , None) ,
-            size = (w, h),
-            pos_hint = {'x' : 0.9 , 'y' : 0.895}
+            source=resource_find('assets/Menu.png'),
+            size_hint=(None, None),
+            size=(w, h),
+            pos_hint={'x': 0.9, 'y': 0.895},
         )
         self.layout.add_widget(self.menu_button)
         self.menu_button.bind(on_release=self.open_menu)
         
-        #self.setting
+        # self.setting
         self.setting = ImageButton(
-            source = resource_find('assets/Setting.png') ,
-            size_hint = (None , None),
-            pos_hint = {'x' : 0.9 , 'y' : 0.85}
+            source=resource_find('assets/Setting.png') ,
+            size_hint=(None, None),
+            pos_hint={'x': 0.9, 'y': 0.85},
         )
         self.setting.bind(on_release=self._on_setting)
         self.layout.add_widget(self.setting)
@@ -78,33 +78,34 @@ class StatusBar(FloatLayout):
         
         #setting menu
         setting_menu = Image(
-            source = resource_find('assets/SettingMenu.png'),
-            size_hint = (0.9, 0.8),
-            pos_hint = {"center_x": 0.5, "center_y": 0.5}
+            source=resource_find('assets/SettingMenu.png'),
+            size_hint=(0.9, 0.8),
+            pos_hint={"center_x": 0.5, "center_y": 0.5},
         )
         self.setting_layout.add_widget(setting_menu)
         
         #self.garbage
         self.garbage = ImageButton(
-            source = resource_find('assets/Garbage.png') ,
-            size_hint = (None , None),
-            pos_hint = {'x' : 0.28, 'y' : 0.32}
+            source = resource_find('assets/Garbage.png'),
+            size_hint=(None, None),
+            pos_hint={'x': 0.28, 'y': 0.32}
         )
         self.garbage.bind(on_release=self._on_garbage)
         self.setting_layout.add_widget(self.garbage)
         
         close_btn = Button(
             text='X', 
-            font_name = 'NotoSans-Regular',
-            size_hint=(None , None), 
-            font_size = 55,
-            size = (130, 90),
+            font_name='NotoSans-Regular',
+            size_hint=(None, None), 
+            font_size=55,
+            size=(130, 90),
             color=(0.065, 0.24, 0, 1),
-            background_normal = '' ,
-            background_color = (0.265, 0.44, 0.108, 1),
-            pos=(Window.width - 350, 
-                Window.height *0.7
-            )
+            background_normal='',
+            background_color=(0.265, 0.44, 0.108, 1),
+            pos=(
+                Window.width - 350, 
+                Window.height * 0.7,
+            ),
         )
         self.setting_layout.add_widget(close_btn)
         close_btn.bind(on_release=self.hide)
@@ -161,7 +162,7 @@ class StatusBar(FloatLayout):
         label = Label(
             text=str(money),
             font_name='NotoSans-Regular',
-            font_size = round(dp(15.6)),
+            font_size=round(dp(15.6)),
             bold=True,
             size_hint=(None, None),
             size=(120, 100),

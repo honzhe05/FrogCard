@@ -1,4 +1,4 @@
-#shop.py
+# decoratescreen.py
 from kivy.app import App
 from kivy.resources import resource_find
 from kivy.uix.label import Label
@@ -28,14 +28,15 @@ class DecorateScreen(Screen):
         
         close_btn = Button(
             text='X', 
-            font_name = 'NotoSans-Regular',
+            font_name='NotoSans-Regular',
             size_hint=(None , None), 
-            font_size = 55,
-            size = (100, 90),
+            font_size=55,
+            size=(100, 90),
             color=(0.065, 0.24, 0, 1),
-            background_normal = '' ,
-            background_color = (0.265, 0.44, 0.108, 1),
-            pos=(Window.width - 100, 
+            background_normal='',
+            background_color=(0.265, 0.44, 0.108, 1),
+            pos=(
+                Window.width - 100, 
                 Window.height *0.688
             )
         )
@@ -67,15 +68,15 @@ class DecorateScreen(Screen):
         
     def create_btn(self, pos_hint):
         return Button(
-            text = '購買',
-            font_name = 'NotoSans-Regular',
-            size_hint=(None , None), 
-            size = (160, 90),
+            text='購買',
+            font_name='NotoSans-Regular',
+            size_hint=(None, None), 
+            size=(160, 90),
             color=(0, 0, 0, 1),  
-            background_normal = '' ,
-            background_color = (0.265, 0.44, 0.108, 1),
-            pos_hint = pos_hint,
-            disabled = True
+            background_normal='' ,
+            background_color=(0.265, 0.44, 0.108, 1),
+            pos_hint=pos_hint,
+            disabled=True,
         )
         
     def on_enter(self):
@@ -100,7 +101,7 @@ class DecorateScreen(Screen):
             if self.app.mn >= self.grass_mn:
                 self.app.mn -= self.grass_mn
                 self.deco_update_mn()
-                
+
                 self.status_bar.money_hint("-100")
                 self.grass_btn.disabled = True
                 self.app.buy_grass = False
@@ -126,7 +127,7 @@ class DecorateScreen(Screen):
             if self.app.mn >= self.cloud_mn:
                 self.app.mn -= self.cloud_mn
                 self.deco_update_mn()
-                
+
                 self.status_bar.money_hint("-300")
                 self.cloud_btn.disabled = True
                 self.app.buy_cloud = False
@@ -139,7 +140,7 @@ class DecorateScreen(Screen):
             if self.app.mn >= self.tree_mn:
                 self.app.mn -= self.tree_mn
                 self.deco_update_mn()
-                
+
                 self.status_bar.money_hint("-500")
                 self.tree_btn.disabled = True
                 self.app.buy_tree = False
@@ -152,7 +153,7 @@ class DecorateScreen(Screen):
             if self.app.mn >= self.apple_mn:
                 self.app.mn -= self.apple_mn
                 self.deco_update_mn()
-                
+
                 self.status_bar.money_hint("-1000")
                 self.apple_btn.disabled = True
                 self.app.buy_apple = False

@@ -20,11 +20,11 @@ class CardGalleryScreen(Screen):
         self.back_btn = Button(
             text="X",
             size_hint=(None, None),
-            font_size = 70,
-            color = (0.56, 0.26, 0.07, 1),
+            font_size=70,
+            color=(0.56, 0.26, 0.07, 1),
             pos_hint={'top': 0.99, 'right': 0.98},
             background_normal='',
-            background_color=(1, 1, 1, 0)
+            background_color=(1, 1, 1, 0),
         )
         layout.add_widget(self.back_btn)
         self.back_btn.bind(on_release = self.close)
@@ -63,7 +63,7 @@ class CardGallery(ScrollView):
                 text=rarity,
                 font_name='NotoSans-Light',
                 size_hint_y=None,
-                height=100
+                height=100,
             )
             outer.add_widget(title)
 
@@ -76,7 +76,7 @@ class CardGallery(ScrollView):
                         text=card['name'],
                         font_name='NotoSans-Light',
                         size_hint_y=None,
-                        height=200
+                        height=200,
                     )
                     grid.add_widget(btn)
 

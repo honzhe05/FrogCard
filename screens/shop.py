@@ -1,4 +1,4 @@
-#shop.py
+# shop.py
 from kivy.app import App
 from kivy.resources import resource_find
 from kivy.uix.label import Label
@@ -20,7 +20,7 @@ class ShopPanel(Screen):
         bg = Image(
             source=resource_find('assets/Shop.png'),
             size_hint=(None, None),
-            size = Window.size,
+            size=Window.size,
             pos=(0, 0)
         )
         self.add_widget(bg)
@@ -29,11 +29,11 @@ class ShopPanel(Screen):
         self.add_widget(self.status_bar)
                           
         self.fly_quan = Label(
-            text = str(self.app.quan),
-            font_name = 'NotoSans-Regular',
-            size_hint=(None , None), 
-            font_size = 60,
-            pos_hint = {'x' : 0.56, 'y' : 0.508},
+            text=str(self.app.quan),
+            font_name='NotoSans-Regular',
+            size_hint=(None, None), 
+            font_size= 60,
+            pos_hint={'x' : 0.56, 'y' : 0.508},
             halign="center",
             valign="middle",
             color=(1, 1, 1, 1),
@@ -43,11 +43,11 @@ class ShopPanel(Screen):
         self.add_widget(self.fly_quan)
         
         self.xp_quan = Label(
-            text = str(self.app.xp),
-            font_name = 'NotoSans-Regular',
+            text=str(self.app.xp),
+            font_name='NotoSans-Regular',
             size_hint=(None , None), 
-            font_size = 60,
-            pos_hint = {'x' : 0.56, 'y' : 0.408},
+            font_size=60,
+            pos_hint={'x': 0.56, 'y': 0.408},
             halign="center",
             valign="middle",
             color=(1, 1, 1, 1),
@@ -57,11 +57,11 @@ class ShopPanel(Screen):
         self.add_widget(self.xp_quan)
         
         self.quan_level_label = Label(
-            text = "LV. " + str(self.app.quan_level),
-            font_name = 'NotoSans-Light',
+            text="LV. " + str(self.app.quan_level),
+            font_name='NotoSans-Light',
             size_hint=(None , None), 
-            font_size = 40,
-            pos_hint = {'x' : 0.26, 'y' : 0.538},
+            font_size=40,
+            pos_hint={'x' : 0.26, 'y' : 0.538},
             halign="center",
             valign="middle",
             color=(1, 1, 1, 1),
@@ -71,11 +71,11 @@ class ShopPanel(Screen):
         self.add_widget(self.quan_level_label)
         
         self.xp_level_label = Label(
-            text = "LV. " + str(self.app.xp_level),
-            font_name = 'NotoSans-Light',
+            text="LV. " + str(self.app.xp_level),
+            font_name= 'NotoSans-Light',
             size_hint=(None , None), 
-            font_size = 40,
-            pos_hint = {'x' : 0.26, 'y' : 0.438},
+            font_size=40,
+            pos_hint={'x' : 0.26, 'y' : 0.438},
             halign="center",
             valign="middle",
             color=(1, 1, 1, 1),
@@ -85,28 +85,28 @@ class ShopPanel(Screen):
         self.add_widget(self.xp_level_label)
         
         self.quan_need_mn = Label(
-            text = str(self.app.quan_mn),
-            font_name = 'NotoSans-Light',
-            size_hint=(None , None), 
-            font_size = 50,
-            pos_hint = {'x' : 0.82, 'y' : 0.508},
+            text=str(self.app.quan_mn),
+            font_name='NotoSans-Light',
+            size_hint=(None, None), 
+            font_size=50,
+            pos_hint={'x': 0.82, 'y': 0.508},
             halign="center",
             valign="middle",
             color=(1, 1, 1, 1),
             outline_color=(0, 0, 0, 1),
-            outline_width=2
+            outline_width=2,
         )
         self.add_widget(self.quan_need_mn)
         
         self.xp_btn = Button(
-            text = '購買',
-            font_name = 'NotoSans-Regular',
-            size_hint=(None , None), 
-            size = (160, 100),
+            text='購買',
+            font_name='NotoSans-Regular',
+            size_hint=(None, None), 
+            size=(160, 100),
             color=(0, 0, 0, 1),  
-            background_normal = '' ,
-            background_color = (0.265, 0.44, 0.108, 1),
-            pos_hint = {'x': 0.65 , 'y': 0.408}
+            background_normal='' ,
+            background_color=(0.265, 0.44, 0.108, 1),
+            pos_hint={'x': 0.65 , 'y': 0.408},
         )
         self.add_widget(self.xp_btn)
         self.xp_btn.bind(on_release=self.buy_xp)
@@ -115,44 +115,45 @@ class ShopPanel(Screen):
             self.app.xp_mn = "MAX"
         
         self.xp_need_mn = Label(
-            text = str(self.app.xp_mn),
-            font_name = 'NotoSans-Light',
-            size_hint=(None , None), 
-            font_size = 50,
-            pos_hint = {'x' : 0.82, 'y' : 0.408},
+            text=str(self.app.xp_mn),
+            font_name='NotoSans-Light',
+            size_hint=(None, None), 
+            font_size=50,
+            pos_hint={'x': 0.82, 'y': 0.408},
             halign="center",
             valign="middle",
             color=(1, 1, 1, 1),
             outline_color=(0, 0, 0, 1),
-            outline_width=2
+            outline_width=2,
         )
         self.add_widget(self.xp_need_mn)
         
         quan_btn = Button(
-            text = '購買',
-            font_name = 'NotoSans-Regular',
-            size_hint=(None , None), 
-            size = (160, 100),
+            text='購買',
+            font_name='NotoSans-Regular',
+            size_hint=(None, None), 
+            size=(160, 100),
             color=(0, 0, 0, 1),  
-            background_normal = '' ,
-            background_color = (0.265, 0.44, 0.108, 1),
-            pos_hint = {'x': 0.65 , 'y': 0.508}
+            background_normal='' ,
+            background_color=(0.265, 0.44, 0.108, 1),
+            pos_hint={'x': 0.65, 'y': 0.508}
         )
         self.add_widget(quan_btn)
         quan_btn.bind(on_release=self.buy_quan)
         
         close_btn = Button(
             text='X', 
-            font_name = 'NotoSans-Regular',
-            size_hint=(None , None), 
-            font_size = 55,
-            size = (100, 90),
+            font_name='NotoSans-Regular',
+            size_hint=(None, None), 
+            font_size=55,
+            size=(100, 90),
             color=(0.065, 0.24, 0, 1),
-            background_normal = '' ,
-            background_color = (0.265, 0.44, 0.108, 1),
-            pos=(Window.width - 100, 
-                Window.height *0.591
-            )
+            background_normal='',
+            background_color=(0.265, 0.44, 0.108, 1),
+            pos=(
+                Window.width - 100, 
+                Window.height *0.591,
+            ),
         )
         self.add_widget(close_btn)
         close_btn.bind(on_release=self.hide)
