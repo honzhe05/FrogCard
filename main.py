@@ -56,6 +56,9 @@ class MyApp(App):
         self.con = False
         self.music = 100
         self.sound = 100
+        self.h = 0
+        self.m = 0
+        self.s = 0
         self.is_exiting = True
         
         bgms = [
