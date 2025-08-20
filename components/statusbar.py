@@ -27,18 +27,11 @@ class StatusBar(FloatLayout):
         self.menu_open = False
 
     def top_bar(self):
-        topbar = Image(
+        self.topbar = Image(
             source=resource_find('assets/Topbar.png'),
             size_hint=(None, None)
         )
-        topbar.texture_update()
-        img_w, img_h = topbar.texture.size
-        screen_w, screen_h = Window.size
-        topbar.width = screen_w
-        topbar.height = screen_w * img_h / img_w
-
-        topbar.pos = (0, screen_h - topbar.height)
-        self.layout.add_widget(topbar)
+        self.update_top_bar()
 
         # money and diamond
         self.money = self.create_label(
@@ -147,6 +140,18 @@ class StatusBar(FloatLayout):
         self.setting_layout.add_widget(time_label)
         Clock.schedule_interval(lambda dt: setattr(
             time_label, 'text', self.timer.get_time_str()), 1)
+
+    def update_top_bar(self, dt=None):
+        self.topbar.texture_update()
+        img_w, img_h = self.topbar.texture.size
+        screen_w, screen_h = Window.size
+        self.topbar.width = screen_w
+        self.topbar.height = screen_w * img_h / img_w
+        self.topbar.pos = (0, screen_h - self.topbar.height)
+
+        if self.topbar.parent:
+            self.topbar.parent.remove_widget(self.topbar)
+        self.layout.add_widget(self.topbar, index=6)
 
     def set_game_screen(self, game_screen):
         self.game_screen = game_screen

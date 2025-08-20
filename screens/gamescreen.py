@@ -349,6 +349,7 @@ class GameScreen(Screen):
                 self.timer.set_time(self.app.h, self.app.m, self.app.s)
                 self.status_bar.exp_bar.update_arc()
                 self.status_bar.create_exp_level_label()
+                self.status_bar.update_top_bar()
 
                 self.status_bar.money.text = str(self.app.mn)
                 self.status_bar.diamond.text = str(self.app.dm)

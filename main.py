@@ -33,7 +33,6 @@ safe_set_clearcolor()
 
 
 class MyApp(App):
-
     def build(self):
         register_fonts()
         self.skip_save_on_exit = False
