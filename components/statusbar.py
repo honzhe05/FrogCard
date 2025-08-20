@@ -13,6 +13,7 @@ from components.imagebutton import ImageButton
 from utils.error_handler import log_error
 from components.XPcircle import ExpArc
 from config import FULL_VERSION_in_setting
+from utils.playtimer import PlayTimer
 
 class StatusBar(FloatLayout):
     def __init__(self, game_screen=None, **kwargs):
@@ -21,6 +22,7 @@ class StatusBar(FloatLayout):
         self.add_widget(self.layout)
         self.setting_layout = FloatLayout()
         self.app = App.get_running_app()
+        self.timer = PlayTimer()
         self.menu_open = False
         
     def top_bar(self):
@@ -110,6 +112,7 @@ class StatusBar(FloatLayout):
         self.setting_layout.add_widget(close_btn)
         close_btn.bind(on_release=self.hide)
         
+        #version text
         nm = round(dp(10))
         version_text = Label(
             text=str(FULL_VERSION_in_setting),
@@ -124,6 +127,22 @@ class StatusBar(FloatLayout):
             outline_width=2
         )
         self.setting_layout.add_widget(version_text)
+        
+        #time label
+        time_label = Label(
+            text = self.timer.get_time_str(),
+            font_name='NotoSans-Light',
+            size_hint=(None, None),
+            font_size=nm * 1.5,
+            halign='center',
+            valign='middle',
+            pos_hint = {'x': 0.64, 'y': 0.4},
+            color=(1, 1, 1, 1),
+            outline_color=(0, 0, 0, 1),
+            outline_width=2
+        )
+        self.setting_layout.add_widget(time_label)
+        Clock.schedule_interval(lambda dt: setattr(time_label, 'text', self.timer.get_time_str()), 1)
       
     def set_game_screen(self, game_screen):
         self.game_screen = game_screen

@@ -1,0 +1,23 @@
+{
+    "money": 100,
+    "diamond": 10,
+    "xp": 2,
+    "exp": 0,
+    "level": 1,
+    "quan": 5,
+    "quan_level": 1,
+    "quan_mn": 50,
+    "xp_level": 1,
+    "xp_mn": 100,
+    "max_exp": 100,
+    "buy_grass": true,
+    "buy_more_grass": true,
+    "buy_cloud": true,
+    "buy_tree": true,
+    "buy_apple": true,
+    "music": 100,
+    "sound": 100,
+    "h": 0,
+    "m": 0,
+    "s": 2
+}

@@ -22,6 +22,7 @@ from screens.startscreen import StartScreen
 from components.statusbar import StatusBar
 from utils.error_handler import log_error
 from screens.decoratescreen import DecorateScreen
+from utils.playtimer import PlayTimer
 
 class GameScreen(Screen):
     def __init__(self , **kwargs):
@@ -313,7 +314,10 @@ class GameScreen(Screen):
                 self.app.buy_tree,
                 self.app.buy_apple,
                 self.app.music,
-                self.app.sound
+                self.app.sound,
+                self.app.h,
+                self.app.m,
+                self.app.s
             )
         except Exception as e:
             log_error(f"GameScreen.save", e)
@@ -341,6 +345,11 @@ class GameScreen(Screen):
                 self.app.buy_apple = data.get("buy_apple", True)
                 self.music = data.get("music", 100)
                 self.sound = data.get("sound", 100)
+                self.app.h = data.get("h", 0)
+                self.app.m = data.get("m", 0)
+                self.app.s = data.get("s", 0)
+                self.timer = PlayTimer()
+                self.timer.set_time(self.app.h, self.app.m, self.app.s)
                 self.status_bar.exp_bar.update_arc()
                 self.status_bar.create_exp_level_label()
                 

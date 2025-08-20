@@ -3,11 +3,17 @@ import json
 import os
 from kivy.app import App
 from utils.error_handler import log_error
+from config import UPDATE_CHANNEL
 
 def get_save_path():
     try:
-        base_path = App.get_running_app().user_data_dir
-        return os.path.join(base_path, "savegame.json")
+        if UPDATE_CHANNEL == "developer":
+            from plyer import storagepath
+            base_path = storagepath.get_documents_dir()
+            return os.path.join(base_path, "FrogCard", "data", "savegame.json")
+        else:
+            base_path = App.get_running_app().user_data_dir
+            return os.path.join(base_path, "savegame.json")
     except Exception as e:
         log_error("get_save_path", e)
         return "savegame.json" 
@@ -19,7 +25,7 @@ def ensure_data_dir():
     except Exception as e:
         log_error("ensure_data_dir", e)
 
-def save_game(money, diamond, xp, exp, level, quan, quan_level, quan_mn, xp_level, xp_mn, max_exp, buy_grass, buy_more_grass, buy_cloud, buy_tree, buy_apple, music, sound):
+def save_game(money, diamond, xp, exp, level, quan, quan_level, quan_mn, xp_level, xp_mn, max_exp, buy_grass, buy_more_grass, buy_cloud, buy_tree, buy_apple, music, sound, h, m, s):
     game_data = {
         "money": money,
         "diamond": diamond,
@@ -38,7 +44,10 @@ def save_game(money, diamond, xp, exp, level, quan, quan_level, quan_mn, xp_leve
         "buy_tree": buy_tree,
         "buy_apple": buy_apple,
         "music": music,
-        "sound": sound
+        "sound": sound,
+        "h": h,
+        "m": m,
+        "s": s
     }
     try:
         ensure_data_dir()
@@ -66,7 +75,10 @@ def load_game():
         "buy_tree": True,
         "buy_apple": True,
         "music": 100,
-        "sound": 100
+        "sound": 100,
+        "h": 0,
+        "m": 0,
+        "s": 0
     }
     try:
         path = get_save_path()
