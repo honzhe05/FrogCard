@@ -39,6 +39,11 @@ class StatusBar(FloatLayout):
         self.update_top_bar()
 
         # money and diamond
+        if hasattr(self, 'money') and self.money.parent:
+            self.layout.remove_widget(self.money)
+        if hasattr(self, 'diamond') and self.diamond.parent:
+            self.layout.remove_widget(self.diamond)
+
         self.money = self.create_label(
             str(self.app.mn), {'x': 0.8, 'y': 0.949})
         self.diamond = self.create_label(
