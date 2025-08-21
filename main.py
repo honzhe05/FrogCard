@@ -17,6 +17,7 @@ from config import APP_VERSION
 from ui.fonts import register_fonts
 from ui.update_popup import show_update_popup
 from logic.bgm_player import MusicPlayer
+from components.statusbar import StatusBar
 
 
 def safe_set_clearcolor(first_try=True):
@@ -59,17 +60,19 @@ class MyApp(App):
         self.h = 0
         self.m = 0
         self.s = 0
+        self.music_now = "None"
         self.is_exiting = True
 
         bgms = [
-            "HiddenAgenda.mp3",
-            "IfIHadaChicken.mp3",
-            "JauntyGumption.mp3",
-            "TheBuilder.mp3",
-            "Wallpaper.mp3",
+            ("IfIHadaChicken", 150, "If I Had a Chicken"),
+            ("JauntyGumption", 118, "Jaunty Gumption"),
+            ("TheBuilder", 117, "The Builder"),
+            ("HiddenAgenda", 135, "Hidden Agenda"),
+            ("Wallpaper", 220, "Wallpaper"),
         ]
-        player = MusicPlayer(bgms)
-        player.play_next()
+        self.statusbar = StatusBar()
+        self.player = MusicPlayer(bgms, self.statusbar)
+        self.player.play_next()
 
         # test
         # Window.size = (720, 1520)
@@ -141,7 +144,6 @@ class MyApp(App):
     def on_key(self, window, key, *args):
         if key == 27:
             sm = self.root
-
             if (
                 self.con and
                 hasattr(self, 'popup') and

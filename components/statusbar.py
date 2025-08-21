@@ -25,6 +25,11 @@ class StatusBar(FloatLayout):
         self.app = App.get_running_app()
         self.timer = PlayTimer()
         self.menu_open = False
+        self.top_bar()
+        Clock.schedule_interval(
+            self._sync_music_label,
+            1
+        )
 
     def top_bar(self):
         self.topbar = Image(
@@ -130,8 +135,6 @@ class StatusBar(FloatLayout):
             font_name='NotoSans-Light',
             size_hint=(None, None),
             font_size=nm * 1.5,
-            halign='center',
-            valign='middle',
             pos_hint={'x': 0.64, 'y': 0.4},
             color=(1, 1, 1, 1),
             outline_color=(0, 0, 0, 1),
@@ -140,6 +143,30 @@ class StatusBar(FloatLayout):
         self.setting_layout.add_widget(time_label)
         Clock.schedule_interval(lambda dt: setattr(
             time_label, 'text', self.timer.get_time_str()), 1)
+
+        # music label
+        self.music_now = Label(
+            text="None",
+            font_name='NotoSans-Light',
+            size_hint=(None, None),
+            font_size=round(dp(10)) * 1.5,
+            halign='center',
+            valign='middle',
+            pos_hint={'center_x': 0.5, 'y': 0.477},
+            color=(1, 1, 1, 1),
+            outline_color=(0, 0, 0, 1),
+            outline_width=2
+        )
+        self.setting_layout.add_widget(self.music_now)
+
+    def show_music(self, song_name):
+        self.music_now.text = song_name
+
+    def _sync_music_label(self, dt):
+        if self.setting_layout.parent:
+            current_song = App.get_running_app().music_now
+            if self.music_now.text != current_song:
+                self.music_now.text = current_song
 
     def update_top_bar(self, dt=None):
         self.topbar.texture_update()
@@ -168,6 +195,7 @@ class StatusBar(FloatLayout):
 
     def _on_setting(self, *args):
         try:
+            self.show_music(App.get_running_app().music_now)
             self.add_widget(self.setting_layout)
         except Exception as e:
             log_error("_on_setting", e)

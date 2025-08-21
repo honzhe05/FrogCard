@@ -1,36 +1,34 @@
-# bgm_player
+from kivy.app import App
 from kivy.core.audio import SoundLoader
 from kivy.clock import Clock
 
 
 class MusicPlayer:
-    def __init__(self, playlist):
-        self.playlist = playlist
+    def __init__(self, playlist_with_durations, statusbar):
+        self.playlist = playlist_with_durations
+        self.statusbar = statusbar
         self.index = 0
         self.sound = None
-        self._checker = None
 
-    def play_next(self, dt=0):
+    def next(self, dt=None):
+        self.index += 1
+        self.play_next()
+
+    def play_next(self):
         if self.index >= len(self.playlist):
             self.index = 0
 
-        song_name = self.playlist[self.index]
-        sound = SoundLoader.load(f"assets/audios/{song_name}")
+        song_name, duration, song = self.playlist[self.index]
+        sound = SoundLoader.load(f"assets/audios/{song_name}.mp3")
         if sound:
+            App.get_running_app().music_now = song
+            Clock.schedule_once(
+                lambda dt: self.statusbar.show_music(song),
+                0
+            )
             self.sound = sound
             self.sound.loop = False
             self.sound.play()
-            self.index += 1
-            self._start_check()
-
-    def _start_check(self):
-        if self._checker:
-            self._checker.cancel()
-        self._checker = Clock.schedule_interval(self._check_finished, 0.5)
-
-    def _check_finished(self, dt):
-        if not self.sound or not self.sound.length:
-            return
-        if self.sound.get_pos() >= max(self.sound.length - 0.1, 0):
-            self._checker.cancel()
-            self.play_next()
+            Clock.schedule_once(self.next, duration)
+        else:
+            Clock.schedule_once(self.next, 0.5)
