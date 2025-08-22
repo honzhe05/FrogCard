@@ -45,7 +45,6 @@ class MyApp(App):
         self.xp = 2
         self.xp_level = 1
         self.xp_mn = 100
-        self.xp = 2
         self.exp = 0
         self.level = 1
         self.max_exp = 100
@@ -63,16 +62,7 @@ class MyApp(App):
         self.music_now = "None"
         self.is_exiting = True
 
-        bgms = [
-            ("IfIHadaChicken", 150, "If I Had a Chicken"),
-            ("JauntyGumption", 118, "Jaunty Gumption"),
-            ("TheBuilder", 117, "The Builder"),
-            ("HiddenAgenda", 135, "Hidden Agenda"),
-            ("Wallpaper", 220, "Wallpaper"),
-        ]
-        self.statusbar = StatusBar()
-        self.player = MusicPlayer(bgms, self.statusbar)
-        self.player.play_next()
+        Clock.schedule_once(self.play_music, 2)
 
         # test
         # Window.size = (720, 1520)
@@ -105,7 +95,7 @@ class MyApp(App):
 
         try:
             Clock.schedule_once(
-                lambda dt: Clock.schedule_interval(self.game_screen.save, 360),
+                lambda dt: Clock.schedule_interval(self.game_screen.save, 300),
                 5
             )
         except Exception as e:
@@ -114,6 +104,21 @@ class MyApp(App):
 
     def on_start(self):
         Clock.schedule_once(self.check_for_update, 3)
+
+    def play_music(self, dt):
+        bgms = [
+            ("IfIHadaChicken", 150, "If I Had a Chicken"),
+            ("JauntyGumption", 118, "Jaunty Gumption"),
+            ("TheBuilder", 117, "The Builder"),
+            ("HiddenAgenda", 135, "Hidden Agenda"),
+            ("Wallpaper", 220, "Wallpaper"),
+        ]
+        try:
+            self.statusbar = StatusBar()
+            self.player = MusicPlayer(bgms, self.statusbar)
+            self.player.play_next()
+        except Exception as e:
+            log_error("play_music", e)
 
     def check_for_update(self, dt):
         update_info = check_update(APP_VERSION)

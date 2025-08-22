@@ -1,23 +1,30 @@
+# sound.py
 from kivy.resources import resource_find
 from kivy.core.audio import SoundLoader
+from utils.error_handler import log_error
 import threading
-import time
+
+
+sound = None
 
 
 def play_sound(name):
+    global sound
     try:
         path = resource_find(f"assets/audios/{name}")
         if not path:
-            print(f"❌ 找不到音效檔：{name}")
             return
         sound = SoundLoader.load(path)
         if sound:
-            print(f"✅ 播放音效：{sound.source}（{sound.length:.3f} 秒）")
             sound.play()
-            time.sleep(sound.length + 0.5)
     except Exception as e:
-        print(f"❌ 播放失敗：{e}")
+        log_error("play_bgm", e)
 
+def stop_bgm():
+    global sound
+    if sound and hasattr(sound, "stop"):
+        sound.stop()
 
 def play_sound_background(name):
     threading.Thread(target=play_sound, args=(name,), daemon=True).start()
+    

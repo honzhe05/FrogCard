@@ -7,7 +7,7 @@ from utils.error_handler import log_error
 def check_update(current_version):
     try:
         if config.UPDATE_CHANNEL == "developer":
-            return None  # No updates for developer channel
+            return None
         elif config.UPDATE_CHANNEL == "release":
             headers = {
                 "User-Agent": "FrogCardApp/1.0"

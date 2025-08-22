@@ -9,11 +9,13 @@ from kivy.uix.button import Button
 from kivy.metrics import dp
 from kivy.clock import Clock
 from kivy.resources import resource_find
+from kivy.uix.switch import Switch
 from components.imagebutton import ImageButton
 from utils.error_handler import log_error
 from components.XPcircle import ExpArc
 from config import FULL_VERSION_in_setting
 from utils.playtimer import PlayTimer
+from logic.sound import stop_bgm
 
 
 class StatusBar(FloatLayout):
@@ -163,7 +165,22 @@ class StatusBar(FloatLayout):
             outline_width=2
         )
         self.setting_layout.add_widget(self.music_now)
-
+        
+        self.music_vol = Switch(
+            active=True,
+            size_hint=(None, None),
+            size=(dp(220), dp(20)),
+            pos_hint={'center_x': 0.53, 'y':0.63}
+        )
+        self.setting_layout.add_widget(self.music_vol)
+        self.music_vol.bind(active=self.on_switch)
+        
+    def on_switch(self, instance, value):
+        if value:
+            pass
+        else:
+            stop_bgm()
+    
     def show_music(self, song_name):
         self.music_now.text = song_name
 
