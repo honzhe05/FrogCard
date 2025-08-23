@@ -16,11 +16,11 @@ on:
 
 jobs:
   build-android-release:
-    name: Build Android Release
+    name: Build for ${{ matrix.abi }}
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      discussions: write
+    strategy:
+      matrix:
+        abi: [armeabi-v7a, arm64-v8a]
 
     steps:
       - name: Checkout
@@ -31,12 +31,23 @@ jobs:
         with:
           path: .buildozer_global
           key: buildozer-global-${{ hashFiles('buildozer.spec') }}
-        
-      - name: Get short Git commit hash
-        run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          restore-keys: |
+            buildozer-global-
+
+      - name: Cache Buildozer local build
+        uses: actions/cache@v4
+        with:
+          path: .buildozer
+          key: buildozer-local-${{ matrix.abi }}-${{ hashFiles('buildozer.spec') }}
+          restore-keys: |
+            buildozer-local-${{ matrix.abi }}-
+
+      - name: Set ABI in buildozer.spec
+        run: sed -i 's/android.arch = .*/android.arch = ${{ matrix.abi }}/' buildozer.spec
 
       - name: Replace version and update channel in config.py
         run: |
+          echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
           sed -i "s/APP_VERSION = \".*\"/APP_VERSION = \"${{ github.event.inputs.release_tag }}\"/" config.py
           sed -i "s/UPDATE_CHANNEL = \".*\"/UPDATE_CHANNEL = \"release\"/" config.py
           sed -i "s/HASH = \".*\"/HASH = \"$COMMIT_HASH\"/" config.py
@@ -72,6 +83,9 @@ jobs:
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.KEYSTORE_PASSWORD }}
 
+      - name: Rename signed APK
+        run: mv ${{ steps.sign_app.outputs.signedReleaseFile }} bin/FrogCard-${{ matrix.abi }}-${{ github.event.inputs.release_tag }}.apk
+
       - name: Upload to GitHub Release (draft)
         uses: softprops/action-gh-release@v1
         with:
@@ -79,6 +93,6 @@ jobs:
           name: ${{ github.event.inputs.release_name }}
           body: ${{ github.event.inputs.release_body }}
           draft: true
-          files: ${{ steps.sign_app.outputs.signedReleaseFile }}
+          files: bin/FrogCard-${{ matrix.abi }}-${{ github.event.inputs.release_tag }}.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
