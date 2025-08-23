@@ -4,18 +4,19 @@ on: [push, pull_request]
 jobs:
   # Build job. Builds app for Android with Buildozer
   build-android:
-    name: Build for Android
+    name: Build for ${{ matrix.abi }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        abi: [armeabi-v7a, arm64-v8a]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Cache Buildozer global directory
-        uses: actions/cache@v4
-        with:
-          path: .buildozer_global
-          key: buildozer-global-${{ hashFiles('buildozer.spec') }}
+      - name: Set ABI in buildozer.spec
+        run: |
+          sed -i 's/android.arch = .*/android.arch = ${{ matrix.abi }}/' buildozer.spec
 
       - name: Get short Git commit hash
         run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
@@ -24,6 +25,9 @@ jobs:
         run: |
           sed -i 's/HASH = ".*"/HASH = "'$COMMIT_HASH'"/' config.py
           sed -i 's/UPDATE_CHANNEL = ".*"/UPDATE_CHANNEL = "nightly"/' config.py
+
+      - name: Clean bin directory
+        run: rm -rf bin/*
 
       - name: Build with Buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
@@ -60,5 +64,5 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: FrogCard-android-signed
+          name: FrogCard-${{ matrix.abi }}-signed
           path: ${{steps.sign_app.outputs.signedReleaseFile}}
