@@ -23,7 +23,7 @@ jobs:
         abi: [armeabi-v7a, arm64-v8a]
     permissions:
       contents: write
-      discussion: write
+      discussions: write
 
     steps:
       - name: Checkout
