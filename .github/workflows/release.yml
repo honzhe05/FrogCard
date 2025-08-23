@@ -87,7 +87,7 @@ jobs:
         run: mv ${{ steps.sign_app.outputs.signedReleaseFile }} bin/FrogCard-${{ matrix.abi }}-${{ github.event.inputs.release_tag }}.apk
 
       - name: Upload APK as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: apk-${{ matrix.abi }}
           path: bin/FrogCard-${{ matrix.abi }}-${{ github.event.inputs.release_tag }}.apk
@@ -98,7 +98,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download all APKs
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           path: ./release_apks
 
