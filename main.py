@@ -129,18 +129,16 @@ class MyApp(App):
         self.is_exiting = False
         if self.skip_save_on_exit:
             return
-
         try:
-            self.game_screen.save(0)
+            self.game_screen.save()
         except Exception as e:
             log_error("on_stop", e)
 
     def on_pause(self):
         if self.skip_save_on_exit:
             return
-
         try:
-            self.game_screen.save(0)
+            self.game_screen.save()
             return True
         except Exception as e:
             log_error("on_pause", e)

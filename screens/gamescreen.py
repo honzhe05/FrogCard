@@ -178,7 +178,7 @@ class GameScreen(Screen):
     def spawn_flies(self, count):
         try:
             for _ in range(count):
-                random_size = dp(random.uniform(16.67, 83.33))
+                random_size = dp(random.uniform(18, 85))
                 fly = MovingFly(
                     source=resource_find('assets/Fly.png'),
                     size_hint=(None, None),

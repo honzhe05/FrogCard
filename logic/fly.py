@@ -41,10 +41,10 @@ class MovingFly(ButtonBehavior, Image):
         try:
             if not self.disabled:
                 self.xp = int(self.app.xp)
-                if self.size[0] < dp(30) and self.size[0] > dp(20):
+                if self.size[0] < dp(35) and self.size[0] >= dp(20):
                     self.app.mn += self.xp * 2
                     self.size_mn = self.xp * 2
-                elif self.size[0] < dp(20.33):
+                elif self.size[0] < dp(20):
                     self.app.mn += self.xp * 5
                     self.size_mn = self.xp * 5
                 else:
@@ -78,7 +78,7 @@ class MovingFly(ButtonBehavior, Image):
         self.source = resource_find('assets/Fly.png')
         self.disabled = False
 
-        random_size = dp(random.uniform(16.67, 83.33))
+        random_size = dp(random.uniform(18, 85))
         self.size = (random_size, random_size)
         self.pos = (
             random.randint(0, Window.width - 100),
