@@ -1,3 +1,6 @@
+# main.py
+import platform
+import config
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.button import Button
@@ -121,6 +124,12 @@ class MyApp(App):
             log_error("play_music", e)
 
     def check_for_update(self, dt):
+        arch = platform.machine()
+        if "aarch64" in arch:
+            config.ABI = "arm64-v8a"
+        elif "arm" in arch:
+            config.ABI = "armeabi-v7a"
+
         update_info = check_update(APP_VERSION)
         if update_info:
             show_update_popup(update_info)

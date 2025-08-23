@@ -26,8 +26,11 @@ def check_update(current_version):
                     if (
                         asset["content_type"] ==
                         "application/vnd.android.package-archive"
+                        and config.ABI in asset["name"]
                     ):
                         apk_url = asset["browser_download_url"]
+                        break
+
                 if latest_version != current_version:
                     return {
                         "version": latest_version,
@@ -67,7 +70,7 @@ def check_update(current_version):
                         "apk_url": (
                             f"https://nightly.link/honzhe05/FrogCard/"
                             f"workflows/build/main/FrogCard"
-                            f"-{config.platform}-signed.zip"
+                            f"-{config.ABI}-signed.zip"
                         ),
                     }
             return None
