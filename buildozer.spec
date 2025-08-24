@@ -23,13 +23,17 @@ source.include_exts = py,png,jpg,ttf,json,wav,mp3
 source.include_patterns = assets/*,images/*,fonts/*.ttf,assets/audios/*.mp3
 
 # (list) Source files to exclude (let empty to not exclude anything)
-#source.exclude_exts = spec
+source.exclude_exts = md,txt,psd,xcf
 
 # (list) List of directory to exclude (let empty to not exclude anything)
 #source.exclude_dirs = tests, bin
 
 # (list) List of exclusions using pattern matching
-#source.exclude_patterns = license,images/*/*.jpg
+[app:source.exclude_patterns]
+tests/*
+docs/*
+data/original/*
+*.bak
 
 # (str) Application versioning (method 1)
 version = 1.0.7
