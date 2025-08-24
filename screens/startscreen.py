@@ -21,7 +21,7 @@ class StartScreen(Screen):
 
         # background
         background = Image(
-            source=resource_find('assets/Background.jpg'),
+            source=resource_find('assets/Background.png'),
             size_hint=(1, 1),
             pos=(0, 0),
             allow_stretch=True,
