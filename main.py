@@ -65,7 +65,7 @@ class MyApp(App):
         self.music_now = "None"
         self.is_exiting = True
 
-        Clock.schedule_once(self.play_music, 2)
+        Clock.schedule_once(self.play_music, 2.5)
 
         # test
         # Window.size = (720, 1520)
