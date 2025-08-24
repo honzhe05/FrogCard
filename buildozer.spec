@@ -29,11 +29,6 @@ source.exclude_exts = md,txt,psd,xcf
 #source.exclude_dirs = tests, bin
 
 # (list) List of exclusions using pattern matching
-[app:source.exclude_patterns]
-tests/*
-docs/*
-data/original/*
-*.bak
 
 # (str) Application versioning (method 1)
 version = 1.0.7
