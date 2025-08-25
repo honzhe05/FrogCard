@@ -28,7 +28,7 @@ class DecorateScreen(Screen):
 
         close_btn = Button(
             text='X',
-            font_name='NotoSans-Regular',
+            font_name='FCSSM',
             size_hint=(None, None),
             font_size=55,
             size=(100, 90),
@@ -69,7 +69,7 @@ class DecorateScreen(Screen):
     def create_btn(self, pos_hint):
         return Button(
             text='購買',
-            font_name='NotoSans-Regular',
+            font_name='FCSSM',
             size_hint=(None, None),
             size=(160, 90),
             color=(0, 0, 0, 1),

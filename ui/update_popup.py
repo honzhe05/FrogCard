@@ -14,7 +14,7 @@ def show_update_popup(data):
     )
     label = Label(
         text=f"有新版本 {data['version']} ！",
-        font_name="NotoSans-Regular",
+        font_name="FCSSM",
     )
     update_btn_layout = BoxLayout(
         size_hint_y=None,
@@ -23,19 +23,19 @@ def show_update_popup(data):
     )
     down_btn = Button(
         text="前往下載",
-        font_name="NotoSans-Regular",
+        font_name="FCSSM",
         background_color=(0.444, 0.64, 0.736, 1),
         size_hint=(0.5, 0.8)
     )
     btn = Button(
         text="稍後下載",
-        font_name="NotoSans-Regular",
+        font_name="FCSSM",
         background_color=(0.444, 0.64, 0.736, 1),
         size_hint=(0.5, 0.8)
     )
     web_btn = Button(
         text="更新內容",
-        font_name="NotoSans-Regular",
+        font_name="FCSSM",
         background_color=(0.444, 0.64, 0.736, 1),
         size_hint=(0.5, 0.8)
     )

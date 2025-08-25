@@ -206,7 +206,7 @@ class GameScreen(Screen):
         clear_save()
         self.clear_label = Label(
             text="資料將清除，並關閉遊戲",
-            font_name='NotoSans-Bold',
+            font_name='FCSSB',
             size_hint=(None, None),
             font_size=60,
             pos_hint={'x': 0.45, 'y': 0.5},
@@ -225,7 +225,7 @@ class GameScreen(Screen):
     def confirm_del(self, *args):
         confirm_btn = Button(
             text="確認",
-            font_name='NotoSans-Regular',
+            font_name='FCSSM',
             size_hint=(None, None),
             size=(200, 100),
             pos=(
@@ -240,7 +240,7 @@ class GameScreen(Screen):
 
         cancel_btn = Button(
             text="取消",
-            font_name='NotoSans-Regular',
+            font_name='FCSSM',
             size_hint=(None, None),
             size=(200, 100),
             pos=(
@@ -255,7 +255,7 @@ class GameScreen(Screen):
 
         info_screen = Button(
             text="確定要刪除資料？",
-            font_name='NotoSans-Regular',
+            font_name='FCSSM',
             size_hint=(None, None),
             size=(410, 200),
             pos=(

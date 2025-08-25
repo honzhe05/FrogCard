@@ -186,7 +186,7 @@ class MyApp(App):
         )
         label = Label(
             text='你真的想要退出嗎？(盯',
-            font_name='NotoSans-Regular'
+            font_name='FCSSM'
         )
         btn_layout = BoxLayout(
             size_hint_y=None,

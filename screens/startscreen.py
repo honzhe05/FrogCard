@@ -37,14 +37,14 @@ class StartScreen(Screen):
                 f"[size={nm}]Game Version: {FULL_VERSION}\n"
                 f"[size={nnm}]Did you know? "
                 f"I created two new bugs while trying to fix one.\n"
-                f"[size={nnm}]Spent over two hours tweaking and debugging..."
+                f"[size={nnm}]Spent over two hours tweaking and debugging... "
                 f"still couldn't fix it.\n"
                 f"[size={nnm}]Game Developer: "
-                f"Honzhe, AvianJay and copilot."
+                f"Honzhe, AvianJay and copilot. "
                 f"wait nooo\n"
             ),
             markup=True,
-            font_name='NotoSans-Light',
+            font_name='FCSSM',
             size_hint=(1, 1),
             font_size=nm,
             pos_hint={'x': 0.01, 'top': 1},

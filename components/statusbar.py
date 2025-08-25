@@ -105,7 +105,7 @@ class StatusBar(FloatLayout):
 
         close_btn = Button(
             text='X',
-            font_name='NotoSans-Regular',
+            font_name='FCSSM',
             size_hint=(None, None),
             font_size=55,
             size=(130, 90),
@@ -124,7 +124,7 @@ class StatusBar(FloatLayout):
         nm = round(dp(10))
         version_text = Label(
             text=str(FULL_VERSION_in_setting),
-            font_name='NotoSans-Light',
+            font_name='FCSSM',
             size_hint=(None, None),
             font_size=nm*1.1,
             halign='center',
@@ -139,7 +139,7 @@ class StatusBar(FloatLayout):
         # time label
         time_label = Label(
             text=self.timer.get_time_str(),
-            font_name='NotoSans-Light',
+            font_name='FCSSM',
             size_hint=(None, None),
             font_size=nm * 1.5,
             pos_hint={'x': 0.64, 'y': 0.4},
@@ -154,7 +154,7 @@ class StatusBar(FloatLayout):
         # info
         self.info = Label(
             text="FrogCard – Play With Charm.",
-            font_name='NotoSans-Light',
+            font_name='FCSSM',
             size_hint=(None, None),
             font_size=nm * 1.3,
             pos_hint={'center_x': 0.5, 'y': 0.27},
@@ -174,7 +174,7 @@ class StatusBar(FloatLayout):
         # music label
         self.music_now = Label(
             text="None",
-            font_name='NotoSans-Light',
+            font_name='FCSSM',
             size_hint=(None, None),
             font_size=round(dp(10)) * 1.5,
             halign='center',
@@ -249,7 +249,7 @@ class StatusBar(FloatLayout):
     def create_label(self, text, pos_hint):
         return Label(
             text=text,
-            font_name='NotoSans-Regular',
+            font_name='FCSSM',
             size_hint=(None, None),
             size=(100, 50),
             pos_hint=pos_hint,
@@ -263,7 +263,7 @@ class StatusBar(FloatLayout):
     def money_hint(self, money):
         label = Label(
             text=str(money),
-            font_name='NotoSans-Regular',
+            font_name='FCSSM',
             font_size=round(dp(15.6)),
             bold=True,
             size_hint=(None, None),
@@ -289,7 +289,7 @@ class StatusBar(FloatLayout):
             self.layout.remove_widget(self.exp_level)
         self.exp_level = Label(
             text=str(self.app.level),
-            font_name='NotoSans-Light',
+            font_name='FCSSM',
             size_hint=(None, None),
             font_size=dp(33.3),
             pos_hint={'x': 0.03, 'y': 0.941},

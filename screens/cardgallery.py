@@ -62,7 +62,7 @@ class CardGallery(ScrollView):
         for rarity, cards in all_cards.items():
             title = Label(
                 text=rarity,
-                font_name='NotoSans-Light',
+                font_name='FCSSM',
                 size_hint_y=None,
                 height=100,
             )
@@ -75,7 +75,7 @@ class CardGallery(ScrollView):
                 for card in cards:
                     btn = Button(
                         text=card['name'],
-                        font_name='NotoSans-Light',
+                        font_name='FCSSM',
                         size_hint_y=None,
                         height=200,
                     )

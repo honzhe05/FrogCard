@@ -30,7 +30,7 @@ class ShopPanel(Screen):
 
         self.fly_quan = Label(
             text=str(self.app.quan),
-            font_name='NotoSans-Regular',
+            font_name='FCSSM',
             size_hint=(None, None),
             font_size=60,
             pos_hint={'x': 0.56, 'y': 0.508},
@@ -44,7 +44,7 @@ class ShopPanel(Screen):
 
         self.xp_quan = Label(
             text=str(self.app.xp),
-            font_name='NotoSans-Regular',
+            font_name='FCSSM',
             size_hint=(None, None),
             font_size=60,
             pos_hint={'x': 0.56, 'y': 0.408},
@@ -58,7 +58,7 @@ class ShopPanel(Screen):
 
         self.quan_level_label = Label(
             text="LV. " + str(self.app.quan_level),
-            font_name='NotoSans-Light',
+            font_name='FCSSM',
             size_hint=(None, None),
             font_size=40,
             pos_hint={'x': 0.26, 'y': 0.538},
@@ -72,7 +72,7 @@ class ShopPanel(Screen):
 
         self.xp_level_label = Label(
             text="LV. " + str(self.app.xp_level),
-            font_name='NotoSans-Light',
+            font_name='FCSSM',
             size_hint=(None, None),
             font_size=40,
             pos_hint={'x': 0.26, 'y': 0.438},
@@ -86,7 +86,7 @@ class ShopPanel(Screen):
 
         self.quan_need_mn = Label(
             text=str(self.app.quan_mn),
-            font_name='NotoSans-Light',
+            font_name='FCSSM',
             size_hint=(None, None),
             font_size=50,
             pos_hint={'x': 0.82, 'y': 0.508},
@@ -100,7 +100,7 @@ class ShopPanel(Screen):
 
         self.xp_btn = Button(
             text='購買',
-            font_name='NotoSans-Regular',
+            font_name='FCSSM',
             size_hint=(None, None),
             size=(160, 100),
             color=(0, 0, 0, 1),
@@ -116,7 +116,7 @@ class ShopPanel(Screen):
 
         self.xp_need_mn = Label(
             text=str(self.app.xp_mn),
-            font_name='NotoSans-Light',
+            font_name='FCSSM',
             size_hint=(None, None),
             font_size=50,
             pos_hint={'x': 0.82, 'y': 0.408},
@@ -130,7 +130,7 @@ class ShopPanel(Screen):
 
         quan_btn = Button(
             text='購買',
-            font_name='NotoSans-Regular',
+            font_name='FCSSM',
             size_hint=(None, None),
             size=(160, 100),
             color=(0, 0, 0, 1),
@@ -143,7 +143,7 @@ class ShopPanel(Screen):
 
         close_btn = Button(
             text='X',
-            font_name='NotoSans-Regular',
+            font_name='FCSSM',
             size_hint=(None, None),
             font_size=55,
             size=(100, 90),
