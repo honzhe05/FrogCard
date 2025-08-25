@@ -1,4 +1,5 @@
 # statusbar.py
+import webbrowser
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.animation import Animation
@@ -125,7 +126,7 @@ class StatusBar(FloatLayout):
             text=str(FULL_VERSION_in_setting),
             font_name='NotoSans-Light',
             size_hint=(None, None),
-            font_size=nm,
+            font_size=nm*1.1,
             halign='center',
             valign='middle',
             pos_hint={'x': 0.28, 'y': 0.397},
@@ -149,6 +150,26 @@ class StatusBar(FloatLayout):
         self.setting_layout.add_widget(time_label)
         Clock.schedule_interval(lambda dt: setattr(
             time_label, 'text', self.timer.get_time_str()), 1)
+
+        # info
+        self.info = Label(
+            text="FrogCard – Play With Charm.",
+            font_name='NotoSans-Light',
+            size_hint=(None, None),
+            font_size=nm * 1.3,
+            pos_hint={'center_x': 0.5, 'y': 0.27},
+            color=(0.365, 0.54, 0.208, 1)
+        )
+        self.setting_layout.add_widget(self.info)
+        
+        # guthub web
+        self.github = ImageButton(
+            source=resource_find('assets/Github.png'),
+            size_hint=(None, None),
+            pos_hint={'x': 0.72, 'y': 0.27}
+        )
+        self.setting_layout.add_widget(self.github)
+        self.github.bind(on_release=self.open_github)
 
         # music label
         self.music_now = Label(
@@ -207,6 +228,9 @@ class StatusBar(FloatLayout):
 
     def hide(self, *args):
         self.remove_widget(self.setting_layout)
+
+    def open_github(self, *args):
+        webbrowser.open("https://github.com/honzhe05/FrogCard")
 
     def _on_garbage(self, *args):
         try:
