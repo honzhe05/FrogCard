@@ -17,10 +17,10 @@ package.domain = tw.honzhe
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,ttf,json,wav,mp3
+source.include_exts = py,png,otf,json,wav,mp3
 
 # (list) List of inclusions using pattern matching
-source.include_patterns = assets/*,images/*,fonts/*.ttf,assets/audios/*.mp3
+source.include_patterns = assets/*,images/*,fonts/*.otf,assets/audios/*.mp3
 
 # (list) Source files to exclude (let empty to not exclude anything)
 source.exclude_exts = md,txt,psd,xcf
@@ -31,7 +31,7 @@ source.exclude_exts = md,txt,psd,xcf
 # (list) List of exclusions using pattern matching
 
 # (str) Application versioning (method 1)
-version = 1.0.7
+version = 1.0.8
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
