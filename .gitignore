@@ -211,3 +211,5 @@ test/test.py
 .kivy/
 node_modules/
 yarn.lock
+fonts/GenSenRounded2TW-B.otf
+fonts/GenSenRounded2TW-M.otf
