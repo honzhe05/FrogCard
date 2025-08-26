@@ -166,7 +166,7 @@ class StatusBar(FloatLayout):
         self.github = ImageButton(
             source=resource_find('assets/Github.png'),
             size_hint=(None, None),
-            pos_hint={'x': 0.72, 'y': 0.27}
+            pos_hint={'x': 0.73, 'y': 0.27}
         )
         self.setting_layout.add_widget(self.github)
         self.github.bind(on_release=self.open_github)

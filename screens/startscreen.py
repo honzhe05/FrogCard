@@ -50,9 +50,7 @@ class StartScreen(Screen):
             pos_hint={'x': 0.01, 'top': 1},
             halign='left',
             valign='top',
-            color=(1, 1, 1, 1),
-            outline_color=(0, 0, 0, 1),
-            outline_width=2
+            color=(0.25, 0.35, 0, 1)
         )
         version_text.bind(size=version_text.setter('text_size'))
         layout.add_widget(version_text)
