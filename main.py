@@ -81,11 +81,11 @@ class MyApp(App):
         sm.add_widget(self.game_screen)
         Clock.schedule_once(
             lambda dt: sm.add_widget(CardGalleryScreen(name='card')),
-            2
+            4.5
         )
         Clock.schedule_once(
             lambda dt: sm.add_widget(ShopPanel(name='shop')),
-            1.5
+            3
         )
         Clock.schedule_once(
             lambda dt: sm.add_widget(DecorateScreen(name='decorate')),
@@ -99,7 +99,7 @@ class MyApp(App):
         try:
             Clock.schedule_once(
                 lambda dt: Clock.schedule_interval(self.game_screen.save, 300),
-                5
+                10
             )
         except Exception as e:
             log_error("auto_save", e)

@@ -31,7 +31,7 @@ class StartScreen(Screen):
 
         # version
         nm = round(dp(11))
-        nnm = round(dp(10))
+        nnm = round(dp(10.5))
         version_text = Label(
             text=(
                 f"[size={nm}]Game Version: {FULL_VERSION}\n"
@@ -47,7 +47,7 @@ class StartScreen(Screen):
             font_name='FCSSM',
             size_hint=(1, 1),
             font_size=nm,
-            pos_hint={'x': 0.01, 'top': 1},
+            pos_hint={'x': 0.01, 'top': 0.997},
             halign='left',
             valign='top',
             color=(0.25, 0.35, 0, 1)
