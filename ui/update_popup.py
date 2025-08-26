@@ -13,7 +13,7 @@ def show_update_popup(data):
         padding=10
     )
     label = Label(
-        text=f"有新版本 {data['version']} ！",
+        text=f"有新版本 {data['version']} !",
         font_name="FCSSM",
     )
     update_btn_layout = BoxLayout(
@@ -51,7 +51,7 @@ def show_update_popup(data):
         background='',
         background_color=(0.444, 0.64, 0.736, 1),
         content=layout,
-        size_hint=(0.7, 0.23),
+        size_hint=(0.65, 0.2),
         auto_dismiss=False
     )
     down_btn.bind(on_release=lambda *args: webbrowser.open(data["apk_url"]))
