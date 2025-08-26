@@ -84,11 +84,11 @@ class MyApp(App):
     def load_screen(self, dt=None):
         Clock.schedule_once(
             lambda dt: self.sm.add_widget(CardGalleryScreen(name='card')),
-            1.5
+            1.2
         )
         Clock.schedule_once(
             lambda dt: self.sm.add_widget(ShopPanel(name='shop')),
-            2
+            1.4
         )
         Clock.schedule_once(
             lambda dt: self.sm.add_widget(DecorateScreen(name='decorate')),
@@ -196,17 +196,9 @@ class MyApp(App):
             height='40dp',
             spacing=10
         )
-
-        btn_yes = Button(
-            text='Yes',
-            size_hint=(0.5, 0.8),
-            background_color=(0.544, 0.74, 0.836, 1)
-        )
-        btn_no = Button(
-            text='No',
-            size_hint=(0.5, 0.8),
-            background_color=(0.544, 0.74, 0.836, 1)
-        )
+        
+        btn_yes = self.btn_yn('yes')
+        btn_no = self.btn_yn('no')
 
         btn_layout.add_widget(btn_yes)
         btn_layout.add_widget(btn_no)
@@ -223,11 +215,21 @@ class MyApp(App):
             auto_dismiss=False,
         )
 
+        btn_yes.bind(
+            on_release=lambda *args:
+            self.popup.dismiss()
+        )
         btn_yes.bind(on_release=self.stop_app)
-        btn_yes.bind(on_release=self.popup.dismiss)
         btn_no.bind(on_release=self.popup.dismiss)
 
         self.popup.open()
+
+    def btn_yn(self, text):
+        return Button(
+        text=text,
+        size_hint=(0.5, 0.8),
+        background_color=(0.544, 0.74, 0.836, 1)
+    )
 
     def stop_app(self, *args):
         self.stop()

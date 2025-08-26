@@ -103,6 +103,7 @@ class StatusBar(FloatLayout):
         self.garbage.bind(on_release=self._on_garbage)
         self.setting_layout.add_widget(self.garbage)
 
+        # close button
         close_btn = Button(
             text='X',
             font_name='FCSSM',
@@ -129,10 +130,8 @@ class StatusBar(FloatLayout):
             font_size=nm*1.1,
             halign='center',
             valign='middle',
-            pos_hint={'x': 0.28, 'y': 0.397},
-            color=(1, 1, 1, 1),
-            outline_color=(0, 0, 0, 1),
-            outline_width=2
+            pos_hint={'x': 0.282, 'y': 0.397},
+            color=(0.1, 0.1, 0.1, 1)
         )
         self.setting_layout.add_widget(version_text)
 
@@ -142,10 +141,8 @@ class StatusBar(FloatLayout):
             font_name='FCSSM',
             size_hint=(None, None),
             font_size=nm * 1.5,
-            pos_hint={'x': 0.64, 'y': 0.4},
-            color=(1, 1, 1, 1),
-            outline_color=(0, 0, 0, 1),
-            outline_width=2
+            pos_hint={'x': 0.64, 'y': 0.398},
+            color=(0.1, 0.1, 0.1, 1)
         )
         self.setting_layout.add_widget(time_label)
         Clock.schedule_interval(lambda dt: setattr(
@@ -157,7 +154,7 @@ class StatusBar(FloatLayout):
             font_name='FCSSM',
             size_hint=(None, None),
             font_size=nm * 1.3,
-            pos_hint={'center_x': 0.5, 'y': 0.27},
+            pos_hint={'center_x': 0.49, 'y': 0.27},
             color=(0.365, 0.54, 0.208, 1)
         )
         self.setting_layout.add_widget(self.info)
@@ -179,10 +176,8 @@ class StatusBar(FloatLayout):
             font_size=round(dp(10)) * 1.5,
             halign='center',
             valign='middle',
-            pos_hint={'center_x': 0.5, 'y': 0.477},
-            color=(1, 1, 1, 1),
-            outline_color=(0, 0, 0, 1),
-            outline_width=2
+            pos_hint={'center_x': 0.5, 'y': 0.475},
+            color=(0.1, 0.1, 0.1, 1)
         )
         self.setting_layout.add_widget(self.music_now)
 
@@ -197,10 +192,7 @@ class StatusBar(FloatLayout):
         self.music_vol.bind(active=self.on_switch)
 
     def on_switch(self, instance, value):
-        if value:
-            pass
-        else:
-            pass
+        pass
 
     def show_music(self, song_name):
         self.music_now.text = song_name

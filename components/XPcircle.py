@@ -26,7 +26,7 @@ class ExpArc(Widget):
             Line(
                 circle=(self.center_x, self.center_y,
                         size / 2, 90, self.get_angle()),
-                width=dp(3.3)
+                width=dp(3.35)
             )
 
     def add_exp(self, amount):
