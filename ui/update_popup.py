@@ -9,7 +9,7 @@ from kivy.uix.label import Label
 def show_update_popup(data):
     layout = BoxLayout(
         orientation='vertical',
-        spacing=10,
+        spacing=0,
         padding=10
     )
     label = Label(
