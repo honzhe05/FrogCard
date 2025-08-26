@@ -70,32 +70,30 @@ class MyApp(App):
         # test
         # Window.size = (720, 1520)
 
-        sm = ScreenManager(
+        self.sm = ScreenManager(
             transition=FadeTransition(
                 duration=0.5,
                 clearcolor=(0.66, 0.36, 0.17, 1)
             )
         )
         self.game_screen = GameScreen(name='game')
-        sm.add_widget(StartScreen(name='start'))
-        sm.add_widget(self.game_screen)
+        self.sm.add_widget(StartScreen(name='start'))
+        self.sm.add_widget(self.game_screen)
+        return self.sm
+
+    def load_screen(self, dt=None):
         Clock.schedule_once(
-            lambda dt: sm.add_widget(CardGalleryScreen(name='card')),
-            4.5
+            lambda dt: self.sm.add_widget(CardGalleryScreen(name='card')),
+            1.5
         )
         Clock.schedule_once(
-            lambda dt: sm.add_widget(ShopPanel(name='shop')),
-            3
+            lambda dt: self.sm.add_widget(ShopPanel(name='shop')),
+            2
         )
         Clock.schedule_once(
-            lambda dt: sm.add_widget(DecorateScreen(name='decorate')),
+            lambda dt: self.sm.add_widget(DecorateScreen(name='decorate')),
             1
         )
-        Clock.schedule_once(
-            lambda dt: Window.bind(on_key_down=self.on_key),
-            0.5
-        )
-
         try:
             Clock.schedule_once(
                 lambda dt: Clock.schedule_interval(self.game_screen.save, 300),
@@ -103,9 +101,14 @@ class MyApp(App):
             )
         except Exception as e:
             log_error("auto_save", e)
-        return sm
 
     def on_start(self):
+        Clock.schedule_once(
+            lambda dt:
+            Window.bind(on_key_down=self.on_key),
+            0.5
+        )
+        Clock.schedule_once(self.load_screen, 0.5)
         Clock.schedule_once(self.check_for_update, 3)
 
     def play_music(self, dt):
@@ -155,7 +158,7 @@ class MyApp(App):
 
     def on_key(self, window, key, *args):
         if key == 27:
-            sm = self.root
+            self.sm = self.root
             if (
                 self.con and
                 hasattr(self, 'popup') and
@@ -168,8 +171,8 @@ class MyApp(App):
             self.con = True
 
             try:
-                if sm.current != 'game' and sm.current != 'start':
-                    sm.current = 'game'
+                if self.sm.current != 'game' and self.sm.current != 'start':
+                    self.sm.current = 'game'
                 else:
                     self.show_exit_popup()
                 return True
