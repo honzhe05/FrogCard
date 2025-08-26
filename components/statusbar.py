@@ -161,7 +161,7 @@ class StatusBar(FloatLayout):
             color=(0.365, 0.54, 0.208, 1)
         )
         self.setting_layout.add_widget(self.info)
-        
+
         # guthub web
         self.github = ImageButton(
             source=resource_find('assets/Github.png'),

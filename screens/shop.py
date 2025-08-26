@@ -1,5 +1,4 @@
 # shop.py
-import time
 from kivy.app import App
 from kivy.resources import resource_find
 from kivy.uix.label import Label
@@ -56,7 +55,6 @@ class ShopPanel(Screen):
             outline_width=2
         )
         self.add_widget(self.xp_quan)
-        time.sleep(0.01)
 
         self.quan_level_label = Label(
             text="LV. " + str(self.app.quan_level),
@@ -85,7 +83,6 @@ class ShopPanel(Screen):
             outline_width=2
         )
         self.add_widget(self.xp_level_label)
-        time.sleep(0.01)
 
         self.quan_need_mn = Label(
             text=str(self.app.quan_mn),
@@ -130,7 +127,6 @@ class ShopPanel(Screen):
             outline_width=2,
         )
         self.add_widget(self.xp_need_mn)
-        time.sleep(0.01)
 
         quan_btn = Button(
             text='購買',
@@ -161,7 +157,6 @@ class ShopPanel(Screen):
         )
         self.add_widget(close_btn)
         close_btn.bind(on_release=self.hide)
-        time.sleep(0.01)
 
     def on_enter(self):
         app = App.get_running_app()
