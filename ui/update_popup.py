@@ -10,7 +10,7 @@ def show_update_popup(data):
     layout = BoxLayout(
         orientation='vertical',
         spacing=0,
-        padding=10
+        padding=3
     )
     label = Label(
         text=f"有新版本 {data['version']} !",
@@ -21,24 +21,16 @@ def show_update_popup(data):
         height='40dp',
         spacing=10
     )
-    down_btn = Button(
-        text="前往下載",
-        font_name="FCSSM",
-        background_color=(0.444, 0.64, 0.736, 1),
-        size_hint=(0.5, 0.8)
-    )
-    btn = Button(
-        text="稍後下載",
-        font_name="FCSSM",
-        background_color=(0.444, 0.64, 0.736, 1),
-        size_hint=(0.5, 0.8)
-    )
-    web_btn = Button(
-        text="更新內容",
-        font_name="FCSSM",
-        background_color=(0.444, 0.64, 0.736, 1),
-        size_hint=(0.5, 0.8)
-    )
+    def set_btn(text):
+        return Button(
+            text=text,
+            font_name="FCSSM",
+            background_color=(0.544, 0.74, 0.836, 1),
+            size_hint=(1, 0.8)
+        )
+    down_btn = set_btn("前往下載")
+    btn = set_btn("稍後下載")
+    web_btn = set_btn("更新內容")
     layout.add_widget(label)
 
     update_btn_layout.add_widget(web_btn)

@@ -23,11 +23,13 @@ def show_exit_popup(q):
 
     btn_yes = Button(
         text='Yes',
+        font_name='FCSSM',
         size_hint=(0.5, 0.8),
         background_color=(0.544, 0.74, 0.836, 1)
     )
     btn_no = Button(
         text='No',
+        font_name='FCSSM',
         size_hint=(0.5, 0.8),
         background_color=(0.544, 0.74, 0.836, 1)
     )
