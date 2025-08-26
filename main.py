@@ -196,7 +196,7 @@ class MyApp(App):
             height='40dp',
             spacing=10
         )
-        
+
         btn_yes = self.btn_yn('yes')
         btn_no = self.btn_yn('no')
 
@@ -216,20 +216,18 @@ class MyApp(App):
         )
 
         btn_yes.bind(
-            on_release=lambda *args:
-            self.popup.dismiss()
+            on_release=lambda *args: self.popup.dismiss()
         )
         btn_yes.bind(on_release=self.stop_app)
         btn_no.bind(on_release=self.popup.dismiss)
-
         self.popup.open()
 
     def btn_yn(self, text):
         return Button(
-        text=text,
-        size_hint=(0.5, 0.8),
-        background_color=(0.544, 0.74, 0.836, 1)
-    )
+            text=text,
+            size_hint=(0.5, 0.8),
+            background_color=(0.544, 0.74, 0.836, 1)
+        )
 
     def stop_app(self, *args):
         self.stop()
