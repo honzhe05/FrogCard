@@ -139,21 +139,19 @@ class MyApp(App):
 
     def on_stop(self):
         self.is_exiting = False
-        if self.skip_save_on_exit:
-            return
-        try:
-            self.game_screen.save()
-        except Exception as e:
-            log_error("on_stop", e)
+        self.stop_game("on_stop")
 
     def on_pause(self):
+        self.stop_game("on_pause")
+
+    def stop_game(self, source):
         if self.skip_save_on_exit:
             return
         try:
             self.game_screen.save()
             return True
         except Exception as e:
-            log_error("on_pause", e)
+            log_error(source, e)
             return True
 
     def on_key(self, window, key, *args):
