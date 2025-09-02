@@ -47,7 +47,7 @@ class MyApp(App):
             color=(1, 1, 1, 1)
         )
         self.root.add_widget(self.loading_label)
-        Clock.schedule_once(self.init_main_ui, 1.2)
+        Clock.schedule_once(self.init_main_ui, 2)
         return self.root
         
     def init_main_ui(self, dt=None):
@@ -77,8 +77,6 @@ class MyApp(App):
         self.music_now = "None"
         self.is_exiting = True
 
-        Clock.schedule_once(self.play_music, 2.5)
-
         # test
         # Window.size = (720, 1520)
 
@@ -98,11 +96,11 @@ class MyApp(App):
     def load_screen(self, dt=None):
         Clock.schedule_once(
             lambda dt: self.sm.add_widget(CardGalleryScreen(name='card')),
-            1.2
+            1.1
         )
         Clock.schedule_once(
             lambda dt: self.sm.add_widget(ShopPanel(name='shop')),
-            1.4
+            1.2
         )
         Clock.schedule_once(
             lambda dt: self.sm.add_widget(DecorateScreen(name='decorate')),
@@ -120,10 +118,11 @@ class MyApp(App):
         Clock.schedule_once(
             lambda dt:
             Window.bind(on_key_down=self.on_key),
-            0.5
+            5
         )
-        Clock.schedule_once(self.load_screen, 0.5)
+        Clock.schedule_once(self.load_screen, 2)
         Clock.schedule_once(self.check_for_update, 3)
+        Clock.schedule_once(self.play_music, 4)
 
     def play_music(self, dt):
         bgms = [

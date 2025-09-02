@@ -7,6 +7,7 @@ from kivy.uix.image import Image
 from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.metrics import dp
+from kivy.clock import Clock
 from kivy.uix.screenmanager import Screen
 from components.imagebutton import ImageButton
 from utils.error_handler import log_error
@@ -16,7 +17,7 @@ from config import FULL_VERSION
 class StartScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        layout = FloatLayout()
+        self.layout = FloatLayout()
         self.app = App.get_running_app()
 
         # background
@@ -27,7 +28,7 @@ class StartScreen(Screen):
             allow_stretch=True,
             keep_ratio=False
         )
-        layout.add_widget(background)
+        self.layout.add_widget(background)
 
         # version
         nm = round(dp(11))
@@ -53,7 +54,7 @@ class StartScreen(Screen):
             color=(0.25, 0.35, 0, 1)
         )
         version_text.bind(size=version_text.setter('text_size'))
-        layout.add_widget(version_text)
+        self.layout.add_widget(version_text)
 
         # title
         img_width = Window.width * 0.85
@@ -67,7 +68,7 @@ class StartScreen(Screen):
             pos=(center_x, center_y)
         )
 
-        layout.add_widget(self.title)
+        self.layout.add_widget(self.title)
         self.title.bind(on_release=self.title_change_image)
 
         # title frog
@@ -76,7 +77,7 @@ class StartScreen(Screen):
             size_hint=(0.15, 0.15),
             pos=(Window.width, -50)
         )
-        layout.add_widget(self.titlefrog)
+        self.layout.add_widget(self.titlefrog)
 
         # start button
         img_width = Window.width * 0.3
@@ -88,12 +89,15 @@ class StartScreen(Screen):
             size_hint=(0.4, 0.4),
             pos=(img_width, center_y)
         )
-        layout.add_widget(self.startbtn)
-        self.startbtn.bind(on_release=self.go_to_game)
-
-        self.add_widget(layout)
+        Clock.schedule_once(self.add_start_btn, 2)
 
         self.start_jump_animation()
+
+    def add_start_btn(self, dt):
+        self.layout.add_widget(self.startbtn)
+        self.startbtn.bind(on_release=self.go_to_game)
+            
+        self.add_widget(self.layout)
 
     def title_anim(self):
         base_y = Window.height * 0.03
