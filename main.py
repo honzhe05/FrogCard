@@ -47,7 +47,7 @@ class MyApp(App):
             color=(1, 1, 1, 1)
         )
         self.root.add_widget(self.loading_label)
-        Clock.schedule_once(self.load_screen, 1)
+        Clock.schedule_once(self.load_screen, 1.5)
         Clock.schedule_once(self.init_main_ui, 1)
         return self.root
 
