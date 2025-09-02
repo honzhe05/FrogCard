@@ -39,6 +39,18 @@ safe_set_clearcolor()
 class MyApp(App):
     def build(self):
         register_fonts()
+        self.root = BoxLayout()
+        self.loading_label = Label(
+            text="載入中...",
+            font_name='FCSSM',
+            font_size='24sp',
+            color=(1, 1, 1, 1)
+        )
+        self.root.add_widget(self.loading_label)
+        Clock.schedule_once(self.init_main_ui, 1.2)
+        return self.root
+        
+    def init_main_ui(self, dt=None):
         self.skip_save_on_exit = False
         self.mn = 100
         self.dm = 10
@@ -79,8 +91,10 @@ class MyApp(App):
         self.game_screen = GameScreen(name='game')
         self.sm.add_widget(StartScreen(name='start'))
         self.sm.add_widget(self.game_screen)
-        return self.sm
-
+     
+        self.root.clear_widgets()
+        self.root.add_widget(self.sm)
+    
     def load_screen(self, dt=None):
         Clock.schedule_once(
             lambda dt: self.sm.add_widget(CardGalleryScreen(name='card')),
@@ -156,7 +170,6 @@ class MyApp(App):
 
     def on_key(self, window, key, *args):
         if key == 27:
-            self.sm = self.root
             if (
                 self.con and
                 hasattr(self, 'popup') and
