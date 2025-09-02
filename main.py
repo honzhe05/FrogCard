@@ -47,9 +47,9 @@ class MyApp(App):
             color=(1, 1, 1, 1)
         )
         self.root.add_widget(self.loading_label)
-        Clock.schedule_once(self.init_main_ui, 1)
+        Clock.schedule_once(self.init_main_ui, 1.5)
         return self.root
-        
+
     def init_main_ui(self, dt=None):
         self.skip_save_on_exit = False
         self.mn = 100
@@ -89,35 +89,23 @@ class MyApp(App):
         self.game_screen = GameScreen(name='game')
         self.sm.add_widget(StartScreen(name='start'))
         self.sm.add_widget(self.game_screen)
-     
+
         self.root.clear_widgets()
         self.root.add_widget(self.sm)
-    
+
     def load_screen(self, dt=None):
-        Clock.schedule_once(
-            lambda dt: self.sm.add_widget(DecorateScreen(name='decorate')),
-            1
-        )
-        Clock.schedule_once(
-            lambda dt: self.sm.add_widget(CardGalleryScreen(name='card')),
-            1.1
-        )
-        Clock.schedule_once(
-            lambda dt: self.sm.add_widget(ShopPanel(name='shop')),
-            1.2
-        )
+        self.sm.add_widget(DecorateScreen(name='decorate'))
+        self.sm.add_widget(CardGalleryScreen(name='card'))
+        self.sm.add_widget(ShopPanel(name='shop'))
         try:
-            Clock.schedule_once(
-                lambda dt: Clock.schedule_interval(self.game_screen.save, 300),
-                0
-            )
+            Clock.schedule_interval(self.game_screen.save, 300)
         except Exception as e:
             log_error("auto_save", e)
 
     def on_start(self):
         Clock.schedule_once(self.check_update, 1)
-        Clock.schedule_once(self.load_screen, 1)
-        Clock.schedule_once(self.play_music, 2)
+        Clock.schedule_once(self.load_screen, 1.5)
+        Clock.schedule_once(self.play_music, 3)
         Clock.schedule_once(
             lambda dt:
             Window.bind(on_key_down=self.on_key),

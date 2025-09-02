@@ -93,9 +93,7 @@ class DecorateScreen(Screen):
 
         Clock.schedule_once(lambda dt: self.status_bar.exp_bar.update_arc(), 0)
         self.status_bar.money.text = str(self.app.mn)
-        self.game_screen = self.app.sm.get_screen('game')
-        # self.game_screen.create_exp_level_label()
-    
+
     def hide(self, *args):
         self.app.sm.current = 'game'
 

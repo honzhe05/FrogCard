@@ -159,7 +159,6 @@ class ShopPanel(Screen):
         close_btn.bind(on_release=self.hide)
 
     def on_enter(self):
-        app = App.get_running_app()
         self.game_screen = self.app.sm.get_screen('game')
         Clock.schedule_once(lambda dt: self.status_bar.exp_bar.update_arc(), 0)
 
