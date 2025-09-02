@@ -9,6 +9,8 @@ from kivy.uix.image import Image
 from kivy.uix.button import Button
 from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.popup import Popup
 from kivy.clock import Clock
 from kivy.metrics import dp
 from logic.fly import MovingFly
@@ -199,10 +201,6 @@ class GameScreen(Screen):
         self.confirm_del()
 
     def do_del(self, button_instance):
-        self.layout.remove_widget(self.confirm_btn)
-        self.layout.remove_widget(self.cancel_btn)
-        self.layout.remove_widget(self.info_screen)
-
         clear_save()
         self.clear_label = Label(
             text="資料將清除，並關閉遊戲",
@@ -217,65 +215,53 @@ class GameScreen(Screen):
         self.layout.add_widget(self.clear_label)
         Clock.schedule_once(self.reset_game, 1.5)
 
-    def not_del(self, button_instance):
-        self.layout.remove_widget(self.confirm_btn)
-        self.layout.remove_widget(self.cancel_btn)
-        self.layout.remove_widget(self.info_screen)
-
-    def confirm_del(self, *args):
-        confirm_btn = Button(
-            text="確認",
-            font_name='FCSSM',
-            size_hint=(None, None),
-            size=(200, 100),
-            pos=(
-                Window.width / 2 + 5,
-                Window.height * 0.4
-            ),
-            color=(0, 0, 0, 1),
-            background_normal=' ',
-            background_color=(0.96, 0.96, 0.86, 1)
+    def show_gar_popup(self):
+        layout = BoxLayout(
+            orientation='vertical',
+            padding=0,
+            spacing=10
         )
-        self.layout.add_widget(confirm_btn)
-
-        cancel_btn = Button(
-            text="取消",
-            font_name='FCSSM',
-            size_hint=(None, None),
-            size=(200, 100),
-            pos=(
-                Window.width / 2 - 205,
-                Window.height * 0.4
-            ),
-            color=(0, 0, 0, 1),
-            background_normal=' ',
-            background_color=(0.96, 0.96, 0.86, 1)
+        label = Label(
+            text='確定要刪除資料？',
+            font_name='FCSSM'
         )
-        self.layout.add_widget(cancel_btn)
-
-        info_screen = Button(
-            text="確定要刪除資料？",
-            font_name='FCSSM',
-            size_hint=(None, None),
-            size=(410, 200),
-            pos=(
-                Window.width / 2 - 205,
-                Window.height * 0.4 + 110
-            ),
-            disabled=True,
-            opacity=1,
-            disabled_color=(0, 0, 0, 1),
-            background_disabled_normal=' ',
-            background_color=(0.96, 0.96, 0.86, 1)
+        btn_layout = BoxLayout(
+            size_hint_y=None,
+            height='40dp',
+            spacing=10
         )
-        self.layout.add_widget(info_screen)
 
-        self.confirm_btn = confirm_btn
-        self.cancel_btn = cancel_btn
-        self.info_screen = info_screen
+        btn_yes = self.btn_yn('yes')
+        btn_no = self.btn_yn('no')
 
-        confirm_btn.bind(on_release=self.do_del)
-        cancel_btn.bind(on_release=self.not_del)
+        btn_layout.add_widget(btn_yes)
+        btn_layout.add_widget(btn_no)
+
+        layout.add_widget(label)
+        layout.add_widget(btn_layout)
+
+        self.popup = Popup(
+            title='Delete data? Are You Sure?',
+            content=layout,
+            background='',
+            background_color=(0.444, 0.64, 0.736, 1),
+            size_hint=(0.65, 0.2),
+            auto_dismiss=False,
+        )
+
+        btn_yes.bind(
+            on_release=lambda *args: self.popup.dismiss()
+        )
+        btn_yes.bind(on_release=self.do_del)
+        btn_no.bind(on_release=self.popup.dismiss)
+        self.popup.open()
+
+    def btn_yn(self, text):
+        return Button(
+            text=text,
+            size_hint=(0.5, 0.8),
+            background_color=(0.544, 0.74, 0.836, 1)
+        )
 
     def reset_game(self, dt):
         app = App.get_running_app()

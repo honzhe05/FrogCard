@@ -227,7 +227,7 @@ class StatusBar(FloatLayout):
     def _on_garbage(self, *args):
         try:
             self.remove_widget(self.setting_layout)
-            self.game_screen.gb_clear()
+            self.game_screen.show_gar_popup()
         except Exception as e:
             log_error("_on_garbage_clear_save", e)
 
