@@ -47,8 +47,8 @@ class MyApp(App):
             color=(1, 1, 1, 1)
         )
         self.root.add_widget(self.loading_label)
-        Clock.schedule_once(self.load_screen, 3.5)
-        Clock.schedule_once(self.init_main_ui, 3)
+        Clock.schedule_once(self.load_screen, 2)
+        Clock.schedule_once(self.init_main_ui, 1.5)
         return self.root
 
     def init_main_ui(self, dt=None):
@@ -100,15 +100,15 @@ class MyApp(App):
     def load_screen(self, dt=None):
         Clock.schedule_once(
             lambda dt: self.sm.add_widget(DecorateScreen(name='decorate')),
-            0
+            0.5
         )
         Clock.schedule_once(
             lambda dt: self.sm.add_widget(CardGalleryScreen(name='card')),
-            1.5
+            2
         )
         Clock.schedule_once(
             lambda dt: self.sm.add_widget(ShopPanel(name='shop')),
-            3
+            3.5
         )
         try:
             Clock.schedule_once(
