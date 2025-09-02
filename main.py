@@ -47,7 +47,7 @@ class MyApp(App):
             color=(1, 1, 1, 1)
         )
         self.root.add_widget(self.loading_label)
-        Clock.schedule_once(self.init_main_ui, 2)
+        Clock.schedule_once(self.init_main_ui, 1)
         return self.root
         
     def init_main_ui(self, dt=None):
@@ -95,16 +95,16 @@ class MyApp(App):
     
     def load_screen(self, dt=None):
         Clock.schedule_once(
+            lambda dt: self.sm.add_widget(DecorateScreen(name='decorate')),
+            1
+        )
+        Clock.schedule_once(
             lambda dt: self.sm.add_widget(CardGalleryScreen(name='card')),
             1.1
         )
         Clock.schedule_once(
             lambda dt: self.sm.add_widget(ShopPanel(name='shop')),
             1.2
-        )
-        Clock.schedule_once(
-            lambda dt: self.sm.add_widget(DecorateScreen(name='decorate')),
-            1
         )
         try:
             Clock.schedule_once(
@@ -115,14 +115,14 @@ class MyApp(App):
             log_error("auto_save", e)
 
     def on_start(self):
+        Clock.schedule_once(self.check_update, 1)
+        Clock.schedule_once(self.load_screen, 1)
+        Clock.schedule_once(self.play_music, 2)
         Clock.schedule_once(
             lambda dt:
             Window.bind(on_key_down=self.on_key),
-            4
+            2
         )
-        Clock.schedule_once(self.load_screen, 2)
-        Clock.schedule_once(self.check_for_update, 3)
-        Clock.schedule_once(self.play_music, 3.5)
 
     def play_music(self, dt):
         bgms = [
@@ -142,7 +142,7 @@ class MyApp(App):
     def get_screen(self, name):
         return self.sm.get_screen(name)
 
-    def check_for_update(self, dt):
+    def check_update(self, dt):
         arch = platform.machine()
         if "aarch64" in arch:
             config.ABI = "arm64-v8a"
