@@ -47,8 +47,8 @@ class MyApp(App):
             color=(1, 1, 1, 1)
         )
         self.root.add_widget(self.loading_label)
-        Clock.schedule_once(self.load_screen, 2.5)
-        Clock.schedule_once(self.init_main_ui, 2)
+        Clock.schedule_once(self.load_screen, 3)
+        Clock.schedule_once(self.init_main_ui, 2.5)
         return self.root
 
     def init_main_ui(self, dt=None):
@@ -119,7 +119,7 @@ class MyApp(App):
             log_error("auto_save", e)
 
     def on_start(self):
-        Clock.schedule_once(self.check_update, 5)
+        Clock.schedule_once(self.check_update, 1)
         Clock.schedule_once(self.play_music, 5)
         Clock.schedule_once(
             lambda dt:
