@@ -89,14 +89,14 @@ class StartScreen(Screen):
             size_hint=(0.4, 0.4),
             pos=(img_width, center_y)
         )
-        Clock.schedule_once(self.add_start_btn, 2)
+        self.layout.add_widget(self.startbtn)
+        self.startbtn.bind(on_release=self.go_to_game)
+
+        Clock.schedule_once(self.add_start, 1)
 
         self.start_jump_animation()
 
-    def add_start_btn(self, dt):
-        self.layout.add_widget(self.startbtn)
-        self.startbtn.bind(on_release=self.go_to_game)
-            
+    def add_start(self, dt):
         self.add_widget(self.layout)
 
     def title_anim(self):
