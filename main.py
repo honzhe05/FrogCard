@@ -109,7 +109,7 @@ class MyApp(App):
         try:
             Clock.schedule_once(
                 lambda dt: Clock.schedule_interval(self.game_screen.save, 300),
-                10
+                0
             )
         except Exception as e:
             log_error("auto_save", e)
@@ -118,11 +118,11 @@ class MyApp(App):
         Clock.schedule_once(
             lambda dt:
             Window.bind(on_key_down=self.on_key),
-            5
+            4
         )
         Clock.schedule_once(self.load_screen, 2)
         Clock.schedule_once(self.check_for_update, 3)
-        Clock.schedule_once(self.play_music, 4)
+        Clock.schedule_once(self.play_music, 3.5)
 
     def play_music(self, dt):
         bgms = [
