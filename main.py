@@ -89,7 +89,10 @@ class MyApp(App):
         )
         self.game_screen = GameScreen(name='game')
         self.sm.add_widget(StartScreen(name='start'))
-        self.sm.add_widget(self.game_screen)
+        Clock.schedule_once(
+            lambda dt: self.sm.add_widget(GameScreen(name='game')),
+            3
+        )
 
         self.root.clear_widgets()
         self.root.add_widget(self.sm)
@@ -101,11 +104,11 @@ class MyApp(App):
         )
         Clock.schedule_once(
             lambda dt: self.sm.add_widget(CardGalleryScreen(name='card')),
-            2
+            1.5
         )
         Clock.schedule_once(
             lambda dt: self.sm.add_widget(ShopPanel(name='shop')),
-            4
+            3
         )
         try:
             Clock.schedule_once(
