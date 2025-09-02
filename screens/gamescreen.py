@@ -272,10 +272,10 @@ class GameScreen(Screen):
         self.fly_layer.clear_widgets()
 
     def open_shop(self, *args):
-        self.manager.current = 'shop'
+        self.app.sm.current = 'shop'
 
     def open_decorate(self, *args):
-        self.manager.current = 'decorate'
+        self.app.sm.current = 'decorate'
 
     def save(self, dt=None):
         try:

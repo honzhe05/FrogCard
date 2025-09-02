@@ -92,9 +92,12 @@ class DecorateScreen(Screen):
             self.apple_btn.disabled = False
 
         Clock.schedule_once(lambda dt: self.status_bar.exp_bar.update_arc(), 0)
-
+        self.status_bar.money.text = str(self.app.mn)
+        self.game_screen = self.app.sm.get_screen('game')
+        # self.game_screen.create_exp_level_label()
+    
     def hide(self, *args):
-        self.manager.current = 'game'
+        self.app.sm.current = 'game'
 
     def buy_grass(self, *args):
         try:
@@ -163,9 +166,9 @@ class DecorateScreen(Screen):
 
     def deco_update_mn(self):
         try:
-            self.game_screen = self.app.root.get_screen('game')
-            shop_panel = self.app.root.get_screen('shop')
-            decorate_screen = self.app.root.get_screen('decorate')
+            self.game_screen = self.app.sm.get_screen('game')
+            shop_panel = self.app.sm.get_screen('shop')
+            decorate_screen = self.app.sm.get_screen('decorate')
             self.game_screen.status_bar.money.text = str(self.app.mn)
             shop_panel.status_bar.money.text = str(self.app.mn)
             decorate_screen.status_bar.money.text = str(self.app.mn)

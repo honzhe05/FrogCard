@@ -51,14 +51,14 @@ class MovingFly(ButtonBehavior, Image):
                     self.app.mn += self.xp
                     self.size_mn = self.xp
 
-                game_screen = self.app.root.get_screen('game')
-                shop_panel = self.app.root.get_screen('shop')
-                decorate_screen = self.app.root.get_screen('decorate')
+                game_screen = self.app.sm.get_screen('game')
+                shop_panel = self.app.sm.get_screen('shop')
+                decorate_screen = self.app.sm.get_screen('decorate')
                 game_screen.status_bar.money.text = str(self.app.mn)
                 shop_panel.status_bar.money.text = str(self.app.mn)
                 decorate_screen.status_bar.money.text = str(self.app.mn)
                 game_screen.status_bar.money_hint("+" + str(self.size_mn))
-                self.app.root.get_screen('game').status_bar.exp_bar.add_exp(18)
+                self.app.sm.get_screen('game').status_bar.exp_bar.add_exp(18)
                 game_screen.status_bar.update_exp_level_label()
                 shop_panel.status_bar.update_exp_level_label()
                 decorate_screen.status_bar.update_exp_level_label()

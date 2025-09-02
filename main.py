@@ -140,6 +140,9 @@ class MyApp(App):
         except Exception as e:
             log_error("play_music", e)
 
+    def get_screen(self, name):
+        return self.sm.get_screen(name)
+
     def check_for_update(self, dt):
         arch = platform.machine()
         if "aarch64" in arch:

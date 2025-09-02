@@ -160,7 +160,7 @@ class ShopPanel(Screen):
 
     def on_enter(self):
         app = App.get_running_app()
-        self.game_screen = app.root.get_screen('game')
+        self.game_screen = self.app.sm.get_screen('game')
         Clock.schedule_once(lambda dt: self.status_bar.exp_bar.update_arc(), 0)
 
         if self.game_screen:
@@ -177,7 +177,7 @@ class ShopPanel(Screen):
         try:
             if self.app.mn >= self.app.xp_mn:
                 self.app.mn -= self.app.xp_mn
-                self.decorate_screen = self.app.root.get_screen('decorate')
+                self.decorate_screen = self.app.sm.get_screen('decorate')
                 self.status_bar.money.text = str(self.app.mn)
                 self.game_screen.status_bar.money.text = str(self.app.mn)
                 self.decorate_screen.status_bar.money.text = str(self.app.mn)
@@ -199,7 +199,7 @@ class ShopPanel(Screen):
         try:
             if self.app.mn >= self.app.quan_mn:
                 self.app.mn -= self.app.quan_mn
-                self.decorate_screen = self.app.root.get_screen('decorate')
+                self.decorate_screen = self.app.sm.get_screen('decorate')
                 self.status_bar.money.text = str(self.app.mn)
                 self.game_screen.status_bar.money.text = str(self.app.mn)
                 self.decorate_screen.status_bar.money.text = str(self.app.mn)
