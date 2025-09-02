@@ -47,8 +47,8 @@ class MyApp(App):
             color=(1, 1, 1, 1)
         )
         self.root.add_widget(self.loading_label)
-        Clock.schedule_once(self.load_screen, 2)
-        Clock.schedule_once(self.init_main_ui, 1.5)
+        Clock.schedule_once(self.load_screen, 1)
+        Clock.schedule_once(self.init_main_ui, 1)
         return self.root
 
     def init_main_ui(self, dt=None):
@@ -89,10 +89,7 @@ class MyApp(App):
         )
         self.game_screen = GameScreen(name='game')
         self.sm.add_widget(StartScreen(name='start'))
-        Clock.schedule_once(
-            lambda dt: self.sm.add_widget(GameScreen(name='game')),
-            3
-        )
+        self.sm.add_widget(GameScreen(name='game'))
 
         self.root.clear_widgets()
         self.root.add_widget(self.sm)
