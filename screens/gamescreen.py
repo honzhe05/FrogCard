@@ -241,7 +241,7 @@ class GameScreen(Screen):
         layout.add_widget(btn_layout)
 
         self.popup = Popup(
-            title='Delete data? Are You Sure?',
+            title='Delete Data? Are You Sure?',
             content=layout,
             background='',
             background_color=(0.444, 0.64, 0.736, 1),
