@@ -129,8 +129,8 @@ class MyApp(App):
             ("IfIHadaChicken", 150, "If I Had a Chicken"),
             ("JauntyGumption", 118, "Jaunty Gumption"),
             ("TheBuilder", 117, "The Builder"),
-            ("HiddenAgenda", 135, "Hidden Agenda"),
-            ("Wallpaper", 220, "Wallpaper"),
+            # ("HiddenAgenda", 135, "Hidden Agenda"),
+            # ("Wallpaper", 220, "Wallpaper"),
         ]
         try:
             self.statusbar = StatusBar()
