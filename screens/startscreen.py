@@ -91,9 +91,8 @@ class StartScreen(Screen):
         )
         self.layout.add_widget(self.startbtn)
         self.startbtn.bind(on_release=self.go_to_game)
-
-        Clock.schedule_once(self.add_start, 2)
-
+        
+        Clock.schedule_once(self.add_start, 1)
         self.start_jump_animation()
 
     def add_start(self, dt):

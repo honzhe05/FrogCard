@@ -57,7 +57,7 @@ class ShopPanel(Screen):
         self.add_widget(self.xp_quan)
 
         self.quan_level_label = Label(
-            text=f"LV. {str(self.app.quan_level)}",
+            text=f"LV. {self.app.quan_level}",
             font_name='FCSSM',
             size_hint=(None, None),
             font_size=40,
@@ -71,7 +71,7 @@ class ShopPanel(Screen):
         self.add_widget(self.quan_level_label)
 
         self.xp_level_label = Label(
-            text=f"LV. {str(self.app.xp_level)}",
+            text=f"LV. {self.app.xp_level}",
             font_name='FCSSM',
             size_hint=(None, None),
             font_size=40,
@@ -161,6 +161,7 @@ class ShopPanel(Screen):
     def on_enter(self):
         self.game_screen = self.app.sm.get_screen('game')
         Clock.schedule_once(lambda dt: self.status_bar.exp_bar.update_arc(), 0)
+        self.update_label()
 
         if self.game_screen:
             self.game_screen.hide_flies()
@@ -171,6 +172,12 @@ class ShopPanel(Screen):
 
     def hide(self, *args):
         self.manager.current = 'game'
+
+    def update_label(self):
+        self.xp_level_label.text = f"LV. {self.app.xp_level}"
+        self.quan_level_label.text = f"LV. {self.app.quan_level}"
+        self.xp_need_mn.text = str(self.app.xp_mn)
+        self.quan_need_mn.text = str(self.app.quan_mn)
 
     def buy_xp(self, *args):
         try:

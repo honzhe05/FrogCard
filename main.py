@@ -102,8 +102,6 @@ class MyApp(App):
         self.sm.add_widget(StartScreen(name='start'))
         self.sm.add_widget(GameScreen(name='game'))
 
-        Clock.unschedule(self.anim_load)
-        self.root.clear_widgets()
         self.root.add_widget(self.sm)
 
     def load_screen(self, dt=None):
@@ -119,6 +117,8 @@ class MyApp(App):
             lambda dt: self.sm.add_widget(ShopPanel(name='shop')),
             3
         )
+        Clock.unschedule(self.anim_load)
+        self.root.remove_widget(self.loading_label)
         try:
             Clock.schedule_once(
                 lambda dt: Clock.schedule_interval(self.game_screen.save, 300),
