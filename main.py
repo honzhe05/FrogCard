@@ -34,7 +34,6 @@ def safe_set_clearcolor(first_try=True):
 
 
 safe_set_clearcolor()
-a = 0
 
 
 class MyApp(App):
@@ -49,18 +48,12 @@ class MyApp(App):
         )
         self.root.add_widget(self.loading_label)
         Clock.schedule_interval(self.anim_load, 0.4)
-        Clock.schedule_once(self.load_screen, 1.5)
+        Clock.schedule_once(self.load_screen, 2.5)
         Clock.schedule_once(self.init_main_ui, 1.5)
         return self.root
 
     def anim_load(self, dt=None):
-        global a
-        if a >= 3:
-            self.loading_label.text = "載入中"
-            a = 0
-        else:
-            self.loading_label.text += "."
-            a += 1
+        self.loading_label.text += "."
 
     def init_main_ui(self, dt=None):
         self.skip_save_on_exit = False
@@ -102,6 +95,8 @@ class MyApp(App):
         self.sm.add_widget(StartScreen(name='start'))
         self.sm.add_widget(GameScreen(name='game'))
 
+        Clock.unschedule(self.anim_load)
+        self.root.remove_widget(self.loading_label)
         self.root.add_widget(self.sm)
 
     def load_screen(self, dt=None):
@@ -117,8 +112,6 @@ class MyApp(App):
             lambda dt: self.sm.add_widget(ShopPanel(name='shop')),
             3
         )
-        Clock.unschedule(self.anim_load)
-        self.root.remove_widget(self.loading_label)
         try:
             Clock.schedule_once(
                 lambda dt: Clock.schedule_interval(self.game_screen.save, 300),
@@ -128,8 +121,8 @@ class MyApp(App):
             log_error("auto_save", e)
 
     def on_start(self):
-        Clock.schedule_once(self.play_music, 2)
-        Clock.schedule_once(self.check_update, 4)
+        Clock.schedule_once(self.play_music, 4)
+        Clock.schedule_once(self.check_update, 2)
         Clock.schedule_once(
             lambda dt:
             Window.bind(on_key_down=self.on_key),
