@@ -192,9 +192,11 @@ class StatusBar(FloatLayout):
         self.music_vol.bind(active=self.on_switch)
 
     def on_switch(self, instance, value):
-        pass
+        self.start_screen = self.app.sm.get_screen('start')
+        value = not value
+        self.start_screen.play_music(value)
 
-    def show_music(self, song_name):
+    def show_music(self, song_name="None"):
         self.music_now.text = song_name
 
     def _sync_music_label(self, dt):

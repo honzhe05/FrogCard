@@ -118,8 +118,10 @@ class StartScreen(Screen):
 
     def start_jump_animation(self):
         try:
-            anim = Animation(x=self.titlefrog.x -
-                             Window.width - 200, duration=4.5)
+            anim = Animation(
+                x=self.titlefrog.x - Window.width - 200,
+                duration=4.5
+            )
             anim.bind(on_complete=self.reset_position)
             anim.start(self.titlefrog)
         except Exception as e:
@@ -133,24 +135,27 @@ class StartScreen(Screen):
         self.anim_btn = Animation(opacity=0, duration=0.2)
         self.anim_btn.bind(on_complete=lambda *_: self.contin())
         self.anim_btn.start(self.startbtn)
-
-    def play_music(self):
-        bgms = [
-            ("IfIHadaChicken", 150, "If I Had a Chicken"),
-            ("JauntyGumption", 118, "Jaunty Gumption"),
-            ("TheBuilder", 117, "The Builder"),
-            ("HiddenAgenda", 135, "Hidden Agenda")
-        ]
-        try:
+            
+    def play_music(self, stop=False):
+        if stop:
+            if hasattr(self, 'player'):
+                self.player.stop_play()
+            return
+    
+        if not hasattr(self, 'statusbar'):
             self.statusbar = StatusBar()
+    
+        bgms = [
+            ("IfIHadaChicken", 151, "If I Had a Chicken"),
+            ("JauntyGumption", 119, "Jaunty Gumption"),
+            ("TheBuilder", 118, "The Builder"),
+            ("HiddenAgenda", 136, "Hidden Agenda")
+        ]
+        if not hasattr(self, 'player'):
             self.player = MusicPlayer(bgms, self.statusbar)
-            Clock.schedule_once(
-                lambda dt: self.player.play_next(),
-                1.5
-            )
-        except Exception as e:
-            log_error("play_music", e)
-
+    
+        Clock.schedule_once(self.player.play_next, 0.1)
+    
     def contin(self):
         try:
             self.manager.current = 'game'
