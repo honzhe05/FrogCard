@@ -109,7 +109,7 @@ class MyApp(App):
     def load_screen(self, dt=None):
         Clock.schedule_once(
             lambda dt: self.sm.add_widget(DecorateScreen(name='decorate')),
-            2
+            1.5
         )
         Clock.schedule_once(
             lambda dt: self.sm.add_widget(CardGalleryScreen(name='card')),
@@ -117,7 +117,7 @@ class MyApp(App):
         )
         Clock.schedule_once(
             lambda dt: self.sm.add_widget(ShopPanel(name='shop')),
-            4
+            3
         )
         try:
             Clock.schedule_once(
