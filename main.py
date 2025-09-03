@@ -121,7 +121,7 @@ class MyApp(App):
             log_error("auto_save", e)
 
     def on_start(self):
-        Clock.schedule_once(self.play_music, 4)
+        # Clock.schedule_once(self.play_music, 4)
         # Clock.schedule_once(self.check_update, 2)
         Clock.schedule_once(
             lambda dt:
