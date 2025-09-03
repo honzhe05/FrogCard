@@ -12,6 +12,7 @@ from kivy.uix.screenmanager import Screen
 from components.imagebutton import ImageButton
 from utils.error_handler import log_error
 from config import FULL_VERSION
+from logic.bgm_player import MusicPlayer
 from components.statusbar import StatusBar
 
 

@@ -19,8 +19,6 @@ from update_checker import check_update
 from config import APP_VERSION
 from ui.fonts import register_fonts
 from ui.update_popup import show_update_popup
-from logic.bgm_player import MusicPlayer
-from components.statusbar import StatusBar
 
 
 def safe_set_clearcolor(first_try=True):
