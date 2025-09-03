@@ -116,8 +116,8 @@ class MyApp(App):
             log_error("auto_save", e)
 
     def on_start(self):
+        Clock.schedule_once(self.play_music, 2)
         Clock.schedule_once(self.check_update, 4)
-        Clock.schedule_once(self.play_music, 4)
         Clock.schedule_once(
             lambda dt:
             Window.bind(on_key_down=self.on_key),
@@ -134,15 +134,9 @@ class MyApp(App):
         try:
             self.statusbar = StatusBar()
             self.player = MusicPlayer(bgms, self.statusbar)
-            Clock.schedule_once(self.play_start, 2)
-        except Exception as e:
-            log_error("play_music", e)
-
-    def play_start(self, dt):
-        try:
             self.player.play_next()
         except Exception as e:
-            log_error("paly_start", e)
+            log_error("play_music", e)
 
     def get_screen(self, name):
         return self.sm.get_screen(name)
