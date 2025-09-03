@@ -129,13 +129,12 @@ class MyApp(App):
             ("TheBuilder", 117, "The Builder"),
             ("IfIHadaChicken", 150, "If I Had a Chicken"),
             ("JauntyGumption", 118, "Jaunty Gumption"),
-            ("HiddenAgenda", 135, "Hidden Agenda"),
-            ("Wallpaper", 220, "Wallpaper"),
+            ("HiddenAgenda", 135, "Hidden Agenda")
         ]
         try:
             self.statusbar = StatusBar()
             self.player = MusicPlayer(bgms, self.statusbar)
-            Clock.schedule_once(self.play_start, 5)
+            Clock.schedule_once(self.play_start, 2)
         except Exception as e:
             log_error("play_music", e)
 
