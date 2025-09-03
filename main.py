@@ -55,7 +55,7 @@ class MyApp(App):
 
     def anim_load(self, dt=None):
         global a
-        if a>=3:
+        if a >= 3:
             self.loading_label.text = "載入中"
             a = 0
         else:
