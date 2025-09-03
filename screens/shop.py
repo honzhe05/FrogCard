@@ -174,10 +174,14 @@ class ShopPanel(Screen):
         self.manager.current = 'game'
 
     def update_label(self):
+        self.fly_quan.text = str(self.app.quan)
+        self.xp_quan.text = str(self.app.xp)
         self.xp_level_label.text = f"LV. {self.app.xp_level}"
         self.quan_level_label.text = f"LV. {self.app.quan_level}"
         self.xp_need_mn.text = str(self.app.xp_mn)
         self.quan_need_mn.text = str(self.app.quan_mn)
+        self.status_bar.money.text = str(self.app.mn)
+        self.status_bar.update_exp_level_label()
 
     def buy_xp(self, *args):
         try:
