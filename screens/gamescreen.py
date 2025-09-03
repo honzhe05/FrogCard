@@ -341,8 +341,7 @@ class GameScreen(Screen):
                 self.status_bar.diamond.text = str(self.app.dm)
                 self.shop_panel.fly_quan.text = str(self.app.quan)
                 self.spawn_flies(self.app.quan)
-                self.shop_panel.quan_level_label.text = "LV. " + \
-                    str(self.app.quan_level)
+                self.shop_panel.quan_level_label.text = f"LV. {str(self.app.quan_level)}"
                 self.shop_panel.quan_need_mn.text = str(self.app.quan_mn)
         except Exception as e:
             log_error("GameScreen.load", e)

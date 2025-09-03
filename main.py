@@ -110,7 +110,7 @@ class MyApp(App):
         try:
             Clock.schedule_once(
                 lambda dt: Clock.schedule_interval(self.game_screen.save, 300),
-                5
+                0
             )
         except Exception as e:
             log_error("auto_save", e)
