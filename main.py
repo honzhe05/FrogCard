@@ -34,6 +34,7 @@ def safe_set_clearcolor(first_try=True):
 
 
 safe_set_clearcolor()
+a = 0
 
 
 class MyApp(App):
@@ -41,15 +42,25 @@ class MyApp(App):
         register_fonts()
         self.root = BoxLayout()
         self.loading_label = Label(
-            text="載入中...",
+            text="載入中",
             font_name='FCSSM',
             font_size='24sp',
             color=(1, 1, 1, 1)
         )
         self.root.add_widget(self.loading_label)
+        Clock.schedule_interval(self.anim_load, 0.4)
         Clock.schedule_once(self.load_screen, 1.5)
         Clock.schedule_once(self.init_main_ui, 1.5)
         return self.root
+
+    def anim_load(self, dt=None):
+        global a
+        if a>=3:
+            self.loading_label.text = "載入中"
+            a = 0
+        else:
+            self.loading_label.text += "."
+            a += 1
 
     def init_main_ui(self, dt=None):
         self.skip_save_on_exit = False
@@ -91,21 +102,22 @@ class MyApp(App):
         self.sm.add_widget(StartScreen(name='start'))
         self.sm.add_widget(GameScreen(name='game'))
 
+        Clock.unschedule(self.anim_load)
         self.root.clear_widgets()
         self.root.add_widget(self.sm)
 
     def load_screen(self, dt=None):
         Clock.schedule_once(
             lambda dt: self.sm.add_widget(DecorateScreen(name='decorate')),
-            0.5
-        )
-        Clock.schedule_once(
-            lambda dt: self.sm.add_widget(CardGalleryScreen(name='card')),
             2
         )
         Clock.schedule_once(
+            lambda dt: self.sm.add_widget(CardGalleryScreen(name='card')),
+            0
+        )
+        Clock.schedule_once(
             lambda dt: self.sm.add_widget(ShopPanel(name='shop')),
-            3.5
+            4
         )
         try:
             Clock.schedule_once(
@@ -126,9 +138,9 @@ class MyApp(App):
 
     def play_music(self, dt):
         bgms = [
-            ("TheBuilder", 117, "The Builder"),
             ("IfIHadaChicken", 150, "If I Had a Chicken"),
             ("JauntyGumption", 118, "Jaunty Gumption"),
+            ("TheBuilder", 117, "The Builder"),
             ("HiddenAgenda", 135, "Hidden Agenda")
         ]
         try:

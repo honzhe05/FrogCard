@@ -57,7 +57,7 @@ class ShopPanel(Screen):
         self.add_widget(self.xp_quan)
 
         self.quan_level_label = Label(
-            text="LV. " + str(self.app.quan_level),
+            text=f"LV. {str(self.app.quan_level)}",
             font_name='FCSSM',
             size_hint=(None, None),
             font_size=40,
@@ -71,7 +71,7 @@ class ShopPanel(Screen):
         self.add_widget(self.quan_level_label)
 
         self.xp_level_label = Label(
-            text="LV. " + str(self.app.xp_level),
+            text=f"LV. {str(self.app.xp_level)}",
             font_name='FCSSM',
             size_hint=(None, None),
             font_size=40,
