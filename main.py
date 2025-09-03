@@ -122,7 +122,7 @@ class MyApp(App):
 
     def on_start(self):
         Clock.schedule_once(self.play_music, 4)
-        Clock.schedule_once(self.check_update, 2)
+        # Clock.schedule_once(self.check_update, 2)
         Clock.schedule_once(
             lambda dt:
             Window.bind(on_key_down=self.on_key),
