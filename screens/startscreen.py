@@ -144,19 +144,22 @@ class StartScreen(Screen):
         try:
             self.statusbar = StatusBar()
             self.player = MusicPlayer(bgms, self.statusbar)
-            self.player.play_next()
+            Clock.schedule_once(
+                lambda dt: self.player.play_next(),
+                1.5
+            )
         except Exception as e:
             log_error("play_music", e)
 
     def contin(self):
         try:
-            self.play_music()
             self.manager.current = 'game'
         except Exception as e:
             log_error("StartScreen.contin", e)
 
     def on_enter(self):
         self.title_anim()
+        self.play_music()
 
     def on_leave(self, *args):
         self.anim.stop(self.title)
