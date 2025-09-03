@@ -146,10 +146,10 @@ class StartScreen(Screen):
             self.statusbar = StatusBar()
     
         bgms = [
-            ("IfIHadaChicken", 151, "If I Had a Chicken"),
-            ("JauntyGumption", 119, "Jaunty Gumption"),
-            ("TheBuilder", 118, "The Builder"),
-            ("HiddenAgenda", 136, "Hidden Agenda")
+            ("IfIHadaChicken", 61, "If I Had a Chicken"),
+            ("JauntyGumption", 66, "Jaunty Gumption"),
+            ("TheBuilder", 68, "The Builder"),
+            ("HiddenAgenda", 58, "Hidden Agenda")
         ]
         if not hasattr(self, 'player'):
             self.player = MusicPlayer(bgms, self.statusbar)
