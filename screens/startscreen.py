@@ -12,6 +12,7 @@ from kivy.uix.screenmanager import Screen
 from components.imagebutton import ImageButton
 from utils.error_handler import log_error
 from config import FULL_VERSION
+from components.statusbar import StatusBar
 
 
 class StartScreen(Screen):
@@ -132,8 +133,23 @@ class StartScreen(Screen):
         self.anim_btn.bind(on_complete=lambda *_: self.contin())
         self.anim_btn.start(self.startbtn)
 
+    def play_music(self):
+        bgms = [
+            ("IfIHadaChicken", 150, "If I Had a Chicken"),
+            ("JauntyGumption", 118, "Jaunty Gumption"),
+            ("TheBuilder", 117, "The Builder"),
+            ("HiddenAgenda", 135, "Hidden Agenda")
+        ]
+        try:
+            self.statusbar = StatusBar()
+            self.player = MusicPlayer(bgms, self.statusbar)
+            self.player.play_next()
+        except Exception as e:
+            log_error("play_music", e)
+
     def contin(self):
         try:
+            self.play_music()
             self.manager.current = 'game'
         except Exception as e:
             log_error("StartScreen.contin", e)

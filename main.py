@@ -121,27 +121,12 @@ class MyApp(App):
             log_error("auto_save", e)
 
     def on_start(self):
-        # Clock.schedule_once(self.play_music, 4)
-        # Clock.schedule_once(self.check_update, 2)
+        Clock.schedule_once(self.check_update, 2)
         Clock.schedule_once(
             lambda dt:
             Window.bind(on_key_down=self.on_key),
             2
         )
-
-    def play_music(self, dt):
-        bgms = [
-            ("IfIHadaChicken", 150, "If I Had a Chicken"),
-            ("JauntyGumption", 118, "Jaunty Gumption"),
-            ("TheBuilder", 117, "The Builder"),
-            ("HiddenAgenda", 135, "Hidden Agenda")
-        ]
-        try:
-            self.statusbar = StatusBar()
-            self.player = MusicPlayer(bgms, self.statusbar)
-            self.player.play_next()
-        except Exception as e:
-            log_error("play_music", e)
 
     def get_screen(self, name):
         return self.sm.get_screen(name)
