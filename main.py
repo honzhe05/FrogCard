@@ -142,6 +142,7 @@ class MyApp(App):
 
     def on_stop(self):
         self.is_exiting = False
+        self.start_screen.play_music(True)
         self.stop_game("on_stop")
 
     def on_pause(self):
