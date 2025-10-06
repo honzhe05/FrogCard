@@ -68,7 +68,7 @@ class MovingFly(ButtonBehavior, Image):
                 fade_out.bind(on_complete=self.fade_complete)
                 fade_out.start(self)
                 self.disabled = True
-                logic.sound.play_sound_background("GotFly.wav")
+                logic.sound.play_sound_background("GotFly.mp3")
                 Clock.schedule_once(self.recover, 5)
         except Exception as e:
             log_error("MovingFly.on_release", e)
