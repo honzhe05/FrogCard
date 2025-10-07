@@ -46,7 +46,7 @@ jobs:
         run: rm -rf bin/*
 
       - name: Build with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1
+        uses: n8marti/buildozer-action@fix-user-doesnt-exist
         id: buildozer
         with:
           workdir: .
